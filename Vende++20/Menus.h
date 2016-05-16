@@ -26,3 +26,5 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado);
 void opcoesRecomendacao(VendeMaisMais & supermercado);
 
 void mostrarMenuInicial();
+
+void funcaoInutil();
