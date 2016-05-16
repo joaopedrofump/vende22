@@ -23,7 +23,7 @@ unsigned short int leUnsignedShortInt(unsigned short int min, unsigned short int
     unsigned short int userSInt;
     
     do {
-        cout << "Por favor introduza um numero entre " << min << " e " << max << endl;
+        //cout << "Por favor introduza um numero entre " << min << " e " << max << endl;
         cin >> userSInt;
         
         if (cin.fail()) {
