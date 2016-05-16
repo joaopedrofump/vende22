@@ -1,0 +1,19 @@
+4
+1
+Manuel Antonio Guedes
+1/7/2016
+10.03
+2
+Albina Martins
+2/7/2016
+223
+3
+Jose Antonio Marques
+9/7/2016
+221.1
+4
+Maria Alice Almeida
+10/7/2016
+120.33
+------------------------------------------------
+1 3 

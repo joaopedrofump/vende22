@@ -1,0 +1,308 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DFDD9C6E1CEA16B200D14B88 /* Cliente.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C571CEA16B200D14B88 /* Cliente.cpp */; };
+		DFDD9C6F1CEA16B200D14B88 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C5A1CEA16B200D14B88 /* Data.cpp */; };
+		DFDD9C701CEA16B200D14B88 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C5E1CEA16B200D14B88 /* main.cpp */; };
+		DFDD9C711CEA16B200D14B88 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C5F1CEA16B200D14B88 /* Makefile */; };
+		DFDD9C721CEA16B200D14B88 /* Menus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C601CEA16B200D14B88 /* Menus.cpp */; };
+		DFDD9C731CEA16B200D14B88 /* Produto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C621CEA16B200D14B88 /* Produto.cpp */; };
+		DFDD9C741CEA16B200D14B88 /* Table.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C651CEA16B200D14B88 /* Table.cpp */; };
+		DFDD9C751CEA16B200D14B88 /* Transacao.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C671CEA16B200D14B88 /* Transacao.cpp */; };
+		DFDD9C761CEA16B200D14B88 /* utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C6A1CEA16B200D14B88 /* utils.cpp */; };
+		DFDD9C771CEA16B200D14B88 /* Vende++.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFDD9C6C1CEA16B200D14B88 /* Vende++.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DFDD9C2A1CEA160400D14B88 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DFDD9C2C1CEA160400D14B88 /* Vende++20 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Vende++20"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFDD9C571CEA16B200D14B88 /* Cliente.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cliente.cpp; sourceTree = "<group>"; };
+		DFDD9C581CEA16B200D14B88 /* Cliente.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cliente.h; sourceTree = "<group>"; };
+		DFDD9C591CEA16B200D14B88 /* clientes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = clientes.txt; sourceTree = "<group>"; };
+		DFDD9C5A1CEA16B200D14B88 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
+		DFDD9C5B1CEA16B200D14B88 /* Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Data.h; sourceTree = "<group>"; };
+		DFDD9C5C1CEA16B200D14B88 /* defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = defs.h; sourceTree = "<group>"; };
+		DFDD9C5D1CEA16B200D14B88 /* LEIA-ME */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LEIA-ME"; sourceTree = "<group>"; };
+		DFDD9C5E1CEA16B200D14B88 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DFDD9C5F1CEA16B200D14B88 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		DFDD9C601CEA16B200D14B88 /* Menus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Menus.cpp; sourceTree = "<group>"; };
+		DFDD9C611CEA16B200D14B88 /* Menus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menus.h; sourceTree = "<group>"; };
+		DFDD9C621CEA16B200D14B88 /* Produto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Produto.cpp; sourceTree = "<group>"; };
+		DFDD9C631CEA16B200D14B88 /* Produto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Produto.h; sourceTree = "<group>"; };
+		DFDD9C641CEA16B200D14B88 /* produtos.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = produtos.txt; sourceTree = "<group>"; };
+		DFDD9C651CEA16B200D14B88 /* Table.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Table.cpp; sourceTree = "<group>"; };
+		DFDD9C661CEA16B200D14B88 /* Table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Table.h; sourceTree = "<group>"; };
+		DFDD9C671CEA16B200D14B88 /* Transacao.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transacao.cpp; sourceTree = "<group>"; };
+		DFDD9C681CEA16B200D14B88 /* Transacao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transacao.h; sourceTree = "<group>"; };
+		DFDD9C691CEA16B200D14B88 /* transacoes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = transacoes.txt; sourceTree = "<group>"; };
+		DFDD9C6A1CEA16B200D14B88 /* utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = utils.cpp; sourceTree = "<group>"; };
+		DFDD9C6B1CEA16B200D14B88 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
+		DFDD9C6C1CEA16B200D14B88 /* Vende++.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Vende++.cpp"; sourceTree = "<group>"; };
+		DFDD9C6D1CEA16B200D14B88 /* Vende++.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Vende++.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DFDD9C291CEA160400D14B88 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DFDD9C231CEA160400D14B88 = {
+			isa = PBXGroup;
+			children = (
+				DFDD9C2E1CEA160400D14B88 /* Vende++20 */,
+				DFDD9C2D1CEA160400D14B88 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DFDD9C2D1CEA160400D14B88 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DFDD9C2C1CEA160400D14B88 /* Vende++20 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DFDD9C2E1CEA160400D14B88 /* Vende++20 */ = {
+			isa = PBXGroup;
+			children = (
+				DFDD9C571CEA16B200D14B88 /* Cliente.cpp */,
+				DFDD9C581CEA16B200D14B88 /* Cliente.h */,
+				DFDD9C591CEA16B200D14B88 /* clientes.txt */,
+				DFDD9C5A1CEA16B200D14B88 /* Data.cpp */,
+				DFDD9C5B1CEA16B200D14B88 /* Data.h */,
+				DFDD9C5C1CEA16B200D14B88 /* defs.h */,
+				DFDD9C5D1CEA16B200D14B88 /* LEIA-ME */,
+				DFDD9C5E1CEA16B200D14B88 /* main.cpp */,
+				DFDD9C5F1CEA16B200D14B88 /* Makefile */,
+				DFDD9C601CEA16B200D14B88 /* Menus.cpp */,
+				DFDD9C611CEA16B200D14B88 /* Menus.h */,
+				DFDD9C621CEA16B200D14B88 /* Produto.cpp */,
+				DFDD9C631CEA16B200D14B88 /* Produto.h */,
+				DFDD9C641CEA16B200D14B88 /* produtos.txt */,
+				DFDD9C651CEA16B200D14B88 /* Table.cpp */,
+				DFDD9C661CEA16B200D14B88 /* Table.h */,
+				DFDD9C671CEA16B200D14B88 /* Transacao.cpp */,
+				DFDD9C681CEA16B200D14B88 /* Transacao.h */,
+				DFDD9C691CEA16B200D14B88 /* transacoes.txt */,
+				DFDD9C6A1CEA16B200D14B88 /* utils.cpp */,
+				DFDD9C6B1CEA16B200D14B88 /* utils.h */,
+				DFDD9C6C1CEA16B200D14B88 /* Vende++.cpp */,
+				DFDD9C6D1CEA16B200D14B88 /* Vende++.h */,
+			);
+			path = "Vende++20";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DFDD9C2B1CEA160400D14B88 /* Vende++20 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFDD9C331CEA160400D14B88 /* Build configuration list for PBXNativeTarget "Vende++20" */;
+			buildPhases = (
+				DFDD9C281CEA160400D14B88 /* Sources */,
+				DFDD9C291CEA160400D14B88 /* Frameworks */,
+				DFDD9C2A1CEA160400D14B88 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Vende++20";
+			productName = "Vende++20";
+			productReference = DFDD9C2C1CEA160400D14B88 /* Vende++20 */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DFDD9C241CEA160400D14B88 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Furras.com;
+				TargetAttributes = {
+					DFDD9C2B1CEA160400D14B88 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = DFDD9C271CEA160400D14B88 /* Build configuration list for PBXProject "Vende++20" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DFDD9C231CEA160400D14B88;
+			productRefGroup = DFDD9C2D1CEA160400D14B88 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DFDD9C2B1CEA160400D14B88 /* Vende++20 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DFDD9C281CEA160400D14B88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFDD9C6E1CEA16B200D14B88 /* Cliente.cpp in Sources */,
+				DFDD9C731CEA16B200D14B88 /* Produto.cpp in Sources */,
+				DFDD9C751CEA16B200D14B88 /* Transacao.cpp in Sources */,
+				DFDD9C6F1CEA16B200D14B88 /* Data.cpp in Sources */,
+				DFDD9C711CEA16B200D14B88 /* Makefile in Sources */,
+				DFDD9C701CEA16B200D14B88 /* main.cpp in Sources */,
+				DFDD9C761CEA16B200D14B88 /* utils.cpp in Sources */,
+				DFDD9C721CEA16B200D14B88 /* Menus.cpp in Sources */,
+				DFDD9C771CEA16B200D14B88 /* Vende++.cpp in Sources */,
+				DFDD9C741CEA16B200D14B88 /* Table.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DFDD9C311CEA160400D14B88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		DFDD9C321CEA160400D14B88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		DFDD9C341CEA160400D14B88 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DFDD9C351CEA160400D14B88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DFDD9C271CEA160400D14B88 /* Build configuration list for PBXProject "Vende++20" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFDD9C311CEA160400D14B88 /* Debug */,
+				DFDD9C321CEA160400D14B88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFDD9C331CEA160400D14B88 /* Build configuration list for PBXNativeTarget "Vende++20" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFDD9C341CEA160400D14B88 /* Debug */,
+				DFDD9C351CEA160400D14B88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DFDD9C241CEA160400D14B88 /* Project object */;
+}
