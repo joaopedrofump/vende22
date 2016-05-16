@@ -3,6 +3,7 @@
 #include <fstream>
 #include <ctime>
 
+
 // data na forma DD/MM/AAA
 
 Data::Data(bool currentDate) {
