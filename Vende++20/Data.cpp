@@ -1,6 +1,7 @@
 #include "Data.h"
 #include <string>
 #include <fstream>
+#include <ctime>
 
 // data na forma DD/MM/AAA
 
