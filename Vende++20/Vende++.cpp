@@ -16,7 +16,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     unsigned int numeroClientes;
     unsigned int numeroProdutos;
     unsigned int numeroTransacoes;
-
+    
     this->loja = loja;
     this->fichClientes = fichClients;
     this->fichProdutos = fichProdutos;
