@@ -46,7 +46,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "YES"
+      useCustomWorkingDirectory = "NO"
       customWorkingDirectory = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programac&#x327;a&#x303;o/ProjectoVende++/Vende++20/Vende++20"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"

@@ -1,6 +1,6 @@
 #include "Menus.h"
 
-
+const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programação/ProjectoVende++/Vende++20/Vende++20/";
 
 bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes){
     
@@ -18,11 +18,28 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
      
      cout << "Introduza o nome do ficheiro de transações" << endl;
      getline(cin, fichTransacoes);*/
+
     
     loja = "Micro-Preço";
     fichClientes = "clientes.txt";
     fichProdutos = "produtos.txt";
     fichTransacoes = "transacoes.txt";
+    
+#ifdef __llvm__
+    
+    string fichclientes2 = "";
+    string fichProdutos2 = "";
+    string fichTransacoes2 = "";
+    
+    fichclientes2.append(PATH).append(fichClientes);
+    fichProdutos2.append(PATH).append(fichProdutos);
+    fichTransacoes2.append(PATH).append(fichTransacoes);
+    
+    fichClientes = fichclientes2;
+    fichProdutos = fichProdutos2;
+    fichTransacoes = fichTransacoes2;
+    
+#endif
     
     inStreamClientes.open(fichClientes.c_str());
     clientesExiste = inStreamClientes.good();
