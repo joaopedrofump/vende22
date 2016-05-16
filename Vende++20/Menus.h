@@ -28,3 +28,5 @@ void opcoesRecomendacao(VendeMaisMais & supermercado);
 void mostrarMenuInicial();
 
 void funcaoInutil();
+
+void funcaoInutil2();
