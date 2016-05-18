@@ -79,7 +79,7 @@ unsigned short int menuGestaoClientes(){
 }
 
 
-void opcoesGestaoClientes(VendeMaisMais & supermercado){
+void opcoesGestaoClientes(VendeMaisMais &supermercado){
     unsigned int opcao;
     string nome;
     
@@ -89,8 +89,6 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
                 clearScreen();
                 mostrarMenuInicial(0);
                 supermercado.listarClientesOrdemAlfa();
-                //system("pause");
-                
                 ignoreLine();
                 break;
             case 2:
@@ -238,7 +236,7 @@ unsigned short int menuInicial(){
     return opcao;
 }
 
-void opcoesIniciais(VendeMaisMais & supermercado){
+void opcoesIniciais(VendeMaisMais &supermercado){
     unsigned int opcao;
     
     

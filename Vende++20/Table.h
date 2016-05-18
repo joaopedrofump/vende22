@@ -28,9 +28,9 @@ public:
 
 	Table(vector<string> components);
 	Table(vector<string> components, vector<int> spacesForColumn);
-	Table(vector<vector<string>> tableVector, vector<bool> blocks);
+    Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int> spacesForColumn);
 
-	void addNewLine(vector<string> components);
+    void addNewLine(vector<string> components);
 	void addDataInSameLine(vector<string> components);
 
 	void adjustColumnsSize(vector<int> spaspacesForColumn);
