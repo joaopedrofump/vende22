@@ -21,7 +21,7 @@ class Data {
     
  public:
     Data(bool currentDate = false);
-    Data(string data); // data na forma DD/MM/AAA
+    Data(string data); // data na forma DD/MM/AAAA
     Data(unsigned int dia, unsigned int mes, unsigned int ano);
     int getDia() const;
     int getMes() const;

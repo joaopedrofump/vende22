@@ -20,7 +20,17 @@ int main(){
 //    //
 //    // cria uma loja
     VendeMaisMais supermercado(loja, fichClients, fichProdutos, fichTransacoes);
-//
+    
+    supermercado.adicionarProduto("fita-cola", 1.3);
+    
+    supermercado.eliminarProduto(3);
+    
+    cout << supermercado.getMaxProductId() << endl;
+    
+    supermercado.saveChanges();
+    
+    
+    
     
     //    /*supermercado.listarClientesOrdemAlfa();
 //    supermercado.adicionarCliente("Joao Pedro");
@@ -31,11 +41,11 @@ int main(){
 //    
 //    
 //    
-    cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
-    cout << supermercado << endl;  // mostra estatisticas da loja
-	opcoesIniciais(supermercado); // menu inicial com as grandes opcoes
-    				// que implementam as funcioanlidades
-    				// disonibilizadas
+//    cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
+//    cout << supermercado << endl;  // mostra estatisticas da loja
+//	opcoesIniciais(supermercado); // menu inicial com as grandes opcoes
+//    				// que implementam as funcioanlidades
+//    				// disonibilizadas
     
     
     

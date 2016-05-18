@@ -7,11 +7,15 @@ string const FILE_SEPRATOR = "------------------------------------------------";
 typedef map<unsigned int, Cliente>::const_iterator constIntClient;
 typedef map<string, Cliente>::const_iterator constIntClientString;
 
+typedef map<unsigned int, Produto>::const_iterator constIntProduto;
+typedef map<string, Produto>::const_iterator constIntProdutoString;
+
 VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
     
     ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
     
     Cliente::setNumClientes(0);
+    Produto::setNumProdutos(0);
     
     unsigned int numeroClientes;
     unsigned int numeroProdutos;
@@ -25,7 +29,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     
     inStreamClientes.open(this->fichClientes.c_str());
     inStreamClientes >> numeroClientes;
-    //inStreamClientes.ignore(1000, '\n');
+    inStreamClientes.ignore(1000, '\n');
     
     inStreamProdutos.open(this->fichProdutos.c_str());
     inStreamProdutos >> numeroProdutos;
@@ -35,7 +39,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     inStreamTransacoes >> numeroTransacoes;
     inStreamTransacoes.ignore(1000, '\n');
     
-    //ler todos
+    //ler todos os clientes
     
     for (int i = 0; i < numeroClientes; i++) {
         
@@ -50,9 +54,11 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     
     this->maxClientesId = Cliente::getNumClientes();
     
-    //ler inactivos
+    //ler clientes inactivos
     
     if (!inStreamClientes.eof()) {
+        
+        cout << "teste" << endl;
         
         unsigned int clientId;
         string inactiveClients; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
@@ -77,10 +83,44 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
         
     }
     
+    //ler todos os produtos
+    
     for (int i = 0; i < numeroProdutos; i++) {
         
         Produto produtoActual(inStreamProdutos);
-        this->produtos.push_back(produtoActual);
+        pair<unsigned int, Produto> parIntProdutoActual = make_pair(produtoActual.getProdutoId(), produtoActual);
+        pair<string, Produto> parStringProdutoActual = make_pair(produtoActual.getNome(), produtoActual);
+        this->produtos.insert(parIntProdutoActual);
+        this->produtoIdx.insert(parStringProdutoActual);
+    }
+    
+    this->maxProdutcId = Produto::getNumProdutos();
+    
+    //ler produtos inactivos
+    
+    if (!inStreamProdutos.eof()) {
+        
+        unsigned int produtoId;
+        string inactiveProducts; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
+        getline(inStreamProdutos, inactiveProducts);
+        getline(inStreamProdutos, inactiveProducts);
+        stringstream inactiveProductsStream(inactiveProducts);
+        
+        while (!inactiveProductsStream.eof()) {
+            
+            inactiveProductsStream >> produtoId;
+            
+            if (inactiveProductsStream.fail()) {
+                
+                break;
+                
+            }
+            
+            this->produtos.at(produtoId).setStatus(false);
+            this->produtoIdx.at(this->produtos.at(produtoId).getNome()).setStatus(false);
+            
+        }
+        
     }
     
     for (int i = 0; i < numeroTransacoes; i++) {
@@ -297,7 +337,7 @@ void VendeMaisMais::adicionarCliente(string nome) {
     
 }
 
-unsigned int VendeMaisMais::getMaxClienteId(){
+unsigned int VendeMaisMais::getMaxClienteId() const{
     
     return this->maxClientesId;
     
@@ -317,10 +357,135 @@ void VendeMaisMais::listarProdutos() const{
 
 void VendeMaisMais::adicionarProduto(string nomeProduto, float custoProduto){
     Produto novoProduto(nomeProduto, custoProduto);
-    produtos.push_back(novoProduto);
+    pair<unsigned int, Produto> parIntProdutoNovo = make_pair(novoProduto.getProdutoId(), novoProduto);
+    pair<string, Produto> parStringProdutoNovo = make_pair(novoProduto.getNome(), novoProduto);
+    this->produtos.insert(parIntProdutoNovo);
+    this->produtoIdx.insert(parStringProdutoNovo);
     produtosAlterados = true;
-    saveChanges();
+    this->maxProdutcId = Produto::getNumProdutos();
+    
 }
+
+void VendeMaisMais::eliminarProduto(string nome) {
+    
+    //verificar se o produto existe
+    
+    constIntProdutoString iterator = this->produtoIdx.find(nome);
+    
+    if (iterator == this->produtoIdx.end()) {
+        
+        cout << "O produto não foi encontrado." << endl;
+        return;
+        
+    }
+    
+    //colocar o produto inactivo nos dois mapas
+    
+    if (this->produtoIdx.at(nome).getStatus()) {
+        this->produtoIdx.at(nome).setStatus(false);
+        this->produtos.at(this->produtoIdx.at(nome).getProdutoId()).setStatus(false);
+        cout << "Produto eliminado correctamente" << endl;
+        this->produtosAlterados = true;
+    }
+    
+    else {
+        
+        cout << "O produto já se encontra eliminado." << endl;
+        
+    }
+    
+}
+
+void VendeMaisMais::eliminarProduto(unsigned int produtoId) {
+    
+    //verificar se o cliente existe
+    
+    constIntProduto iterator = this->produtos.find(produtoId);
+    
+    if (iterator == this->produtos.end()) {
+        
+        cout << "O produto não foi encontrado." << endl;
+        return;
+        
+    }
+    
+    if (this->produtos.at(produtoId).getStatus()) {
+        
+        this->produtos.at(produtoId).setStatus(false);
+        this->produtoIdx.at(this->produtos.at(produtoId).getNome()).setStatus(false);
+        cout << "Produto eliminado correctamente" << endl;
+        this->produtosAlterados = true;
+        
+        
+    } else {
+        cout << "O produto já se encontra eliminado." << endl;
+    }
+    
+}
+
+void VendeMaisMais::reactivarProduto(string nome) {
+    
+    //verificar se o produto existe
+    
+    constIntProdutoString iterator = this->produtoIdx.find(nome);
+    
+    if (iterator == this->produtoIdx.end()) {
+        
+        cout << "O produto não foi encontrado." << endl;
+        return;
+        
+    }
+    
+    //colocar o produto inactivo nos dois mapas
+    
+    if (!this->produtoIdx.at(nome).getStatus()) {
+        this->produtoIdx.at(nome).setStatus(true);
+        this->produtos.at(this->produtoIdx.at(nome).getProdutoId()).setStatus(true);
+        cout << "Produto reactivado correctamente" << endl;
+        this->produtosAlterados = true;
+    }
+    
+    else {
+        
+        cout << "O produto já se encontra activo." << endl;
+        
+    }
+    
+}
+
+void VendeMaisMais::reactivarProduto(unsigned int produtoId) {
+    
+    //verificar se o cliente existe
+    
+    constIntProduto iterator = this->produtos.find(produtoId);
+    
+    if (iterator == this->produtos.end()) {
+        
+        cout << "O produto não foi encontrado." << endl;
+        return;
+        
+    }
+    
+    if (!this->produtos.at(produtoId).getStatus()) {
+        
+        this->produtos.at(produtoId).setStatus(true);
+        this->produtoIdx.at(this->produtos.at(produtoId).getNome()).setStatus(true);
+        cout << "Produto reactivado correctamente" << endl;
+        this->produtosAlterados = true;
+        
+        
+    } else {
+        cout << "O produto já se encontra activo." << endl;
+    }
+    
+}
+
+unsigned int VendeMaisMais::getMaxProductId() const {
+    
+    return this->maxProdutcId;
+    
+}
+
 
 
 /*********************************
@@ -332,8 +497,10 @@ void VendeMaisMais::adicionarProduto(string nomeProduto, float custoProduto){
 void VendeMaisMais::saveChanges() const{
     
     ofstream outClientes(this->fichClientes);
+    ofstream outProducts(this->fichProdutos);
     ofstream outTransacoes(this->fichTransacoes);
     
+    //escrever todos os clientes
     outClientes << this->clientes.size() << endl;
     
     constIntClient iterator;
@@ -344,7 +511,7 @@ void VendeMaisMais::saveChanges() const{
     
         
     }
-    
+    //escrever o numero dos clientes inactivos
     outClientes << FILE_SEPRATOR << endl;
     
     for (iterator = this->clientes.begin(); iterator != this->clientes.end(); iterator++) {
@@ -352,16 +519,41 @@ void VendeMaisMais::saveChanges() const{
         if (!iterator->second.getStatus()) {
             
             outClientes << iterator->first;
-            
-            if (iterator->first != this->maxClientesId) {
-                
-                outClientes << " ";
-                
-            }
+            outClientes << " ";
             
         }
         
     }
+    
+    //escrever todos os produtos
+    outProducts << this->produtos.size() << endl;
+    
+    constIntProduto iteratorProduto;
+    
+    for (iteratorProduto = this->produtos.begin(); iteratorProduto != this->produtos.end(); iteratorProduto++) {
+        
+        iteratorProduto->second.save(outProducts);
+        
+        
+    }
+    //escrever o numero dos clientes inactivos
+    outProducts << FILE_SEPRATOR << endl;
+    
+    for (iteratorProduto = this->produtos.begin(); iteratorProduto != this->produtos.end(); iteratorProduto++) {
+        
+        if (!iteratorProduto->second.getStatus()) {
+            
+            outProducts << iteratorProduto->first;
+            outProducts << " ";
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
     
     outTransacoes << this->transacoes.size() << endl;
     

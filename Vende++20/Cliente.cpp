@@ -1,11 +1,12 @@
 #include "Cliente.h"
+#include "utils.h"
 
 
 unsigned int Cliente::numClientes;
 
 Cliente::Cliente(ifstream &in){
     
-    string dataString;
+    /*string dataString;
     in >> this->id;
     in.ignore();
     getline(in, this->nome);
@@ -15,7 +16,34 @@ Cliente::Cliente(ifstream &in){
     this->active = true;
     Data dataCartao(dataString);
     this->cartaoCliente = dataCartao;
-    this->numClientes++;
+    this->numClientes++;*/
+    
+    
+    string stringTemporaria;
+    getline(in, stringTemporaria);
+    
+    this->id = atoi(stringTemporaria.substr(0, stringTemporaria.find(';', 0)).c_str());
+    
+    stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
+    
+    this->nome = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
+    trimString(this->nome);
+    
+    stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
+    
+    string dataString = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
+    trimString(dataString);
+    
+    Data dataCartao(dataString);
+    this->cartaoCliente = dataCartao;
+    
+    stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
+    
+    this->volCompras = atof(stringTemporaria.c_str());
+    this->active = true;
+    
+    numClientes++;
+    
 }
 
 Cliente::Cliente(string nome) {
@@ -74,11 +102,11 @@ void Cliente::save(ofstream &out) const{
 
 ostream& operator<<(ostream& out, const Cliente &cliente){
   
-    out << cliente.getId() << endl;
-    out << cliente.getNome() << endl;
-    out << cliente.getCartaoCliente() << endl;
+    out << cliente.getId() << " ; ";
+    out << cliente.getNome() << " ; ";
+    out << cliente.getCartaoCliente() << " ; ";
     out << cliente.getVolCompras() << endl;
-
+    
     return out;
 }
 
