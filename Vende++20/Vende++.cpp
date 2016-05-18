@@ -144,11 +144,19 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
     
     constIntClientString iteClienteIdx;
     
+    Table clientsTable({ "ID", "Nome do Cliente", "Cartão de Cliente", "Volume de Compras" });
+    
     for (iteClienteIdx = this->clienteIdx.begin(); iteClienteIdx != this->clienteIdx.end(); iteClienteIdx++) {
         
-        cout << iteClienteIdx->first << endl;
+        if (iteClienteIdx == this->clienteIdx.begin()) {
+            clientsTable.addNewLine(iteClienteIdx->second.toTable());
+        }
+        else {
+            clientsTable.addNewLine(iteClienteIdx->second.toTable()); //AddDataInSameLine
+        }
         
     }
+    cout << clientsTable << endl;
     
 }
 

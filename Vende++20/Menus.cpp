@@ -57,7 +57,44 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
     return clientesExiste && produtosExiste && transacoesExiste;
 }
 
+void opcoesIniciais(VendeMaisMais &supermercado){
+    unsigned int opcao;
+    
+    while((opcao = menuInicial()))
+        switch (opcao){
+            case 1: opcoesGestaoClientes(supermercado);
+                break;
+            case 2: opcoesGestaoProdutos(supermercado);
+                break;
+            case 3: opcoesGestaoTransacoes(supermercado);
+                break;
+            case 4: opcoesRecomendacao(supermercado);
+                break;
+        }
+    
+    supermercado.saveChanges();
+}
 
+unsigned short int menuInicial(){
+    unsigned short int opcao;
+    
+    mostrarMenuInicial(0);
+    opcao = leUnsignedShortInt(0, 4);
+    
+    if(opcao == 5)
+        return 0;
+    
+    return opcao;
+}
+
+void mostrarMenuInicial(unsigned short int opcaoEscolhida){
+    clearScreen();
+    Table menu({ "Menu Inicial" });
+    Table menuOpcoes({ "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" });
+    
+    cout << menu << endl;
+    cout << menuOpcoes;
+}
 
 /******************************************
  * Gestao de Clientes
@@ -78,6 +115,11 @@ unsigned short int menuGestaoClientes(){
     return opcao;
 }
 
+
+
+/******************************************
+ * Gestao de Produtos
+ ******************************************/
 
 void opcoesGestaoClientes(VendeMaisMais &supermercado){
     unsigned int opcao;
@@ -110,9 +152,6 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado){
     }
 }
 
-/******************************************
- * Gestao de Produtos
- ******************************************/
 unsigned short int menuGestaoProdutos(){
     unsigned short int opcao;
     
@@ -210,47 +249,5 @@ void opcoesRecomendacao(VendeMaisMais & supermercado){
  * Menu Inicial
  ******************************************/
 
-void mostrarMenuInicial(unsigned short int opcaoEscolhida){
-    clearScreen();
-    Table menu({ "Menu Inicial" });
-    Table menuOpcoes({ "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" });
-    
-    cout << menu << endl;
-    cout << menuOpcoes;
-}
 
-unsigned short int menuInicial(){
-    unsigned short int opcao;
-    
-    clearScreen();
-    Table menu({ "Menu Inicial" });
-    Table menuOpcoes({ "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" });
-    
-    cout << menu << endl;
-    cout << menuOpcoes;
-    opcao = leUnsignedShortInt(0, 4);
-    
-    if(opcao == 5)
-        return 0;
-    
-    return opcao;
-}
 
-void opcoesIniciais(VendeMaisMais &supermercado){
-    unsigned int opcao;
-    
-    
-    while((opcao = menuInicial()))
-        switch (opcao){
-            case 1: opcoesGestaoClientes(supermercado);
-                break;
-            case 2: opcoesGestaoProdutos(supermercado);
-                break;
-            case 3: opcoesGestaoTransacoes(supermercado);
-                break;
-            case 4: opcoesRecomendacao(supermercado);
-                break;
-        }
-    
-    supermercado.saveChanges();
-}
