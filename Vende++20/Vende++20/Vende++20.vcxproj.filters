@@ -15,66 +15,72 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Cliente.cpp">
+    <ClCompile Include="..\Cliente.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Data.cpp">
+    <ClCompile Include="..\Data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\main.cpp">
+    <ClCompile Include="..\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Menus.cpp">
+    <ClCompile Include="..\Menus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Produto.cpp">
+    <ClCompile Include="..\Produto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Table.cpp">
+    <ClCompile Include="..\Table.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Transacao.cpp">
+    <ClCompile Include="..\Transacao.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\utils.cpp">
+    <ClCompile Include="..\utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Vende++.cpp">
+    <ClCompile Include="..\Vende++.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Cliente.h">
+    <ClInclude Include="..\Cliente.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Data.h">
+    <ClInclude Include="..\Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\defs.h">
+    <ClInclude Include="..\defs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Menus.h">
+    <ClInclude Include="..\Menus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Produto.h">
+    <ClInclude Include="..\Produto.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Table.h">
+    <ClInclude Include="..\Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Transacao.h">
+    <ClInclude Include="..\Transacao.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\utils.h">
+    <ClInclude Include="..\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Vende++.h">
+    <ClInclude Include="..\Vende++.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\clientes.txt" />
-    <Text Include="..\..\produtos.txt" />
-    <Text Include="..\..\transacoes.txt" />
+    <Text Include="..\clientes.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\produtos.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="..\transacoes.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

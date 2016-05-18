@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A66EC418-6FE0-403F-BA16-461BED3875D1}</ProjectGuid>
-    <RootNamespace>ProjectoVENDE22</RootNamespace>
+    <ProjectGuid>{E8C781E6-8618-46B2-AD55-8AA2322BABBD}</ProjectGuid>
+    <RootNamespace>Vende20</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -110,31 +110,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Cliente.cpp" />
-    <ClCompile Include="..\..\Data.cpp" />
-    <ClCompile Include="..\..\main.cpp" />
-    <ClCompile Include="..\..\Menus.cpp" />
-    <ClCompile Include="..\..\Produto.cpp" />
-    <ClCompile Include="..\..\Table.cpp" />
-    <ClCompile Include="..\..\Transacao.cpp" />
-    <ClCompile Include="..\..\utils.cpp" />
-    <ClCompile Include="..\..\Vende++.cpp" />
+    <ClCompile Include="..\Cliente.cpp" />
+    <ClCompile Include="..\Data.cpp" />
+    <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="..\Menus.cpp" />
+    <ClCompile Include="..\Produto.cpp" />
+    <ClCompile Include="..\Table.cpp" />
+    <ClCompile Include="..\Transacao.cpp" />
+    <ClCompile Include="..\utils.cpp" />
+    <ClCompile Include="..\Vende++.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Cliente.h" />
-    <ClInclude Include="..\..\Data.h" />
-    <ClInclude Include="..\..\defs.h" />
-    <ClInclude Include="..\..\Menus.h" />
-    <ClInclude Include="..\..\Produto.h" />
-    <ClInclude Include="..\..\Table.h" />
-    <ClInclude Include="..\..\Transacao.h" />
-    <ClInclude Include="..\..\utils.h" />
-    <ClInclude Include="..\..\Vende++.h" />
+    <ClInclude Include="..\Cliente.h" />
+    <ClInclude Include="..\Data.h" />
+    <ClInclude Include="..\defs.h" />
+    <ClInclude Include="..\Menus.h" />
+    <ClInclude Include="..\Produto.h" />
+    <ClInclude Include="..\Table.h" />
+    <ClInclude Include="..\Transacao.h" />
+    <ClInclude Include="..\utils.h" />
+    <ClInclude Include="..\Vende++.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\clientes.txt" />
-    <Text Include="..\..\produtos.txt" />
-    <Text Include="..\..\transacoes.txt" />
+    <Text Include="..\clientes.txt" />
+    <Text Include="..\produtos.txt" />
+    <Text Include="..\transacoes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

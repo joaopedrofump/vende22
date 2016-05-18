@@ -6,6 +6,10 @@ unsigned int Cliente::numClientes;
 
 Cliente::Cliente(ifstream &in){
     
+
+
+
+
     string stringTemporaria;
     getline(in, stringTemporaria);
     

@@ -1,0 +1,6 @@
+Vende++20
+Debug
+.vs
+Vende++20.sdf
+Vende++20.sln
+Vende++20.VC.opendb
