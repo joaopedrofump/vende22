@@ -65,7 +65,7 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
 unsigned short int menuGestaoClientes(){
     unsigned short int opcao;
     
-    mostrarMenuInicial();
+    mostrarMenuInicial(0);
     Table menuClientes({ "1 - Listar clientes" });
     menuClientes.addNewLine({ "2 - Ver informacao cliente" });
     menuClientes.addNewLine({ "3 - Adicionar cliente" });
@@ -73,16 +73,7 @@ unsigned short int menuGestaoClientes(){
     menuClientes.addNewLine({ "0 - Voltar ao menu inicial" });
     cout << menuClientes;
     
-    /*cout << TAB << "1 - Listar clientes" << endl;
-     cout << TAB << "2 - Ver informacao cliente" << endl;
-     cout << TAB << "3 - Adicionar cliente" << endl;
-     cout << TAB << "4 - Remover cliente" << endl;
-     cout << TAB << "5 - Voltar ao menu inicial" << endl << endl;
-     cout << TAB << "Qual a sua opcao: */
     opcao = leUnsignedShortInt(0, 4);
-    
-    /*if(opcao == 5)
-     return 0;*/
     
     return opcao;
 }
@@ -92,24 +83,33 @@ void opcoesGestaoClientes(VendeMaisMais & supermercado){
     unsigned int opcao;
     string nome;
     
-    while((opcao = menuGestaoClientes()))
+    while((opcao = menuGestaoClientes())) {
         switch (opcao){
             case 1:
+                clearScreen();
+                mostrarMenuInicial(0);
                 supermercado.listarClientesOrdemAlfa();
+                //system("pause");
+                
+                ignoreLine();
                 break;
             case 2:
                 cout << "Qual o nome do cliente: ";
                 getline(cin, nome);
                 supermercado.mostraInformacaoCliente(nome);
+                //system("pause");
                 break;
             case 3:
                 cout << "Qual o nome do cliente: ";
                 getline(cin, nome);
                 supermercado.adicionarCliente(nome);
                 break;
-            case 4:
+            case 0:
                 break;
         }
+        
+        //break;
+    }
 }
 
 /******************************************
@@ -212,10 +212,10 @@ void opcoesRecomendacao(VendeMaisMais & supermercado){
  * Menu Inicial
  ******************************************/
 
-void mostrarMenuInicial(){
+void mostrarMenuInicial(unsigned short int opcaoEscolhida){
     clearScreen();
     Table menu({ "Menu Inicial" });
-    Table menuOpcoes({ "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "5 - Sair" });
+    Table menuOpcoes({ "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" });
     
     cout << menu << endl;
     cout << menuOpcoes;
