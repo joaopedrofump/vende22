@@ -194,6 +194,7 @@ void ignoreLine() {
     string temp;
     Table tableEnter({ "Press Enter to Continue." });
     cout << tableEnter << endl;
+    cin.ignore(10000, '\n');
     getline(cin, temp);
     
 }

@@ -125,7 +125,7 @@ void Cliente::setNumClientes(unsigned int primeiro) {
     
 }
 
-vector<string> Cliente::toTable(){
+vector<string> Cliente::toTable() const{
     vector<string> output;
     
     stringstream ss;
