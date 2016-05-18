@@ -25,4 +25,4 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado);
 
 void opcoesRecomendacao(VendeMaisMais & supermercado);
 
-void mostrarMenuInicial();
+void mostrarMenuInicial(unsigned short int opcaoEscolhida);

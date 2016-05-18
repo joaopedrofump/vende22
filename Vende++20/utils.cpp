@@ -189,6 +189,15 @@ int GetCursorY()
     return 1;
 }
 
+void ignoreLine() {
+    
+    string temp;
+    Table tableEnter({ "Press Enter to Continue." });
+    cout << tableEnter << endl;
+    getline(cin, temp);
+    
+}
+
 
 
 

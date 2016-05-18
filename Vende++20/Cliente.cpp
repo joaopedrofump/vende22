@@ -6,19 +6,6 @@ unsigned int Cliente::numClientes;
 
 Cliente::Cliente(ifstream &in){
     
-    /*string dataString;
-    in >> this->id;
-    in.ignore();
-    getline(in, this->nome);
-    getline(in, dataString);
-    in >> this->volCompras;
-    in.ignore();
-    this->active = true;
-    Data dataCartao(dataString);
-    this->cartaoCliente = dataCartao;
-    this->numClientes++;*/
-    
-    
     string stringTemporaria;
     getline(in, stringTemporaria);
     
