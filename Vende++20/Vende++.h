@@ -38,8 +38,7 @@ private:
     
     map<unsigned int, Produto> produtos;
     map<string, Produto> produtoIdx;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
-    multimap<int, int> transacaoIdx; // multima para "traduzir" o identificador do
-    // cliente nos indices das suas
+    multimap<int, int> transacaoIdx; // multima para "traduzir" o identificador do cliente nos indices das suas
     // transacoes no vetor de
     // transacoes
     
@@ -47,8 +46,8 @@ public:
     VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
     void listarClientesOrdemAlfa() const;
     void listarProdutos() const;
-    void mostraInformacaoCliente(string nome);
-    void mostraInformacaoCliente(unsigned int clientId);
+    bool mostraInformacaoCliente(string nome);
+    bool mostraInformacaoCliente(unsigned int clientId);
     void eliminarCliente(string nome);
     void eliminarCliente(unsigned int clientId);
     void reactivarCliente(string nome);
@@ -59,6 +58,7 @@ public:
     void reactivarProduto(unsigned int produtoId);
     void adicionarCliente(string nome);
     void adicionarProduto(string nomeProduto, float custoProduto);
+    void registarTransacao(Cliente &clienteTransacao, vector <Produto> &produtos);
     unsigned int getMaxProductId() const;
     void saveChanges() const;
     unsigned int getMaxClienteId() const;

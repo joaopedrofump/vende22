@@ -129,6 +129,21 @@ bool validateName(string &nome) {
         
     }
     
+    nome.at(0) = (char)toupper(nome.at(0));
+    
+    
+    
+    for (size_t i = 0; i < nome.size()-1; i++) {
+        
+        if (nome.at(i) == ' ') {
+            
+            nome.at(i+1) = toupper(nome.at(i+1));
+            
+        }
+        
+        
+    }
+    
     return true;
     
     
@@ -189,18 +204,59 @@ int GetCursorY()
     return 1;
 }
 
-void ignoreLine() {
+void ignoreLine(string message, bool ignoreControl) {
     
     string temp;
-    Table tableEnter({ "Press Enter to Continue." });
+    Table tableEnter({ message });
     cout << tableEnter << endl;
-    cin.ignore(10000, '\n');
+    if (ignoreControl) {
+        
+        cin.ignore(1000, '\n');
+        
+    }
     getline(cin, temp);
+
+}
+
+bool validateInputStream(istream &inStream, string errorMessage) {
+    
+    
+    bool validInput = true;
+    
+    if (inStream.fail()) {
+        
+        inStream.clear();
+        inStream.ignore(1000, '\n');
+        showError(errorMessage);
+        validInput = false;
+        
+    }
+    
+    
+    return validInput;
+    
+}
+
+void showError(string error) {
+    
+    cout << endl << error << endl << endl;
+    cout << "Press any key + Enter to continue" << endl << endl;
+    cin.get();
     
 }
 
 
-
+bool stringVazia(string stringTeste) {
+    
+    if (stringTeste.size() == 0) {
+        
+        return true;
+        
+    }
+    
+    return false;
+    
+}
 
 
 

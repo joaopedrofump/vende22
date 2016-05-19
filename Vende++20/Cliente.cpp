@@ -29,7 +29,10 @@ Cliente::Cliente(ifstream &in){
     this->volCompras = atof(stringTemporaria.c_str());
     this->active = true;
     
-    numClientes++;
+    if (numClientes < this->id) {
+        
+        numClientes = this->id;
+    }
     
 }
 
