@@ -136,10 +136,6 @@ vector<string> Cliente::toTable() const{
     
     output.push_back(nome);
     
-    /*ss.str("");
-    ss << cartaoCliente;
-    str = ss.str();
-    output.push_back(str);*/
 
 	output.push_back(cartaoCliente.mostrarData());
     
