@@ -125,16 +125,22 @@ bool validateName(string &nome) {
             cout << "Cada nome tem de conter pelo menos duas letras." << endl;
             return false;
             
-        }
-        
+        }        
     }
     
-    return true;
-    
-    
+	toupper(nome.at(0));
+
+	for (size_t i = 1; i < nome.size() - 1; i++) {
+
+		if (nome.at(i) == ' ') {
+
+			toupper(nome.at(i + 1));
+
+		}
+	}
+
+    return true;   
 }
-
-
 
 void SetCursor(int column, int line)
 
@@ -189,14 +195,27 @@ int GetCursorY()
     return 1;
 }
 
-void ignoreLine() {
+void ignoreLine(string message, bool ignoreControl) {
     
     string temp;
-    Table tableEnter({ "Press Enter to Continue." });
+    Table tableEnter({ message });
     cout << tableEnter << endl;
-    cin.ignore(10000, '\n');
+    if(ignoreControl)
+		cin.ignore(10000, '\n');
     getline(cin, temp);
     
+}
+
+bool stringVazia(string stringTeste) {
+
+	if (stringTeste.size() == 0) {
+
+		return true;
+
+	}
+
+	return false;
+
 }
 
 

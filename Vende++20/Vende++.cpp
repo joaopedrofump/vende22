@@ -144,7 +144,7 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
     
     constIntClientString iteClienteIdx;
     
-    Table clientsTable({ "ID", "Nome do Cliente", "Cartão de Cliente", "Volume de Compras" });
+    Table clientsTable({ "ID", "Nome do Cliente", "Cartão de Cliente", "Volume de Compras" , "Status"});
     
     for (iteClienteIdx = this->clienteIdx.begin(); iteClienteIdx != this->clienteIdx.end(); iteClienteIdx++) {
         
@@ -161,14 +161,14 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
 }
 
 // mostra a informacao individual de um cliente
-void VendeMaisMais::mostraInformacaoCliente(string nome){
+bool VendeMaisMais::mostraInformacaoCliente(string nome){
     
     constIntClientString iterator = this->clienteIdx.find(nome);
     
     if (iterator == this->clienteIdx.end()) {
         
         cout << "O cliente não foi encontrado." << endl;
-        return;
+        return false;
         
     }
     
@@ -184,16 +184,17 @@ void VendeMaisMais::mostraInformacaoCliente(string nome){
     
     cout << "Estado do Cliente: " << status << endl;
     
+	return true;
 }
 
-void VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
+bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
     
     constIntClient iterator = this->clientes.find(clientId);
     
     if (iterator == this->clientes.end()) {
         
         cout << "O cliente não foi encontrado." << endl;
-        return;
+        return false;
     }
     
     cout << "***************************************************" << endl;
@@ -207,9 +208,10 @@ void VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
     
     cout << "Estado do Cliente: " << status << endl;
     
+	return true;
 }
 
-void VendeMaisMais::eliminarCliente(string nome) {
+bool VendeMaisMais::eliminarCliente(string nome) {
     
     //verificar se o cliente existe
     
@@ -218,7 +220,7 @@ void VendeMaisMais::eliminarCliente(string nome) {
     if (iterator == this->clienteIdx.end()) {
         
         cout << "O cliente não foi encontrado." << endl;
-        return;
+        return false;
         
     }
     
@@ -237,9 +239,10 @@ void VendeMaisMais::eliminarCliente(string nome) {
         
     }
     
+	return true;
 }
 
-void VendeMaisMais::eliminarCliente(unsigned int clientId) {
+bool VendeMaisMais::eliminarCliente(unsigned int clientId) {
     
     //verificar se o cliente existe
     
@@ -248,7 +251,7 @@ void VendeMaisMais::eliminarCliente(unsigned int clientId) {
     if (iterator == this->clientes.end()) {
         
         cout << "O cliente não foi encontrado." << endl;
-        return;
+        return false;
         
     }
     
@@ -263,7 +266,7 @@ void VendeMaisMais::eliminarCliente(unsigned int clientId) {
     } else {
         cout << "O cliente já se encontra eliminado." << endl;
     }
-    
+	return true;
 }
 
 void VendeMaisMais::reactivarCliente(string nome) {
@@ -335,6 +338,8 @@ void VendeMaisMais::adicionarCliente(string nome) {
         this->clientes.insert(parNovoCliente);
         this->clienteIdx.insert(parNovoClienteString);
         this->maxClientesId = Cliente::getNumClientes();
+		
+		this->clientesAlterados = true;
         
     }
     
@@ -359,7 +364,21 @@ unsigned int VendeMaisMais::getMaxClienteId() const{
 // lisat os produto por ordem alfabetica crescente
 void VendeMaisMais::listarProdutos() const{
     
-    // A IMPLEMENTAR
+	constIntProdutoString iteProdutoIdx;
+
+	Table productsTable({ "Nome do Produto", "Custo" });
+
+	for (iteProdutoIdx = this->produtoIdx.begin(); iteProdutoIdx != this->produtoIdx.end(); iteProdutoIdx++) {
+
+		if (iteProdutoIdx == this->produtoIdx.begin()) {
+			productsTable.addNewLine(iteProdutoIdx->second.toTable());
+		}
+		else {
+			productsTable.addDataInSameLine(iteProdutoIdx->second.toTable()); //AddDataInSameLine
+		}
+
+	}
+	cout << productsTable << endl;
     
 }
 
@@ -488,10 +507,15 @@ void VendeMaisMais::reactivarProduto(unsigned int produtoId) {
     
 }
 
+
 unsigned int VendeMaisMais::getMaxProductId() const {
     
     return this->maxProdutcId;
     
+}
+
+map<unsigned int, Cliente> VendeMaisMais::getMapIDtoCliente() const {
+	return this->clientes;
 }
 
 

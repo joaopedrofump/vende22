@@ -77,3 +77,20 @@ bool operator<(const Produto &prod1, const Produto &prod2){
     else
         return false;
 }
+
+vector<string> Produto::toTable() const {
+	vector<string> output;
+
+	output.push_back(nome);
+
+	stringstream ss;
+	
+	ss.str("");
+	ss << custo;
+	string str = ss.str();
+	output.push_back(str);
+
+
+
+	return output;
+}

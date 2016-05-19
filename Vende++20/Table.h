@@ -21,14 +21,17 @@ private:
 	unsigned int numLines;
 	vector<int> columnsWidth;
 	vector<string> lastLineComponents;
-	void formatTable(char internalChar, char limitingChar, vector<int> spacesForColumn);
+	unsigned int indent;
+
+	void formatTable(char internalChar, char limitingChar, vector<int> spacesForColumn, unsigned int indentacaoFT = 0);
 
 public:
 	stringstream tableStream;
 
-	Table(vector<string> components);
-	Table(vector<string> components, vector<int> spacesForColumn);
-    Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int> spacesForColumn);
+	Table(vector<string> components, unsigned int indentacao = 0);
+	Table(vector<string> components, vector<int> spacesForColumn, unsigned int indentacao = 0);
+    Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int> spacesForColumn, unsigned int indentacao = 0);
+	//Table(unsigned int indentacao = 0);
 
     void addNewLine(vector<string> components);
 	void addDataInSameLine(vector<string> components);

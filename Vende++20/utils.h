@@ -24,4 +24,6 @@ bool validateName(string &nome);
 
 void SetCursor(int column, int line);
 
-void ignoreLine();
+void ignoreLine(string message = "Press Enter to Continue.", bool ignoreControl = true);
+
+bool stringVazia(string stringTeste);
