@@ -21,6 +21,8 @@ class Transacao {
     vector<string> produtos;
     vector<Produto> produtosProduto;
     Cliente clienteTransacao;
+    float total;
+    void calculateTotal();
 
  public:
     Transacao(ifstream & in); // trabsacao na forma de  idCliente ; data ; lista de produtos
@@ -33,6 +35,7 @@ class Transacao {
     void setVectorProdutos(vector <Produto> vectorProdutos);
     Cliente getCliente();
     void setCliente(Cliente clienteAInserir);
+    float getTotal() const;
 };
 
 

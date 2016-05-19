@@ -9,6 +9,13 @@ Cliente::Cliente(ifstream &in){
     string stringTemporaria;
     getline(in, stringTemporaria);
     
+    if (stringTemporaria.size() == 0) {
+        
+        this->id = 0;
+        return;
+        
+    }
+    
     this->id = atoi(stringTemporaria.substr(0, stringTemporaria.find(';', 0)).c_str());
     
     stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
@@ -124,7 +131,7 @@ unsigned int Cliente::getNumClientes() {
 
 void Cliente::setNumClientes(unsigned int primeiro) {
     
-    //numClientes = primeiro;
+    numClientes = primeiro;
     
 }
 
@@ -150,4 +157,10 @@ vector<string> Cliente::toTable() const{
     output.push_back(str);
     
     return output;
+}
+
+void Cliente::acrescentarCompras(float total) {
+    
+    this->volCompras += total;
+    
 }

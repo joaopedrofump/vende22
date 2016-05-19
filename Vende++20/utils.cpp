@@ -204,7 +204,7 @@ int GetCursorY()
     return 1;
 }
 
-void ignoreLine(string message, bool ignoreControl) {
+void ignoreLine(bool ignoreControl, string message) {
     
     string temp;
     Table tableEnter({ message });
@@ -227,21 +227,13 @@ bool validateInputStream(istream &inStream, string errorMessage) {
         
         inStream.clear();
         inStream.ignore(1000, '\n');
-        showError(errorMessage);
+        ignoreLine(false);
         validInput = false;
         
     }
     
     
     return validInput;
-    
-}
-
-void showError(string error) {
-    
-    cout << endl << error << endl << endl;
-    cout << "Press any key + Enter to continue" << endl << endl;
-    cin.get();
     
 }
 
@@ -259,7 +251,66 @@ bool stringVazia(string stringTeste) {
 }
 
 
-
+vector <unsigned int> leVectorInteiros(string mensagem, string mensagemErro) {
+    
+    string inteiros;
+    vector <unsigned int> resultado;
+    bool fim = false;
+    
+    
+    
+    do {
+        
+        Table tabelaMensagem({mensagem});
+        Table tabelaMensagemErro({mensagemErro});
+        cout << tabelaMensagem << endl;
+        getline(cin, inteiros);
+        stringstream inteirosStream(inteiros);
+        trimString(inteiros);
+        
+        if (inteiros.size() == 0) {
+            
+            break;
+            
+        }
+        
+        while (!inteirosStream.eof()) {
+            
+            unsigned int currentInt;
+            inteirosStream >> currentInt;
+            
+            if (inteirosStream.fail()) {
+                
+                inteirosStream.clear();
+                inteirosStream.ignore(1);
+                
+                
+                
+            }
+            
+            else {
+                
+                resultado.push_back(currentInt);
+                fim = true;
+                
+            }
+            
+            
+        }
+        
+        if (!fim) {
+            
+            cout << tabelaMensagemErro << endl;
+            
+            
+        }
+        
+    
+    } while (!fim);
+    
+    return resultado;
+    
+}
 
 
 
