@@ -24,28 +24,11 @@ int main(){
 
     cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
     cout << supermercado << endl;  // mostra estatisticas da loja
-    //opcoesIniciais(supermercado);
+    opcoesIniciais(supermercado);
 
-    vector<unsigned int> vetorTeste;
-    vetorTeste = leVectorInteiros("Introduza os ids");
-    
-    for (size_t i = 0; i < vetorTeste.size(); i++) {
-        
-        cout << vetorTeste.at(i) << endl;
-        
-    }
-    
-    
-    
     
     supermercado.saveChanges();
-    
-    
-<<<<<<< HEAD
-=======
-    cout << "Informacao da loja " << loja << " do supermercado Vende++:" << endl;
-    cout << supermercado << endl;  // mostra estatisticas da loja
-    opcoesIniciais(supermercado);
->>>>>>> LEO
+
+
     return 0;
 }

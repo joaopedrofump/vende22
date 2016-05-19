@@ -128,7 +128,6 @@ bool validateName(string &nome) {
         }        
     }
     
-<<<<<<< HEAD
     nome.at(0) = (char)toupper(nome.at(0));
     
     
@@ -147,21 +146,6 @@ bool validateName(string &nome) {
     return true;
     
     
-}
-=======
-	nome.at(0) = toupper(nome.at(0));
-
-	for (size_t i = 0; i < nome.size() - 1; i++) {
->>>>>>> LEO
-
-		if (nome.at(i) == ' '){
-
-			nome.at(i+1) = toupper(nome.at(i + 1));
-
-		}
-	} //COLOCA A PRIMEIRA LETRA DE CADA NOME EM MAIUSCULAS
-
-    return true;   
 }
 
 void SetCursor(int column, int line)
@@ -222,19 +206,13 @@ void ignoreLine(bool ignoreControl, string message) {
     string temp;
     Table tableEnter({ message });
     cout << tableEnter << endl;
-<<<<<<< HEAD
     if (ignoreControl) {
         
         cin.ignore(1000, '\n');
         
     }
-=======
-    if(ignoreControl)
-		cin.ignore(10000, '\n');
->>>>>>> LEO
     getline(cin, temp);
 
-<<<<<<< HEAD
 }
 
 bool validateInputStream(istream &inStream, string errorMessage) {
@@ -255,15 +233,8 @@ bool validateInputStream(istream &inStream, string errorMessage) {
     return validInput;
     
 }
-=======
-bool stringVazia(string stringTeste) {
 
-	if (stringTeste.size() == 0) {
->>>>>>> LEO
 
-		return true;
-
-<<<<<<< HEAD
 bool stringVazia(string stringTeste) {
     
     if (stringTeste.size() == 0) {
@@ -275,13 +246,7 @@ bool stringVazia(string stringTeste) {
     return false;
     
 }
-=======
-	}
->>>>>>> LEO
 
-	return false;
-
-<<<<<<< HEAD
 vector <unsigned int> leVectorInteiros(string mensagem, string mensagemErro) {
     
     string inteiros;
@@ -343,9 +308,7 @@ vector <unsigned int> leVectorInteiros(string mensagem, string mensagemErro) {
     
 }
 
-=======
-}
->>>>>>> LEO
+
 
 
 

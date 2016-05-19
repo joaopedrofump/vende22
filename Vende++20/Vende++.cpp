@@ -64,12 +64,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     //ler clientes inactivos
     
     if (!inStreamClientes.eof()) {
-        
-<<<<<<< HEAD
-=======
-        //cout << "teste" << endl;
-        
->>>>>>> LEO
+
         unsigned int clientId;
         string inactiveClients; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
         getline(inStreamClientes, inactiveClients);
@@ -191,11 +186,7 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
     
     constIntClientString iteClienteIdx;
     
-<<<<<<< HEAD
-    Table clientsTable({ "ID", "Nome do Cliente", "Cartao de Cliente", "Volume de Compras" });
-=======
     Table clientsTable({ "ID", "Nome do Cliente", "Cartao de Cliente", "Volume de Compras" , "Status"});
->>>>>>> LEO
     
     for (iteClienteIdx = this->clienteIdx.begin(); iteClienteIdx != this->clienteIdx.end(); iteClienteIdx++) {
         
@@ -269,12 +260,8 @@ bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
 
     str =  this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
     
-<<<<<<< HEAD
-    cout << "Estado do Cliente: " << status << endl;
-    return true;
-=======
+
 	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
->>>>>>> LEO
     
 	cout << mostrarCliente;
 
@@ -434,23 +421,7 @@ unsigned int VendeMaisMais::getMaxClienteId() const{
 // lisat os produto por ordem alfabetica crescente
 void VendeMaisMais::listarProdutos() const{
     
-<<<<<<< HEAD
-    constIntProdutoString iteProdutoIdx;
-    
-    Table productsTable({ "Nome do Produto", "Custo", "Status"});
-    
-    for (iteProdutoIdx = this->produtoIdx.begin(); iteProdutoIdx != this->produtoIdx.end(); iteProdutoIdx++) {
-        
-        if (iteProdutoIdx == this->produtoIdx.begin()) {
-            productsTable.addNewLine(iteProdutoIdx->second.toTable());
-        }
-        else {
-            productsTable.addDataInSameLine(iteProdutoIdx->second.toTable()); //AddDataInSameLine
-        }
-        
-    }
-    cout << productsTable << endl;
-=======
+
 	constIntProdutoString iteProdutoIdx;
 
 	Table productsTable({ "Nome do Produto", "Custo", "Status "});
@@ -466,7 +437,7 @@ void VendeMaisMais::listarProdutos() const{
 
 	}
 	cout << productsTable << endl;
->>>>>>> LEO
+
     
 }
 
@@ -604,7 +575,6 @@ unsigned int VendeMaisMais::getMaxProductId() const {
     
 }
 
-<<<<<<< HEAD
 void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned int> produtos) {
     
     
@@ -655,12 +625,7 @@ void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned i
     
     this->clientes.at(idCliente).acrescentarCompras(transacaoInserir.getTotal());
     this->clienteIdx.at(clientes.at(idCliente).getNome()).acrescentarCompras(transacaoInserir.getTotal());
-    
-    
-=======
-map<unsigned int, Cliente> VendeMaisMais::getMapIDtoCliente() const {
-	return this->clientes;
->>>>>>> LEO
+
 }
 
 
