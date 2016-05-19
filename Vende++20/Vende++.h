@@ -58,7 +58,7 @@ public:
     void reactivarProduto(unsigned int produtoId);
     void adicionarCliente(string nome);
     void adicionarProduto(string nomeProduto, float custoProduto);
-    void registarTransacao(Cliente &clienteTransacao, vector <Produto> &produtos);
+    void registarTransacao(unsigned int idCliente, vector <unsigned int> produtos);
     unsigned int getMaxProductId() const;
     void saveChanges() const;
     unsigned int getMaxClienteId() const;

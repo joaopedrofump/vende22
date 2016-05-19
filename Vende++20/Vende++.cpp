@@ -46,6 +46,11 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     for (int i = 0; i < numeroClientes; i++) {
         
         Cliente clienteActual(inStreamClientes);
+        
+        if (clienteActual.getId() == 0) {
+            continue;
+        }
+        
         pair<unsigned int, Cliente> parClienteIdActual = make_pair(clienteActual.getId(), clienteActual);
         pair<string, Cliente> parNomeIdActual = make_pair(clienteActual.getNome(), clienteActual);
         this->clientes.insert(parClienteIdActual);
@@ -88,6 +93,11 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     for (int i = 0; i < numeroProdutos; i++) {
         
         Produto produtoActual(inStreamProdutos);
+        
+        if (produtoActual.getProdutoId() == 0) {
+            continue;
+        }
+        
         pair<unsigned int, Produto> parIntProdutoActual = make_pair(produtoActual.getProdutoId(), produtoActual);
         pair<string, Produto> parStringProdutoActual = make_pair(produtoActual.getNome(), produtoActual);
         this->produtos.insert(parIntProdutoActual);
@@ -126,6 +136,11 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     for (int i = 0; i < numeroTransacoes; i++) {
         
         Transacao transacaoActual(inStreamTransacoes);
+        
+        if (transacaoActual.getIdCliente() == 0) {
+            continue;
+        }
+        
         vector <Produto> produtosActuais;
         Cliente clienteAtual(this->clientes.at(transacaoActual.getIdCliente()));
         
@@ -144,7 +159,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     }
     
     for (size_t i = 0; i < this->transacoes.size(); i++) {
-        cout << "teste" << endl;
+        
         for (size_t j = 0; j < this->transacoes.at(i).getProdutosProduto().size(); j++) {
             
             pair<int, int> parTransacaoClienteInt = make_pair(this->transacoes.at(i).getCliente().getId(), transacoes.at(i).getProdutosProduto().at(j).getProdutoId());
@@ -388,7 +403,21 @@ unsigned int VendeMaisMais::getMaxClienteId() const{
 // lisat os produto por ordem alfabetica crescente
 void VendeMaisMais::listarProdutos() const{
     
-    // A IMPLEMENTAR
+    constIntProdutoString iteProdutoIdx;
+    
+    Table productsTable({ "Nome do Produto", "Custo", "Status"});
+    
+    for (iteProdutoIdx = this->produtoIdx.begin(); iteProdutoIdx != this->produtoIdx.end(); iteProdutoIdx++) {
+        
+        if (iteProdutoIdx == this->produtoIdx.begin()) {
+            productsTable.addNewLine(iteProdutoIdx->second.toTable());
+        }
+        else {
+            productsTable.addDataInSameLine(iteProdutoIdx->second.toTable()); //AddDataInSameLine
+        }
+        
+    }
+    cout << productsTable << endl;
     
 }
 
@@ -523,9 +552,43 @@ unsigned int VendeMaisMais::getMaxProductId() const {
     
 }
 
-void VendeMaisMais::registarTransacao(Cliente &clienteTransacao, vector <Produto> &produtos) {
+void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned int> produtos) {
     
-    Transacao transacaoInserir(clienteTransacao, produtos);
+    
+    constIntClient iteradorClientes = this->clientes.find(idCliente);
+    
+    if (iteradorClientes == this->clientes.end()) {
+        
+        cout << "Nao foi possivel registar a transacao: o Cliente não foi encontrado." << endl;
+        return;
+        
+    }
+    
+    Cliente clienteTransacao(iteradorClientes->second);
+    
+    vector <Produto> produtosTransacao;
+    
+    for (size_t i = 0; i < produtos.size(); i++) {
+        
+        constIntProduto iteradorProdutos = this->produtos.find(produtos.at(i));
+        
+        if (iteradorProdutos != this->produtos.end() && this->produtos.at(produtos.at(i)).getStatus()) {
+            
+            produtosTransacao.push_back(this->produtos.at(produtos.at(i)));
+            
+        }
+        
+    }
+    
+    if (produtosTransacao.size() == 0) {
+        
+        cout << "Nao foi possivel registar a transacao: nenhum dos produtos foi encontrado." << endl;
+        return;
+        
+    }
+    
+    
+    Transacao transacaoInserir(clienteTransacao, produtosTransacao);
     
     this->transacoes.push_back(transacaoInserir);
     
@@ -537,7 +600,8 @@ void VendeMaisMais::registarTransacao(Cliente &clienteTransacao, vector <Produto
         
     }
     
-    
+    this->clientes.at(idCliente).acrescentarCompras(transacaoInserir.getTotal());
+    this->clienteIdx.at(clientes.at(idCliente).getNome()).acrescentarCompras(transacaoInserir.getTotal());
     
     
 }
