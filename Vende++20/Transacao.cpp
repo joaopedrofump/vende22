@@ -9,8 +9,7 @@ unsigned int Transacao::getIdCliente() const{
 }
 
 
-
-Transacao::Transacao(ifstream & in){ // le uma transacao na forma de  idcliente ; data ; lista produtos
+Transacao::Transacao(ifstream &in){ // le uma transacao na forma de  idcliente ; data ; lista produtos
     string linha;
     string stringTemporaria;
     getline(in, linha);
@@ -39,13 +38,20 @@ Transacao::Transacao(ifstream & in){ // le uma transacao na forma de  idcliente 
     this->produtos = produtosComprados;
 }
 
+Transacao::Transacao(Cliente clienteAInserir, vector <Produto> produtosTransacao) {
+    
+    this->clienteTransacao = clienteAInserir;
+    this->produtosProduto = produtosTransacao;
+    
+}
+
 void Transacao::save(ofstream & out) const{ // transacao guardada como na forma de  idcliente ; data ; lista produtos
     
     out << *this;
     
 }
 
-ostream& operator<<(ostream& out, const Transacao & transacao){
+ostream& operator<<(ostream& out, const Transacao &transacao){
     
     out << transacao.idCliente << " ; " << transacao.data << " ; ";
     for (int x = 0; x < transacao.produtos.size(); x++){
@@ -55,4 +61,32 @@ ostream& operator<<(ostream& out, const Transacao & transacao){
         }
     }
     return out;
+}
+
+vector<string> Transacao::getProdutosString() const {
+    
+    return this->produtos;
+    
+}
+
+vector<Produto> Transacao::getProdutosProduto() const {
+    
+    return this->produtosProduto;
+    
+}
+
+void Transacao::setVectorProdutos(vector <Produto> vectorProdutos) {
+    
+    this->produtosProduto = vectorProdutos;
+    
+}
+
+Cliente Transacao::getCliente() {
+    
+    return this->clienteTransacao;
+}
+
+void Transacao::setCliente(Cliente clienteAInserir) {
+    
+    this->clienteTransacao = clienteAInserir;
 }
