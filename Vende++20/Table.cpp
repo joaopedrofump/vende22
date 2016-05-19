@@ -161,12 +161,9 @@ void Table::addDataInSameLine(vector<string> components) {
     tableVector.push_back(components);
     blocks.pop_back();
     blocks.push_back(false);
-<<<<<<< HEAD
-    blocks.push_back(true); //concatena a penultima linha com a Ãºltima
-=======
+
     blocks.push_back(true); //concatena a penultima linha com a œltima
 
->>>>>>> LEO
     Table newTable(this->tableVector, this->blocks, spaces); //Reconstroi a tabela anterior com a largura das colunas redefinida
     tableStream << newTable;
     /*tableStream << " |  ";
