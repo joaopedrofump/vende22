@@ -1,6 +1,6 @@
 #include "Menus.h"
 
-const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programação/ProjectoVende++/Vende++20/Vende++20/";
+const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programação/ProjectoVende++/Vende++20/Vende++20/";
 
 bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes){
     
@@ -18,7 +18,7 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
      
      cout << "Introduza o nome do ficheiro de transações" << endl;
      getline(cin, fichTransacoes);*/
-
+    
     
     loja = "Micro-Preço";
     fichClientes = "clientes.txt";
@@ -116,28 +116,47 @@ unsigned short int menuGestaoClientes(){
 }
 
 
-
-/******************************************
- * Gestao de Produtos
- ******************************************/
-
 void opcoesGestaoClientes(VendeMaisMais &supermercado){
     unsigned int opcao;
     string nome;
+    unsigned int idCliente;
     
     while((opcao = menuGestaoClientes())) {
+        bool control = false;
         switch (opcao){
             case 1:
                 clearScreen();
                 mostrarMenuInicial(0);
+                cin.ignore();
                 supermercado.listarClientesOrdemAlfa();
                 ignoreLine();
                 break;
             case 2:
-                cout << "Qual o nome do cliente: ";
-                getline(cin, nome);
-                supermercado.mostraInformacaoCliente(nome);
-                //system("pause");
+                do {
+                    clearScreen();
+                    mostrarMenuInicial(0);
+                    cout << "Introduza o id de cliente." << endl;
+                    getline(cin, nome);
+                    if (stringVazia(nome)) {
+                        cin.ignore();
+                        break;
+                    }
+                    
+                    trimString(nome);
+                    if (isdigit(nome.at(0))) {
+                        
+                        idCliente = stoi(nome);
+                        control = supermercado.mostraInformacaoCliente(idCliente);
+                        ignoreLine();
+                        
+                    }
+                    else {
+                        control = supermercado.mostraInformacaoCliente(nome);
+                        ignoreLine();
+                    }
+                    
+                } while(!control);
+                
                 break;
             case 3:
                 cout << "Qual o nome do cliente: ";
