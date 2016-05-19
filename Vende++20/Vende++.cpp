@@ -366,7 +366,7 @@ void VendeMaisMais::listarProdutos() const{
     
 	constIntProdutoString iteProdutoIdx;
 
-	Table productsTable({ "Nome do Produto", "Custo" });
+	Table productsTable({ "Nome do Produto", "Custo" , "Status"});
 
 	for (iteProdutoIdx = this->produtoIdx.begin(); iteProdutoIdx != this->produtoIdx.end(); iteProdutoIdx++) {
 

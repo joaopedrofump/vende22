@@ -128,16 +128,16 @@ bool validateName(string &nome) {
         }        
     }
     
-	toupper(nome.at(0));
+	nome.at(0) = toupper(nome.at(0));
 
-	for (size_t i = 1; i < nome.size() - 1; i++) {
+	for (size_t i = 0; i < nome.size() - 3; i++) {
 
-		if (nome.at(i) == ' ') {
+		if (nome.at(i) == ' ' || nome.at(i+3) != ' '){
 
-			toupper(nome.at(i + 1));
+			nome.at(i+1) = toupper(nome.at(i + 1));
 
 		}
-	}
+	} //COLOCA A PRIMEIRA LETRA DE CADA NOME EM MAIUSCULAS
 
     return true;   
 }

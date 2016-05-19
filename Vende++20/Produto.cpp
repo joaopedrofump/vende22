@@ -90,7 +90,10 @@ vector<string> Produto::toTable() const {
 	string str = ss.str();
 	output.push_back(str);
 
-
+	if (this->active)
+		output.push_back("ATIVO");
+	else
+		output.push_back("INATIVO");
 
 	return output;
 }

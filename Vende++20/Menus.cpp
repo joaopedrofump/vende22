@@ -261,13 +261,13 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado){
     
     while ((opcao = menuGestaoProdutos()))
         switch (opcao){
-            case 1:
+            case 1:     // ============== MOSTRAR PRODUTOS ============
                 clearScreen();
 				mostrarMenuInicial(0);
 				supermercado.listarProdutos();
 				ignoreLine();
 				break;
-            case 2:
+            case 2:    // =============== ADICIONAR PRODUTO ===========
                 cout << "Qual o nome do produto: ";
 				cin.ignore();
                 getline(cin, nome);
@@ -276,7 +276,7 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado){
                 supermercado.adicionarProduto(nome, custo);
 				supermercado.saveChanges();
                 break;
-            case 3:
+            case 3:    // ================ ELIMINAR PRODUTO ===========
 				cout << "Qual o nome do produto: ";
 				cin.ignore();
 				getline(cin, nome);
