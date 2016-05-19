@@ -24,7 +24,7 @@ public:
     
     Cliente(ifstream & in);
     Cliente(string nome);
-    
+    Cliente() {};
     string getNome() const;
     unsigned int getId() const;
     float getVolCompras() const;
