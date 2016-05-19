@@ -41,5 +41,11 @@ int main(){
     supermercado.saveChanges();
     
     
+<<<<<<< HEAD
+=======
+    cout << "Informacao da loja " << loja << " do supermercado Vende++:" << endl;
+    cout << supermercado << endl;  // mostra estatisticas da loja
+    opcoesIniciais(supermercado);
+>>>>>>> LEO
     return 0;
 }

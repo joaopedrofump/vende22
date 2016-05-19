@@ -81,8 +81,8 @@ unsigned short int menuInicial(){
     mostrarMenuInicial(0);
     opcao = leUnsignedShortInt(0, 4);
     
-    if(opcao == 5)
-        return 0;
+    /*if(opcao == 5)
+        return 0;*/
     
     return opcao;
 }
@@ -90,8 +90,22 @@ unsigned short int menuInicial(){
 void mostrarMenuInicial(unsigned short int opcaoEscolhida){
     clearScreen();
     Table menu({ "Menu Inicial" });
-    Table menuOpcoes({ "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" });
-    
+	vector<string> menuCabecalho;
+	switch (opcaoEscolhida) {
+	case 0:
+		menuCabecalho = { "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" };
+		break;
+	case 1:
+		menuCabecalho = { "1 - Clientes" + string(14, ' '), "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" };
+		break;
+	case 2:
+		menuCabecalho = { "1 - Clientes", "2 - Produtos" + string(14, ' '), "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" };
+		break;
+	default:
+		menuCabecalho = { "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" };
+		break;
+	}
+	Table menuOpcoes(menuCabecalho);
     cout << menu << endl;
     cout << menuOpcoes;
 }
@@ -102,7 +116,7 @@ void mostrarMenuInicial(unsigned short int opcaoEscolhida){
 unsigned short int menuGestaoClientes(){
     unsigned short int opcao;
     
-    mostrarMenuInicial(0);
+    mostrarMenuInicial(1);
     Table menuClientes({ "1 - Listar clientes" });
     menuClientes.addNewLine({ "2 - Ver informacao cliente" });
     menuClientes.addNewLine({ "3 - Adicionar cliente" });
@@ -120,17 +134,24 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado){
     unsigned int opcao;
     string nome;
     unsigned int idCliente;
+<<<<<<< HEAD
     
     while((opcao = menuGestaoClientes())) {
         bool control = false;
+=======
+    while((opcao = menuGestaoClientes())) {
+		bool control = false;
+		
+>>>>>>> LEO
         switch (opcao){
-            case 1:
+            case 1:           //=========== MOSTRAR CLIENTES ==============
                 clearScreen();
                 mostrarMenuInicial(0);
                 cin.ignore();
                 supermercado.listarClientesOrdemAlfa();
                 ignoreLine();
                 break;
+<<<<<<< HEAD
             case 2:
                 do {
                     clearScreen();
@@ -163,6 +184,91 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado){
                 getline(cin, nome);
                 supermercado.adicionarCliente(nome);
                 break;
+=======
+			case 2:          //============ MOSTRAR UM CLIENTE ============
+				do {
+					clearScreen();
+					mostrarMenuInicial(0);
+					Table introIdNome({ "Introduza o ID ou o NOME do cliente." });
+					cout << introIdNome << endl;
+					cin.ignore();
+					getline(cin, nome);
+					if (stringVazia(nome)) {
+						//cin.ignore();
+						break;
+					}
+
+					trimString(nome);
+					if (isdigit(nome.at(0))) {
+
+						idCliente = stoi(nome);
+						clearScreen();
+						mostrarMenuInicial(0);
+						control = supermercado.mostraInformacaoCliente(idCliente);
+						ignoreLine(false); //False - so precisa de 1 enter mas da erro (?)
+
+					}
+					else {
+						control = supermercado.mostraInformacaoCliente(nome);
+						ignoreLine(false); //False - so precisa de 1 enter mas da erro (?)
+					}
+
+				} while (!control);
+
+				break;
+			case 3:            //=========== ADICIONAR CLIENTE ================
+				do {
+					clearScreen();
+					mostrarMenuInicial(0);
+					Table introIdNome({ "Introduza NOME do cliente." });
+					cout << introIdNome << endl;
+					cin.ignore();
+					getline(cin, nome);
+					if (stringVazia(nome)) {
+						//cin.ignore();
+						break;
+					}
+
+					trimString(nome);
+					control = validateName(nome);
+					ignoreLine(false, "Cliente adicionado com sucesso");
+
+
+				} while (!control);
+				supermercado.adicionarCliente(nome);
+				supermercado.saveChanges();
+				break;
+			case 4:            //============  ELIMINAR CLIENTES ================
+				do {
+					clearScreen();
+					mostrarMenuInicial(0);
+					Table introIdNome({ "Introduza o ID ou o NOME do cliente a eliminar." });
+					cout << introIdNome << endl;
+					cin.ignore();
+					getline(cin, nome);
+					if (stringVazia(nome)) {
+						//cin.ignore();
+						break;
+					}
+
+					trimString(nome);
+					if (isdigit(nome.at(0))) {
+
+						idCliente = stoi(nome);
+						control = supermercado.eliminarCliente(idCliente);
+						
+						ignoreLine(false);
+
+					}
+					else {
+						control = supermercado.eliminarCliente(nome);
+						ignoreLine(false);
+					}
+
+				} while (!control);
+				supermercado.saveChanges();
+				break;
+>>>>>>> LEO
             case 0:
                 break;
         }
@@ -171,21 +277,23 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado){
     }
 }
 
+/******************************************
+* Gestao de Produtos
+******************************************/
+
 unsigned short int menuGestaoProdutos(){
     unsigned short int opcao;
     
-    //clearScreen();
-    Table menuProdutos({ "1 - Listar produtos" });
+	mostrarMenuInicial(2);
+    Table menuProdutos({ "1 - Listar produtos" }, 17);
     menuProdutos.addNewLine({ "2 - Adicionar produto" });
     menuProdutos.addNewLine({ "3 - Remover produto" });
-    menuProdutos.addDataInSameLine({ "5 - Voltar ao menu inicial" });
+    menuProdutos.addNewLine({ "0 - Voltar ao menu inicial" });
     cout << menuProdutos;
     
-    opcao = leUnsignedShortInt(1, 5);
+    opcao = leUnsignedShortInt(0, 3);
     
-    if (opcao == 5)
-        return 0;
-    
+        
     return opcao;
 }
 
@@ -194,27 +302,63 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado){
     unsigned int opcao;
     string nome;
     float custo;
+	unsigned int idProduto;
     
-    while ((opcao = menuGestaoProdutos()))
-        switch (opcao){
-            case 1:
-                supermercado.listarProdutos();
-                break;
-            case 2:
-                cout << "Qual o nome do produto: ";
-                getline(cin, nome);
-                cout << "Qual o custo do produto: ";
-                cin >> custo;
-                supermercado.adicionarProduto(nome, custo);
-                break;
-            case 3:
-                cout << "Qual o nome do cliente: ";
-                getline(cin, nome);
-                supermercado.adicionarCliente(nome);
-                break;
-            case 4:
-                break;
-        }
+	while ((opcao = menuGestaoProdutos())) {
+		bool control = false;
+		switch (opcao) {
+		case 1:     // ============== MOSTRAR PRODUTOS ============
+			clearScreen();
+			mostrarMenuInicial(0);
+			supermercado.listarProdutos();
+			ignoreLine();
+			break;
+		case 2:    // =============== ADICIONAR PRODUTO ===========
+			cout << "Qual o nome do produto: ";
+			cin.ignore();
+			getline(cin, nome);
+			cout << "Qual o custo do produto: ";
+			cin >> custo;
+			supermercado.adicionarProduto(nome, custo);
+			supermercado.saveChanges();
+			break;
+		case 3:    // ================ ELIMINAR PRODUTO ===========
+			do {
+				clearScreen();
+				mostrarMenuInicial(0);
+				Table introIdNome({ "Introduza o ID ou o NOME do produto a eliminar." });
+				cout << introIdNome << endl;
+				cin.ignore();
+				getline(cin, nome);
+				if (stringVazia(nome)) {
+					//cin.ignore();
+					break;
+				}
+
+				trimString(nome);
+				if (isdigit(nome.at(0))) {
+
+					idProduto = stoi(nome);
+					control = supermercado.eliminarProduto(idProduto);
+					
+					//ignoreLine(false);
+
+				}
+				else {
+					control = supermercado.eliminarProduto(nome);
+					ignoreLine(false);
+				}
+
+			} while (!control);
+			supermercado.saveChanges();
+			break;
+			//NAO TA BEM
+		case 4:
+			break;
+		}
+
+
+	}
 }
 
 /******************************************

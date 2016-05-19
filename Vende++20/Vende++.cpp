@@ -65,6 +65,11 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     
     if (!inStreamClientes.eof()) {
         
+<<<<<<< HEAD
+=======
+        //cout << "teste" << endl;
+        
+>>>>>>> LEO
         unsigned int clientId;
         string inactiveClients; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
         getline(inStreamClientes, inactiveClients);
@@ -186,7 +191,11 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
     
     constIntClientString iteClienteIdx;
     
+<<<<<<< HEAD
     Table clientsTable({ "ID", "Nome do Cliente", "Cartao de Cliente", "Volume de Compras" });
+=======
+    Table clientsTable({ "ID", "Nome do Cliente", "Cartao de Cliente", "Volume de Compras" , "Status"});
+>>>>>>> LEO
     
     for (iteClienteIdx = this->clienteIdx.begin(); iteClienteIdx != this->clienteIdx.end(); iteClienteIdx++) {
         
@@ -194,7 +203,7 @@ void VendeMaisMais::listarClientesOrdemAlfa() const{
             clientsTable.addNewLine(iteClienteIdx->second.toTable());
         }
         else {
-            clientsTable.addNewLine(iteClienteIdx->second.toTable()); //AddDataInSameLine
+            clientsTable.addDataInSameLine(iteClienteIdx->second.toTable()); //addDataInSameLine
         }
         
     }
@@ -227,6 +236,7 @@ bool VendeMaisMais::mostraInformacaoCliente(string nome){
     cout << "Estado do Cliente: " << status << endl;
     return true;
     
+	return true;
 }
 
 bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
@@ -238,22 +248,40 @@ bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
         cout << "O cliente não foi encontrado." << endl;
         return false;
     }
+
+	stringstream ss;
+	ss << this->clientes.at(clientId).getId();
+	string str = ss.str();
     
-    cout << "***************************************************" << endl;
-    cout << "Id de Cliente: " << this->clientes.at(clientId).getId() << endl;
-    cout << "Nome do Cliente: " << this->clientes.at(clientId).getNome() << endl;
-    cout << "Cartão de Cliente: " << this->clientes.at(clientId).getCartaoCliente().mostrarData() << endl;
+	Table mostrarCliente({ "Id de Cliente: " , str });  // Mostra o id
+
+	ss.str("");
+	ss << this->clientes.at(clientId).getNome();
+	str = ss.str();
+
+	mostrarCliente.addNewLine({ "Nome do Cliente: " , str}); // Mostra o Nome
+
+	ss.str("");
+	ss << this->clientes.at(clientId).getCartaoCliente().mostrarData();
+	str = ss.str();
+
+	mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
+
+    str =  this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
     
-    string status;
-    
-    status =  this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
-    
+<<<<<<< HEAD
     cout << "Estado do Cliente: " << status << endl;
     return true;
+=======
+	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
+>>>>>>> LEO
     
+	cout << mostrarCliente;
+
+	return true;
 }
 
-void VendeMaisMais::eliminarCliente(string nome) {
+bool VendeMaisMais::eliminarCliente(string nome) {
     
     //verificar se o cliente existe
     
@@ -262,7 +290,7 @@ void VendeMaisMais::eliminarCliente(string nome) {
     if (iterator == this->clienteIdx.end()) {
         
         cout << "O cliente não foi encontrado." << endl;
-        return;
+        return false;
         
     }
     
@@ -281,9 +309,10 @@ void VendeMaisMais::eliminarCliente(string nome) {
         
     }
     
+	return true;
 }
 
-void VendeMaisMais::eliminarCliente(unsigned int clientId) {
+bool VendeMaisMais::eliminarCliente(unsigned int clientId) {
     
     //verificar se o cliente existe
     
@@ -292,7 +321,7 @@ void VendeMaisMais::eliminarCliente(unsigned int clientId) {
     if (iterator == this->clientes.end()) {
         
         cout << "O cliente não foi encontrado." << endl;
-        return;
+        return false;
         
     }
     
@@ -307,7 +336,7 @@ void VendeMaisMais::eliminarCliente(unsigned int clientId) {
     } else {
         cout << "O cliente já se encontra eliminado." << endl;
     }
-    
+	return true;
 }
 
 void VendeMaisMais::reactivarCliente(string nome) {
@@ -379,6 +408,8 @@ void VendeMaisMais::adicionarCliente(string nome) {
         this->clientes.insert(parNovoCliente);
         this->clienteIdx.insert(parNovoClienteString);
         this->maxClientesId = Cliente::getNumClientes();
+		
+		this->clientesAlterados = true;
         
     }
     
@@ -403,6 +434,7 @@ unsigned int VendeMaisMais::getMaxClienteId() const{
 // lisat os produto por ordem alfabetica crescente
 void VendeMaisMais::listarProdutos() const{
     
+<<<<<<< HEAD
     constIntProdutoString iteProdutoIdx;
     
     Table productsTable({ "Nome do Produto", "Custo", "Status"});
@@ -418,6 +450,23 @@ void VendeMaisMais::listarProdutos() const{
         
     }
     cout << productsTable << endl;
+=======
+	constIntProdutoString iteProdutoIdx;
+
+	Table productsTable({ "Nome do Produto", "Custo", "Status "});
+
+	for (iteProdutoIdx = this->produtoIdx.begin(); iteProdutoIdx != this->produtoIdx.end(); iteProdutoIdx++) {
+
+		if (iteProdutoIdx == this->produtoIdx.begin()) {
+			productsTable.addNewLine(iteProdutoIdx->second.toTable());
+		}
+		else {
+			productsTable.addDataInSameLine(iteProdutoIdx->second.toTable()); //AddDataInSameLine
+		}
+
+	}
+	cout << productsTable << endl;
+>>>>>>> LEO
     
 }
 
@@ -432,7 +481,7 @@ void VendeMaisMais::adicionarProduto(string nomeProduto, float custoProduto){
     
 }
 
-void VendeMaisMais::eliminarProduto(string nome) {
+bool VendeMaisMais::eliminarProduto(string nome) {
     
     //verificar se o produto existe
     
@@ -441,7 +490,7 @@ void VendeMaisMais::eliminarProduto(string nome) {
     if (iterator == this->produtoIdx.end()) {
         
         cout << "O produto não foi encontrado." << endl;
-        return;
+        return false;
         
     }
     
@@ -460,9 +509,10 @@ void VendeMaisMais::eliminarProduto(string nome) {
         
     }
     
+	return true;
 }
 
-void VendeMaisMais::eliminarProduto(unsigned int produtoId) {
+bool VendeMaisMais::eliminarProduto(unsigned int produtoId) {
     
     //verificar se o cliente existe
     
@@ -471,7 +521,7 @@ void VendeMaisMais::eliminarProduto(unsigned int produtoId) {
     if (iterator == this->produtos.end()) {
         
         cout << "O produto não foi encontrado." << endl;
-        return;
+        return false;
         
     }
     
@@ -487,6 +537,7 @@ void VendeMaisMais::eliminarProduto(unsigned int produtoId) {
         cout << "O produto já se encontra eliminado." << endl;
     }
     
+	return true;
 }
 
 void VendeMaisMais::reactivarProduto(string nome) {
@@ -546,12 +597,14 @@ void VendeMaisMais::reactivarProduto(unsigned int produtoId) {
     
 }
 
+
 unsigned int VendeMaisMais::getMaxProductId() const {
     
     return this->maxProdutcId;
     
 }
 
+<<<<<<< HEAD
 void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned int> produtos) {
     
     
@@ -604,6 +657,10 @@ void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned i
     this->clienteIdx.at(clientes.at(idCliente).getNome()).acrescentarCompras(transacaoInserir.getTotal());
     
     
+=======
+map<unsigned int, Cliente> VendeMaisMais::getMapIDtoCliente() const {
+	return this->clientes;
+>>>>>>> LEO
 }
 
 

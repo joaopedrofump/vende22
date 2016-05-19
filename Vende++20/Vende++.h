@@ -46,20 +46,33 @@ public:
     VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
     void listarClientesOrdemAlfa() const;
     void listarProdutos() const;
+<<<<<<< HEAD
     bool mostraInformacaoCliente(string nome);
     bool mostraInformacaoCliente(unsigned int clientId);
     void eliminarCliente(string nome);
     void eliminarCliente(unsigned int clientId);
+=======
+	bool mostraInformacaoCliente(string nome);
+	bool mostraInformacaoCliente(unsigned int clientId);
+    bool eliminarCliente(string nome);
+	bool eliminarCliente(unsigned int clientId);
+>>>>>>> LEO
     void reactivarCliente(string nome);
     void reactivarCliente(unsigned int clientId);
-    void eliminarProduto(string nome);
-    void eliminarProduto(unsigned int produtoId);
+    bool eliminarProduto(string nome);
+    bool eliminarProduto(unsigned int produtoId);
     void reactivarProduto(string nome);
     void reactivarProduto(unsigned int produtoId);
     void adicionarCliente(string nome);
     void adicionarProduto(string nomeProduto, float custoProduto);
+<<<<<<< HEAD
     void registarTransacao(unsigned int idCliente, vector <unsigned int> produtos);
+=======
+
+>>>>>>> LEO
     unsigned int getMaxProductId() const;
+	map<unsigned int, Cliente> getMapIDtoCliente() const;
+
     void saveChanges() const;
     unsigned int getMaxClienteId() const;
     friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);

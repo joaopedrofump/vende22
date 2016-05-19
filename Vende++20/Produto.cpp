@@ -87,6 +87,7 @@ bool operator<(const Produto &prod1, const Produto &prod2){
 }
 
 vector<string> Produto::toTable() const {
+<<<<<<< HEAD
     vector<string> output;
     
     output.push_back(nome);
@@ -104,4 +105,23 @@ vector<string> Produto::toTable() const {
         output.push_back("INATIVO");
     
     return output;
+=======
+	vector<string> output;
+
+	output.push_back(nome);
+
+	stringstream ss;
+	
+	ss.str("");
+	ss << custo;
+	string str = ss.str();
+	output.push_back(str);
+
+	if (this->active)
+		output.push_back("ATIVO");
+	else
+		output.push_back("INATIVO");
+
+	return output;
+>>>>>>> LEO
 }
