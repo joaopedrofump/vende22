@@ -130,9 +130,9 @@ bool validateName(string &nome) {
     
 	nome.at(0) = toupper(nome.at(0));
 
-	for (size_t i = 0; i < nome.size() - 3; i++) {
+	for (size_t i = 0; i < nome.size() - 1; i++) {
 
-		if (nome.at(i) == ' ' || nome.at(i+3) != ' '){
+		if (nome.at(i) == ' '){
 
 			nome.at(i+1) = toupper(nome.at(i + 1));
 
@@ -195,7 +195,7 @@ int GetCursorY()
     return 1;
 }
 
-void ignoreLine(string message, bool ignoreControl) {
+void ignoreLine(bool ignoreControl, string message) {
     
     string temp;
     Table tableEnter({ message });
@@ -217,13 +217,6 @@ bool stringVazia(string stringTeste) {
 	return false;
 
 }
-
-
-
-
-
-
-
 
 
 

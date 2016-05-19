@@ -161,13 +161,15 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado){
 					if (isdigit(nome.at(0))) {
 
 						idCliente = stoi(nome);
+						clearScreen();
+						mostrarMenuInicial(0);
 						control = supermercado.mostraInformacaoCliente(idCliente);
-						ignoreLine(false);
+						ignoreLine(false); //False - so precisa de 1 enter mas da erro (?)
 
 					}
 					else {
 						control = supermercado.mostraInformacaoCliente(nome);
-						ignoreLine(false);
+						ignoreLine(false); //False - so precisa de 1 enter mas da erro (?)
 					}
 
 				} while (!control);
@@ -188,7 +190,7 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado){
 
 					trimString(nome);
 					control = validateName(nome);
-					ignoreLine("Cliente adicionado com sucesso", false);
+					ignoreLine(false, "Cliente adicionado com sucesso");
 
 
 				} while (!control);
@@ -213,7 +215,7 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado){
 
 						idCliente = stoi(nome);
 						control = supermercado.eliminarCliente(idCliente);
-						;
+						
 						ignoreLine(false);
 
 					}
@@ -258,62 +260,63 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado){
     unsigned int opcao;
     string nome;
     float custo;
+	unsigned int idProduto;
     
-    while ((opcao = menuGestaoProdutos()))
-        switch (opcao){
-            case 1:     // ============== MOSTRAR PRODUTOS ============
-                clearScreen();
+	while ((opcao = menuGestaoProdutos())) {
+		bool control = false;
+		switch (opcao) {
+		case 1:     // ============== MOSTRAR PRODUTOS ============
+			clearScreen();
+			mostrarMenuInicial(0);
+			supermercado.listarProdutos();
+			ignoreLine();
+			break;
+		case 2:    // =============== ADICIONAR PRODUTO ===========
+			cout << "Qual o nome do produto: ";
+			cin.ignore();
+			getline(cin, nome);
+			cout << "Qual o custo do produto: ";
+			cin >> custo;
+			supermercado.adicionarProduto(nome, custo);
+			supermercado.saveChanges();
+			break;
+		case 3:    // ================ ELIMINAR PRODUTO ===========
+			do {
+				clearScreen();
 				mostrarMenuInicial(0);
-				supermercado.listarProdutos();
-				ignoreLine();
-				break;
-            case 2:    // =============== ADICIONAR PRODUTO ===========
-                cout << "Qual o nome do produto: ";
-				cin.ignore();
-                getline(cin, nome);
-                cout << "Qual o custo do produto: ";
-                cin >> custo;
-                supermercado.adicionarProduto(nome, custo);
-				supermercado.saveChanges();
-                break;
-            case 3:    // ================ ELIMINAR PRODUTO ===========
-				cout << "Qual o nome do produto: ";
+				Table introIdNome({ "Introduza o ID ou o NOME do produto a eliminar." });
+				cout << introIdNome << endl;
 				cin.ignore();
 				getline(cin, nome);
-                supermercado.eliminarProduto(nome);
-				supermercado.saveChanges();
-                break;
-				//NAO TA BEM
-            case 4:
-                break;
-        }
+				if (stringVazia(nome)) {
+					//cin.ignore();
+					break;
+				}
 
+				trimString(nome);
+				if (isdigit(nome.at(0))) {
 
-	/*unsigned int opcao;
-	string nome;
+					idProduto = stoi(nome);
+					control = supermercado.eliminarProduto(idProduto);
+					
+					//ignoreLine(false);
 
-	while ((opcao = menuGestaoClientes())) {
-		switch (opcao) {
-		case 1:
-			
-		case 2:
-			cout << "Qual o nome do cliente: ";
-			getline(cin, nome);
-			supermercado.mostraInformacaoCliente(nome);
-			//system("pause");
+				}
+				else {
+					control = supermercado.eliminarProduto(nome);
+					ignoreLine(false);
+				}
+
+			} while (!control);
+			supermercado.saveChanges();
 			break;
-		case 3:
-			cout << "Qual o nome do cliente: ";
-			getline(cin, nome);
-			supermercado.adicionarCliente(nome);
-			break;
-		case 0:
+			//NAO TA BEM
+		case 4:
 			break;
 		}
 
-		//break;
-	}*/
 
+	}
 }
 
 /******************************************

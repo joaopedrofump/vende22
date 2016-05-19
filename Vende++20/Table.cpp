@@ -60,16 +60,30 @@ Table::Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int
         if (tableVector.at(x).size() < numColumnsV) {
             tableVector.at(x).push_back("");
         }
+
         tableStream << string(indentacao, ' ') << " |  ";
+
         for (int i = 0; i < numColumnsV; i++) {
-            tableStream << tableVector.at(x).at(i) << string(spacesForColumn.at(i) - tableVector.at(x).at(i).length(), ' ') << "  |  ";
+
+			int dif = spacesForColumn.at(i) - tableVector.at(x).at(i).length(); //espaços a mais
+			string temporario;
+			if (dif > 0) {
+				temporario = string(spacesForColumn.at(i) - tableVector.at(x).at(i).length(), ' ');
+			}
+			else {
+				temporario = string(tableVector.at(x).at(i).length() - spacesForColumn.at(i), ' ');
+			}
+
+			tableStream << tableVector.at(x).at(i) << temporario << "  |  ";
         }
         tableStream << endl;
+
         if (blocks.at(x)) {
             formatTable('_', '|', spacesForColumn, indentacao);
             //formatTable(' ', '|', spacesForColumn, indentacao);
             if (x < tableVector.size() - 1){
-             formatTable(' ', '|', spacesForColumn, indentacao);
+				//formatTable('_', '|', spacesForColumn, indentacao);
+				formatTable(' ', '|', spacesForColumn, indentacao);
              }
         }
     }
@@ -141,12 +155,14 @@ void Table::addDataInSameLine(vector<string> components) {
             spaces.push_back(columnsWidth.at(i));
         }
     } //Redefine a largura das colunas para a tabela alterada
+
     tableStream.str(string());
     tableStream.clear();
     tableVector.push_back(components);
     blocks.pop_back();
     blocks.push_back(false);
     blocks.push_back(true); //concatena a penultima linha com a œltima
+
     Table newTable(this->tableVector, this->blocks, spaces); //Reconstroi a tabela anterior com a largura das colunas redefinida
     tableStream << newTable;
     /*tableStream << " |  ";
@@ -155,6 +171,7 @@ void Table::addDataInSameLine(vector<string> components) {
      }
      tableStream << endl;
      formatTable('_', '|', spaces);*/
+	this->columnsWidth = spaces;
 }
 
 void Table::formatTable(char internalChar, char limitingChar, vector<int> spacesForColumn, unsigned int indentacaoFT) {
@@ -168,7 +185,17 @@ void Table::formatTable(char internalChar, char limitingChar, vector<int> spaces
     tableStream << endl;
 }
 
+
+vector<int> Table::getColumsWidth() const {
+	return columnsWidth;
+}
+
+unsigned int Table::getIndentacao() const {
+	return indent;
+}
+
 ostream& operator<<(ostream& out, const Table &tableToShow) {
     out << tableToShow.tableStream.str();
+	//formatTableShow('_', '|', tableToShow.getColumsWidth(), tableToShow.getIndentacao(), out);
     return out;
 }

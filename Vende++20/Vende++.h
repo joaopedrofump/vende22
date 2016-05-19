@@ -53,8 +53,8 @@ public:
 	bool eliminarCliente(unsigned int clientId);
     void reactivarCliente(string nome);
     void reactivarCliente(unsigned int clientId);
-    void eliminarProduto(string nome);
-    void eliminarProduto(unsigned int produtoId);
+    bool eliminarProduto(string nome);
+    bool eliminarProduto(unsigned int produtoId);
     void reactivarProduto(string nome);
     void reactivarProduto(unsigned int produtoId);
     void adicionarCliente(string nome);

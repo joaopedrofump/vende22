@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "utils.h"
+
 
 using namespace std;
 
@@ -23,7 +25,7 @@ private:
 	vector<string> lastLineComponents;
 	unsigned int indent;
 
-	void formatTable(char internalChar, char limitingChar, vector<int> spacesForColumn, unsigned int indentacaoFT = 0);
+	
 
 public:
 	stringstream tableStream;
@@ -32,6 +34,11 @@ public:
 	Table(vector<string> components, vector<int> spacesForColumn, unsigned int indentacao = 0);
     Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int> spacesForColumn, unsigned int indentacao = 0);
 	//Table(unsigned int indentacao = 0);
+
+	void formatTable(char internalChar, char limitingChar, vector<int> spacesForColumn, unsigned int indentacaoFT = 0);
+	
+	vector<int> getColumsWidth() const;
+	unsigned int getIndentacao() const;
 
     void addNewLine(vector<string> components);
 	void addDataInSameLine(vector<string> components);

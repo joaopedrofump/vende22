@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <vector>
 #include <cstdlib>
 
@@ -24,6 +25,8 @@ bool validateName(string &nome);
 
 void SetCursor(int column, int line);
 
-void ignoreLine(string message = "Press Enter to Continue.", bool ignoreControl = true);
+void ignoreLine(bool ignoreControl = true, string message = "Press Enter to Continue.");
 
 bool stringVazia(string stringTeste);
+
+void formatTableShow(char internalChar, char limitingChar, vector<int> spacesForColumn, unsigned int indentacaoFT, ostream& out);
