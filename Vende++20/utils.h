@@ -24,4 +24,10 @@ bool validateName(string &nome);
 
 void SetCursor(int column, int line);
 
-void ignoreLine();
+void ignoreLine(string message = "Prima Enter para continuar.", bool ignoreControl = true);
+
+bool validateInputStream(istream &inStream, string errorMessage);
+
+void showError(string error);
+
+bool stringVazia(string stringTeste);
