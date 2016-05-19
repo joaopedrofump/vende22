@@ -128,9 +128,31 @@ bool validateName(string &nome) {
         }        
     }
     
+<<<<<<< HEAD
+    nome.at(0) = (char)toupper(nome.at(0));
+    
+    
+    
+    for (size_t i = 0; i < nome.size()-1; i++) {
+        
+        if (nome.at(i) == ' ') {
+            
+            nome.at(i+1) = toupper(nome.at(i+1));
+            
+        }
+        
+        
+    }
+    
+    return true;
+    
+    
+}
+=======
 	nome.at(0) = toupper(nome.at(0));
 
 	for (size_t i = 0; i < nome.size() - 1; i++) {
+>>>>>>> LEO
 
 		if (nome.at(i) == ' '){
 
@@ -200,23 +222,130 @@ void ignoreLine(bool ignoreControl, string message) {
     string temp;
     Table tableEnter({ message });
     cout << tableEnter << endl;
+<<<<<<< HEAD
+    if (ignoreControl) {
+        
+        cin.ignore(1000, '\n');
+        
+    }
+=======
     if(ignoreControl)
 		cin.ignore(10000, '\n');
+>>>>>>> LEO
     getline(cin, temp);
-    
+
+<<<<<<< HEAD
 }
 
+bool validateInputStream(istream &inStream, string errorMessage) {
+    
+    
+    bool validInput = true;
+    
+    if (inStream.fail()) {
+        
+        inStream.clear();
+        inStream.ignore(1000, '\n');
+        ignoreLine(false);
+        validInput = false;
+        
+    }
+    
+    
+    return validInput;
+    
+}
+=======
 bool stringVazia(string stringTeste) {
 
 	if (stringTeste.size() == 0) {
+>>>>>>> LEO
 
 		return true;
 
+<<<<<<< HEAD
+bool stringVazia(string stringTeste) {
+    
+    if (stringTeste.size() == 0) {
+        
+        return true;
+        
+    }
+    
+    return false;
+    
+}
+=======
 	}
+>>>>>>> LEO
 
 	return false;
 
+<<<<<<< HEAD
+vector <unsigned int> leVectorInteiros(string mensagem, string mensagemErro) {
+    
+    string inteiros;
+    vector <unsigned int> resultado;
+    bool fim = false;
+    
+    
+    
+    do {
+        
+        Table tabelaMensagem({mensagem});
+        Table tabelaMensagemErro({mensagemErro});
+        cout << tabelaMensagem << endl;
+        getline(cin, inteiros);
+        stringstream inteirosStream(inteiros);
+        trimString(inteiros);
+        
+        if (inteiros.size() == 0) {
+            
+            break;
+            
+        }
+        
+        while (!inteirosStream.eof()) {
+            
+            unsigned int currentInt;
+            inteirosStream >> currentInt;
+            
+            if (inteirosStream.fail()) {
+                
+                inteirosStream.clear();
+                inteirosStream.ignore(1);
+                
+                
+                
+            }
+            
+            else {
+                
+                resultado.push_back(currentInt);
+                fim = true;
+                
+            }
+            
+            
+        }
+        
+        if (!fim) {
+            
+            cout << tabelaMensagemErro << endl;
+            
+            
+        }
+        
+    
+    } while (!fim);
+    
+    return resultado;
+    
 }
+
+=======
+}
+>>>>>>> LEO
 
 
 

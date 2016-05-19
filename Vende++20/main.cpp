@@ -21,17 +21,31 @@ int main(){
     // cria uma loja
     VendeMaisMais supermercado(loja, fichClients, fichProdutos, fichTransacoes);
     
-    /*supermercado.listarClientesOrdemAlfa();
-     supermercado.adicionarCliente("Joao Pedro");
-     supermercado.mostraInformacaoCliente("Joao Pedro");
-     
-     cout << Cliente::getNumClientes() << endl;
-     cout << supermercado.getMaxClienteId() << endl;*/
+
+    cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
+    cout << supermercado << endl;  // mostra estatisticas da loja
+    //opcoesIniciais(supermercado);
+
+    vector<unsigned int> vetorTeste;
+    vetorTeste = leVectorInteiros("Introduza os ids");
+    
+    for (size_t i = 0; i < vetorTeste.size(); i++) {
+        
+        cout << vetorTeste.at(i) << endl;
+        
+    }
     
     
     
+    
+    supermercado.saveChanges();
+    
+    
+<<<<<<< HEAD
+=======
     cout << "Informacao da loja " << loja << " do supermercado Vende++:" << endl;
     cout << supermercado << endl;  // mostra estatisticas da loja
     opcoesIniciais(supermercado);
+>>>>>>> LEO
     return 0;
 }

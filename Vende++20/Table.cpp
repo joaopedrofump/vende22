@@ -98,12 +98,12 @@ Table::Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int
 }
 
 void Table::addNewLine(vector<string> components) {
-    if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor número de termos
+    if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor n√∫mero de termos
         for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
             components.push_back("");
         }
     }
-    if (components.size() > this->numColumns) {  //Verifica se vector componentes tem maior número de termos
+    if (components.size() > this->numColumns) {  //Verifica se vector componentes tem maior n√∫mero de termos
         for (int x = numColumns; x < components.size(); x++) { //da tabela original e remove-os, nesse caso.
             components.pop_back();
         }
@@ -136,12 +136,12 @@ void Table::addNewLine(vector<string> components) {
 }
 
 void Table::addDataInSameLine(vector<string> components) {
-    if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor número de termos
+    if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor n√∫mero de termos
         for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
             components.push_back("");
         }
     }
-    if (components.size() > this->numColumns) {  //Verifica se vector componentes tem maior número de termos
+    if (components.size() > this->numColumns) {  //Verifica se vector componentes tem maior n√∫mero de termos
         for (int x = numColumns; x < components.size(); x++) { //da tabela original e remove-os, nesse caso.  MELHORAR!!!
             components.pop_back();
         }
@@ -161,8 +161,12 @@ void Table::addDataInSameLine(vector<string> components) {
     tableVector.push_back(components);
     blocks.pop_back();
     blocks.push_back(false);
+<<<<<<< HEAD
+    blocks.push_back(true); //concatena a penultima linha com a √∫ltima
+=======
     blocks.push_back(true); //concatena a penultima linha com a última
 
+>>>>>>> LEO
     Table newTable(this->tableVector, this->blocks, spaces); //Reconstroi a tabela anterior com a largura das colunas redefinida
     tableStream << newTable;
     /*tableStream << " |  ";

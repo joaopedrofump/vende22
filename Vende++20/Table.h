@@ -17,7 +17,7 @@ class Table {
 private:
 	//stringstream tableStream;
 	vector<vector<string>> tableVector;
-	vector<bool> blocks; //FALSE se a linha está colada à de cima, TRUE se são linhas separadas
+	vector<bool> blocks; //FALSE se a linha estÂ· colada â€¡ de cima, TRUE se sâ€žo linhas separadas
 
 	unsigned int numColumns;
 	unsigned int numLines;

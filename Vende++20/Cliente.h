@@ -24,7 +24,7 @@ public:
     
     Cliente(ifstream & in);
     Cliente(string nome);
-    
+    Cliente() {};
     string getNome() const;
     unsigned int getId() const;
     float getVolCompras() const;
@@ -39,6 +39,7 @@ public:
     friend bool operator<(const Cliente &cli1, const Cliente &cli2); // compara 2 clientes (1 cleinte e menor que outro se o seu nome for "alfabeticamente" inferior)
     
     vector<string> toTable() const;
+    void acrescentarCompras(float total);
     
 };
 

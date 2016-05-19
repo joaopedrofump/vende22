@@ -9,6 +9,13 @@ Cliente::Cliente(ifstream &in){
     string stringTemporaria;
     getline(in, stringTemporaria);
     
+    if (stringTemporaria.size() == 0) {
+        
+        this->id = 0;
+        return;
+        
+    }
+    
     this->id = atoi(stringTemporaria.substr(0, stringTemporaria.find(';', 0)).c_str());
     
     stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
@@ -29,7 +36,10 @@ Cliente::Cliente(ifstream &in){
     this->volCompras = atof(stringTemporaria.c_str());
     this->active = true;
     
-    numClientes++;
+    if (numClientes < this->id) {
+        
+        numClientes = this->id;
+    }
     
 }
 
@@ -121,7 +131,7 @@ unsigned int Cliente::getNumClientes() {
 
 void Cliente::setNumClientes(unsigned int primeiro) {
     
-    //numClientes = primeiro;
+    numClientes = primeiro;
     
 }
 
@@ -154,4 +164,10 @@ vector<string> Cliente::toTable() const{
 		output.push_back("INATIVO");
     
     return output;
+}
+
+void Cliente::acrescentarCompras(float total) {
+    
+    this->volCompras += total;
+    
 }
