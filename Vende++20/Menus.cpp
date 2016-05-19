@@ -1,6 +1,6 @@
 #include "Menus.h"
 
-const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programação/ProjectoVende++/Vende++20/Vende++20/";
+const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programação/ProjectoVende++/Vende++20/Vende++20/";
 
 bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes){
     
