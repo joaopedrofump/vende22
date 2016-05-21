@@ -36,14 +36,14 @@ Transacao::Transacao(ifstream &in){ // le uma transacao na forma de  idcliente ;
     while (linha.find(',') < (int)linha.length()){ //correr o resto da string
         
         stringTemporaria = linha.substr(0, linha.find(',', 0));
-        trimString(stringTemporaria);
+        validateProduct(stringTemporaria);
         produtosComprados.push_back(stringTemporaria);
         linha = linha.substr(linha.find(',') + 1);
     }
-    trimString(linha);
+    validateProduct(linha);
     produtosComprados.push_back(linha);
     this->produtos = produtosComprados;
-    this->calculateTotal();
+    
 }
 
 Transacao::Transacao(Cliente clienteAInserir, vector <Produto> produtosTransacao) {
@@ -120,5 +120,11 @@ void Transacao::calculateTotal() {
         this->total += produtosProduto.at(i).getCusto();
         
     }
+    
+}
+
+Data Transacao::getData() const {
+    
+    return this->data;
     
 }

@@ -21,7 +21,8 @@ Cliente::Cliente(ifstream &in){
     stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
     
     this->nome = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
-    trimString(this->nome);
+    
+    validateName(this->nome);
     
     stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
     

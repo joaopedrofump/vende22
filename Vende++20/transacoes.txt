@@ -1,7 +1,36 @@
-6
-1 ; 3/1/2016 ; cerveja,batata frita,amendoins,fiambre
-1 ; 4/1/2016 ; cerveja,amendoins,pao
-2 ; 4/1/2016 ; peixe,carne,batatas
-16 ; 10/1/2016 ; agua,acucar,cha
-1 ; 1/2/2016 ; cerveja,batata frita,amendoins,presunto
-2 ; 19/5/2016 ; bolachas,pao,batata frita
+35
+3 ; 3/1/2016 ; Cerveja,Batata Frita,Amendoins,Fiambre
+1 ; 4/1/2016 ; Cerveja,Amendoins,Pao,Cerveja,Vinho,Sumo,Agua,Bolachas,Pao,Batata Frita,Amendoins,Fiambre,Presunto,Peixe,Carne,Batatas,Acucar,Cha,Cafe,Fita-cola,Tomate,Compal,Amaciador,Manteiga,Margarina,Batata Palha,Mantas,Colchao
+2 ; 4/1/2016 ; Peixe,Carne,Batatas
+4 ; 10/1/2016 ; Agua,Acucar,Cha
+1 ; 1/2/2016 ; Cerveja,Batata Frita,Amendoins,Presunto
+3 ; 20/5/2016 ; Agua,Bolachas
+5 ; 20/5/2016 ; Pao
+1 ; 20/5/2016 ; Bolachas,Batata Frita,Fiambre,Amendoins
+1 ; 20/5/2016 ; Sumo,Pao,Batata Frita
+3 ; 20/5/2016 ; Fiambre
+1 ; 20/5/2016 ; Agua,Amaciador,Compal
+1 ; 20/5/2016 ; Sumo,Bolachas,Pao
+6 ; 20/5/2016 ; Fita-cola,Compal,Agua
+1 ; 20/5/2016 ; Bolachas,Pao
+3 ; 20/5/2016 ; Bolachas
+2 ; 20/5/2016 ; Presunto
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+7 ; 20/5/2016 ; Colchao
+1 ; 20/5/2016 ; peixe,carne,acucar,fita-cola
+4 ; 20/5/2016 ; pao
+5 ; 20/5/2016 ; pao
+9 ; 20/5/2016 ; pao
+2 ; 20/5/2016 ; pao

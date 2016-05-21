@@ -1,19 +1,28 @@
-16
-cerveja ; 1.5
-vinho ; 9
-sumo ; 2.6
-agua ; 0.6
-bolachas ; 1.6
-pao ; 0.1
-batata frita ; 1.7
-amendoins ; 2.3
-fiambre ; 3.3
-presunto ; 4.5
-peixe ; 7.8
-carne ; 9.1
-batatas ; 4
-acucar ; 1.2
-cha ; 0.6
-cafe ; 1.3
+25
+Cerveja ; 1.5
+Vinho ; 9
+Sumo ; 2.6
+Agua ; 0.6
+Bolachas ; 1.6
+Pao ; 0.1
+Batata Frita ; 1.7
+Amendoins ; 2.3
+Fiambre ; 3.3
+Presunto ; 4.5
+Peixe ; 7.8
+Carne ; 9.1
+Batatas ; 4
+Acucar ; 1.2
+Cha ; 0.6
+Cafe ; 1.3
+Fita-cola ; 1.3
+Tomate ; 2.3
+Compal ; 1.2
+Amaciador ; 4.3
+Manteiga ; 2
+Margarina ; 1.34
+Batata Palha ; 1.99
+Mantas ; 4
+Colchao ; 132.99
 ------------------------------------------------
-1 8 10 
+1 2 13 15 

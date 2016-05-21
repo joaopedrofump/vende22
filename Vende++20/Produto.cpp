@@ -15,7 +15,8 @@ Produto::Produto(ifstream & in){ // nome ; custo
     }
     
     this->nome = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
-    trimString(this->nome);
+    //trimString(this->nome);
+    validateProduct(this->nome);
     stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
     trimString(stringTemporaria);
     this->custo = atof(stringTemporaria.c_str());

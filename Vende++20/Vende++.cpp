@@ -10,7 +10,8 @@ typedef map<string, Cliente>::const_iterator constIntClientString;
 typedef map<unsigned int, Produto>::const_iterator constIntProduto;
 typedef map<string, Produto>::const_iterator constIntProdutoString;
 
-typedef map<unsigned int, unsigned int>::const_iterator constIteMMTra;
+typedef multimap<unsigned int, unsigned int>::const_iterator constIteMMTra;
+typedef pair <multimap<unsigned int,unsigned int>::iterator, multimap<unsigned int,unsigned int>::iterator> iteradorPar;
 
 VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
     
@@ -151,6 +152,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
         }
         
         transacaoActual.setVectorProdutos(produtosActuais);
+        transacaoActual.calculateTotal();
         transacaoActual.setCliente(clienteAtual);
         
         this->transacoes.push_back(transacaoActual);
@@ -629,6 +631,101 @@ void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned i
 }
 
 
+void VendeMaisMais::listarTransacoes() const {
+    
+    for (size_t i = this->transacoes.size(); i >= 1; i--) {
+        
+        cout << this->transacoes.at(i-1) << endl;
+        
+    }
+    
+}
+
+void VendeMaisMais::listarTransacoes(unsigned int clienteId) {
+    
+    constIntClient iteradorClientes = this->clientes.find(clienteId);
+    
+    if (iteradorClientes == this->clientes.end()) {
+        
+        ignoreLine(false, "O cliente nao foi encontrado");
+        return;
+        
+    }
+    
+    for (size_t i = this->transacoes.size(); i >= 1; i--) {
+        
+        if (this->transacoes.at(i-1).getCliente().getId() == iteradorClientes->first) {
+            
+            cout << this->transacoes.at(i-1) << endl;
+            
+        }
+        
+    }
+    
+}
+
+void VendeMaisMais::listarTransacoes(string data1, string data2, bool dataUnica) {
+    
+    data2 = dataUnica ? data1 : data2;
+    
+    Data dataMenor(data1);
+    Data dataMaior(data2);
+    
+    if (!(dataMaior >= dataMenor)) {
+        
+        Data dataTemp;
+        dataTemp = dataMaior;
+        dataMaior = dataMenor;
+        dataMenor = dataTemp;
+        
+    }
+    
+    for (size_t i = transacoes.size(); i >= 1; i--) {
+        
+        if (transacoes.at(i-1).getData() >= dataMenor && dataMaior >= transacoes.at(i-1).getData()) {
+            
+            cout << this->transacoes.at(i-1) << endl;
+            
+        }
+        
+    }
+    
+    
+}
+
+void VendeMaisMais::listarTransacoesProduto(unsigned int idProduto) {
+    
+    
+    constIntProduto iteradorProduto = this->produtos.find(idProduto);
+    
+    if (iteradorProduto == this->produtos.end()) {
+        
+        ignoreLine(false, "O produto nao foi encontrado.");
+        return;
+        
+    }
+    
+    
+    for (size_t i = transacoes.size(); i >= 1; i--) {
+        
+        
+        for (size_t j = 0; j < transacoes.at(i-1).getProdutosProduto().size(); j++) {
+            
+            if (idProduto == transacoes.at(i-1).getProdutosProduto().at(j).getProdutoId()) {
+                
+                cout << this->transacoes.at(i-1) << endl;
+                
+            }
+            
+            
+        }
+        
+    }
+    
+    
+    
+}
+
 
 /*********************************
  Preservar Informacao
@@ -712,6 +809,447 @@ void VendeMaisMais::saveChanges() const{
     
     
 }
+
+/*********************************
+ Recomendações
+ ********************************/
+
+unsigned int VendeMaisMais::obterProdutoRecomendado(Produto &produtoRecomendado, unsigned int idCliente) {
+    
+    constIteMMTra iteradorMM;
+    iteradorPar iterador = this->transacaoIdx.equal_range(idCliente);
+    vector<unsigned int> linhaClienteAlvo; //linha do cliente alvo na matriz
+    
+    //calcular matriz
+    vector <vector <unsigned int>> matriz;
+    
+    for (constIntClient i = this->clientes.begin(); i != this->clientes.end(); i++) {
+        
+        //não colocar o cliente alvo na matriz
+        
+        vector <unsigned int> linhaActual;
+        
+        linhaActual.push_back(i->first); //primeiro elemento de cada linha é o id de cada cliente
+        
+        //inicializar com 0s o resto da linha
+        for (constIntProduto itePro = this->produtos.begin(); itePro != this->produtos.end(); itePro++) {
+            
+            linhaActual.push_back(0);
+            
+        }
+        
+        
+        //preencher o resto do vector de int com o numero de vezes que o cliente comprou cada produto
+       
+            
+        iterador = this->transacaoIdx.equal_range(i->first); //obter os produtos comprados pelo cliente
+        
+        for (iteradorMM = iterador.first; iteradorMM != iterador.second; iteradorMM++) {
+            
+            if (this->produtos.at(iteradorMM->second).getStatus()) {
+                
+                linhaActual.at(iteradorMM->second)++;
+                
+            }
+            
+        }
+        
+        if (i->first == idCliente) {
+            
+            linhaClienteAlvo = linhaActual;
+            
+        }
+        
+        matriz.push_back(linhaActual);
+    }
+    
+     //grava no vector de matrizes que pertence a classe
+    
+    //juntar a cada vector da matriz no final, o número de coincidencias desse cliente com o cliente alvo para depois contabilizar apenas os que tiverem o numero maximo de coincidencias
+    
+    unsigned int numeroMaximoCoincidencias = 0;
+    
+    for (size_t i = 0; i < matriz.size(); i++) {
+        
+        unsigned int numeroMaximoCoincidenciasActual = 0;
+        
+        if (matriz.at(i).at(0) == idCliente) {
+            
+            continue;
+            
+        }
+        
+        for (size_t j = 1; j < matriz.at(i).size(); j++) {
+            
+            if (linhaClienteAlvo.at(j) > 0 && matriz.at(i).at(j) > 0) {
+                
+                numeroMaximoCoincidenciasActual++;
+                
+            }
+            
+        }
+        
+        matriz.at(i).push_back(numeroMaximoCoincidenciasActual);
+        
+        numeroMaximoCoincidencias = numeroMaximoCoincidenciasActual > numeroMaximoCoincidencias ? numeroMaximoCoincidenciasActual : numeroMaximoCoincidencias;
+        
+    }
+    
+    this->matrizes.push_back(matriz);
+    
+    
+    //preencher um vetor de inteiros com o numero de coincidencias de cada cliente
+    
+    vector<unsigned int> vetorCoincidencias;
+    
+    for (size_t i = 0; i < matriz.size(); i++) {
+        
+        bool insere = true;
+        
+        if (matriz.at(i).at(0) == idCliente) {
+            
+            continue;
+            
+        }
+        
+        for (size_t j = 0; j < vetorCoincidencias.size(); j++) {
+            
+            if (matriz.at(i).at(matriz.at(i).size() - 1) == vetorCoincidencias.at(j)) {
+                
+                insere = false;
+                
+            }
+            
+        }
+        
+        if (insere) {
+            vetorCoincidencias.push_back(matriz.at(i).at(matriz.at(i).size() - 1));
+        }
+  
+    }
+    
+    sort(vetorCoincidencias.begin(), vetorCoincidencias.end());
+    reverse(vetorCoincidencias.begin(), vetorCoincidencias.end());
+    
+    bool flagNumeroCoincidenciasReal; //flag que controla se realmente o numero de coincidencias é zero ou se nenhum dos clientes com coincidencias compraram produtos que o cliente alvo ainda não tenha comprado
+    
+    flagNumeroCoincidenciasReal = vetorCoincidencias.at(0) ? true : false;
+    
+    
+    //descobrir o número maximo de coincidencias para escolher clientes (para o caso de não haver nenhum cliente com o número máximo de coincidencias com pelo menos um produto comprado além das coincidencias)
+    
+    
+    bool sairFor2 = false;
+    
+    for (size_t h = 0; h < vetorCoincidencias.size(); h++) {
+        
+        numeroMaximoCoincidencias = vetorCoincidencias.at(h);
+        
+        if (numeroMaximoCoincidencias == 0) {
+            break;
+            
+        }
+        
+        bool sairFor = false;
+        
+        for (size_t i = 0; i < matriz.size(); i++) {
+            
+            
+            if (matriz.at(i).at(0) == idCliente || ((matriz.at(i).at(matriz.at(i).size() - 1)) != numeroMaximoCoincidencias)) {
+                
+                continue;
+                
+            }
+            
+            for (size_t j = 1; j < matriz.at(i).size()-1; j++) {
+                
+                if (linhaClienteAlvo.at(j) > 0) {
+                    
+                    continue;
+                    
+                }
+                
+                if (matriz.at(i).at(j) > 0) {
+                    
+                    sairFor = true;
+                    sairFor2 = true;
+                    break;
+                    
+                }
+                
+            }
+            
+            if (sairFor) {
+                break;
+            }
+            
+        }
+        
+        if (sairFor2) {
+            break;
+        }
+        
+    }
+
+    //cout << numeroMaximoCoincidencias << endl;
+    
+    if (numeroMaximoCoincidencias == 0) {
+        
+        iteradorMM = this->transacaoIdx.find(idCliente);
+        
+        if (iteradorMM == this->transacaoIdx.end()) {
+            
+            produtoRecomendado = obterProdutoMaisVendido(idCliente, numeroMaximoCoincidencias, flagNumeroCoincidenciasReal); //cliente nao comprou nada
+            return 0;
+            
+        }
+        
+        else {
+            
+            produtoRecomendado = obterProdutoMaisVendido(idCliente, numeroMaximoCoincidencias, flagNumeroCoincidenciasReal);
+            
+            if (flagNumeroCoincidenciasReal) {
+                
+                bool comprouTodosProdutos = true;
+                
+                for (size_t i = 1; i < linhaClienteAlvo.size(); i++) {
+                    
+                    if (linhaClienteAlvo.at(i) == 0 && this->produtos.at((int)i).getStatus()) {
+                        
+                        comprouTodosProdutos = false;
+                        break;
+                        
+                    }
+                    
+                }
+                
+                if (comprouTodosProdutos) {
+                    
+                    return 4; //cliente comprou todos os produtos
+                    
+                }
+                
+                return 3; //nenhum dos clientes com coincidencias compraram produtos que o cliente alvo ainda não tenha comprado
+            }
+            return 1; //cliente comprou mas nao ha ninguem que tenha comprado o mesmo
+        }
+        
+        
+    }
+    
+    else { //ha coincidencias
+        
+        produtoRecomendado = obterProdutoMaisVendido(idCliente, numeroMaximoCoincidencias, flagNumeroCoincidenciasReal);
+        return 2;
+        
+    }
+    
+    return 5;
+}
+
+Produto VendeMaisMais::obterProdutoMaisVendido(unsigned int clienteId, unsigned int numCoincidencias, bool numCoincidenciasReal) const {
+    
+    vector <unsigned int> totalProdutos(this->produtos.size()+1, 0);
+    unsigned int idProdutoMaisMais = 1; //id do produto mais comprado
+    unsigned int numClientsSemelhantes = 0;
+    
+    if (numCoincidencias == 0) {
+            
+        for (size_t i = 0; i < matrizes.at(clienteId-1).size(); i++) {
+            
+            if (matrizes.at(clienteId-1).at(i).at(0) == clienteId) {
+                continue;
+            }
+            
+            for (size_t j = 1; j < matrizes.at(clienteId-1).at(0).size()-1; j++) {
+                
+                if (matrizes.at(clienteId-1).at(i).at(j) > 0) {
+                    
+                    totalProdutos.at(j)++;
+                    
+                }
+                
+            }
+            
+        }
+        
+        for (size_t i = 2; i < totalProdutos.size(); i++) {
+            
+            if (totalProdutos.at(i) > totalProdutos.at(idProdutoMaisMais)) {
+                
+                idProdutoMaisMais = (int)i;
+                
+            }
+            
+        }
+        
+    }
+    
+    else {
+        
+        vector<unsigned int> linhaCliente;
+        
+        for (size_t i = 0; i < matrizes.at(clienteId-1).size(); i++) {
+            
+            if (matrizes.at(clienteId-1).at(i).at(0) != clienteId && matrizes.at(clienteId-1).at(i).at(matrizes.at(clienteId-1).at(i).size()-1) == numCoincidencias)
+                
+            {
+                
+                numClientsSemelhantes++; //calcular se há mais do que um cliente semelhante
+                
+            }
+        }
+        
+        //obter linha do cliente alvo para comparar com as outras
+        for (size_t i = 0; i < matrizes.at(clienteId-1).size(); i++) {
+            
+            if (matrizes.at(clienteId-1).at(i).at(0) == clienteId) {
+                
+                linhaCliente = matrizes.at(clienteId-1).at(i);
+                
+            }
+            
+        }
+        
+        for (size_t i = 0; i < matrizes.at(clienteId-1).size(); i++) {
+            
+            if (matrizes.at(clienteId-1).at(i).at(0) == clienteId || matrizes.at(clienteId-1).at(i).at(matrizes.at(clienteId-1).at(i).size()-1) != numCoincidencias)
+                
+            {
+                
+                continue;
+                
+            }
+            
+            
+            
+            for (size_t j = 1; j < matrizes.at(clienteId-1).at(i).size()-2; j++) {
+                
+                if (linhaCliente.at(j) > 0) {
+                    
+                    continue;
+                    
+                }
+                
+                if (numClientsSemelhantes < 2) {
+                    totalProdutos.at(j) += matrizes.at(clienteId-1).at(i).at(j);
+                }
+                
+                else {
+                    
+                    if (matrizes.at(clienteId-1).at(i).at(j) > 0) {
+                        
+                        totalProdutos.at(j)++;
+                        
+                    }
+                    
+                    
+                }
+                
+            }
+            
+        }
+        
+
+        for (size_t i = 1; i < totalProdutos.size(); i++) {
+            
+            if (totalProdutos.at(i) > totalProdutos.at(idProdutoMaisMais)) {
+                
+                idProdutoMaisMais = (int)i;
+                
+            }
+            
+        }
+        
+    }
+    
+    return this->produtos.at(idProdutoMaisMais);
+ 
+}
+
+
+vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClientes) {
+    
+    vector<string> resultado;
+    
+    if (vetorIdClientes.size() == 0) {
+        
+        for (constIntClient iteradorCliente = this->clientes.begin(); iteradorCliente != this->clientes.end(); iteradorCliente++) {
+            
+            Produto produtoAtual;
+            unsigned int caso = this->obterProdutoRecomendado(produtoAtual, iteradorCliente->first);
+            string mensagem;
+            
+            switch (caso) {
+                case 0:
+                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", ainda nao efectuou nenhuma compra no nosso supermercado, considere comprar o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+
+                    break;
+                    
+                case 1:
+                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + " sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
+                    
+                    break;
+                
+                case 2:
+                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + " sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
+                    
+                    break;
+                    
+                case 3:
+                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + ", verificamos que é o cliente com mais compras efectuadas. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+                    break;
+                    
+                case 4:
+                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + ", verificamos que já comprou todos os nossos produtos. Receba os nossos parabéns. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+                    break;
+            }
+            
+            resultado.push_back(mensagem);
+            
+        }
+
+    }
+    
+    return resultado;
+    
+}
+
+void VendeMaisMais::mostrarMatrizes() const {
+    
+    cout << endl;
+    
+    for (size_t h = 0; h < this->matrizes.size(); h++) {
+        
+        cout  << "c" << " " ;
+        
+        for (constIntProduto p = this->produtos.begin(); p != this->produtos.end(); p++) {
+            
+            cout << setw(2) << right << p->first << " ";
+            
+        }
+        
+        cout  << "coinc" << " " ;
+        
+        cout << endl;
+        
+        for (size_t i = 0; i < this->matrizes.at(h).size(); i++) {
+            
+            for (size_t j = 0; j < this->matrizes.at(h).at(i).size(); j++) {
+                
+                cout << setw(2) << left << this->matrizes.at(h).at(i).at(j) << " ";
+                
+            }
+            
+            cout << endl;
+        }
+        
+        cout << endl << endl;
+        
+    }
+    
+}
+
 
 /*********************************
  Mostrar Loja
