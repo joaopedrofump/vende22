@@ -1250,6 +1250,63 @@ void VendeMaisMais::mostrarMatrizes() const {
     
 }
 
+vector<unsigned int> VendeMaisMais::calcularBottomN(unsigned int bottomN) const {
+    
+    
+    if (bottomN > this->matrizes.at(0).size()) {
+        
+        bottomN = (unsigned int)this->matrizes.at(0).size();
+        
+    }
+    
+    vector<unsigned int> resultado(bottomN,0); //vetor resultado
+    multimap <unsigned int, unsigned int> mapaClientesNumeroTransacoes;
+    
+    vector<int> comprasCadaCliente(this->matrizes.at(0).size()+1, 0); //vetor com tamanho = numero de clientes em que cada elemento é o numero de compras de cada cliente
+    
+    for (size_t i = 0; i < matrizes.at(0).size(); i++) {   //iterar nas linhas da matriz (escolhi a 0 porque so vou usar as primeiras colunas-n)
+        
+        for (size_t j = 1; j < matrizes.at(0).at(i).size()-1; j++) { //iterar nas colunas
+            
+            if (matrizes.at(0).at(i).at(j) > 0) {
+                
+                comprasCadaCliente.at(i)++;
+                
+            }
+            
+        }
+        
+        pair<unsigned int, unsigned int> parTransacoesCliente = make_pair(comprasCadaCliente.at(i), matrizes.at(0).at(i).at(0));
+        
+        mapaClientesNumeroTransacoes.insert(parTransacoesCliente);
+        
+    }
+    
+    
+    multimap<unsigned int, unsigned int>::const_iterator iteradorMapa = mapaClientesNumeroTransacoes.begin();
+    
+    
+    
+    for (int i = 0; i < resultado.size(); i++) {
+        
+        resultado.at(i) = iteradorMapa->second;
+        iteradorMapa++;
+        
+    }
+    
+    for (int i = 0; i < resultado.size(); i++) {
+        
+        cout << resultado.at(i) << endl;
+        
+    }
+    
+    
+    
+    return resultado;
+    
+}
+
+
 
 /*********************************
  Mostrar Loja

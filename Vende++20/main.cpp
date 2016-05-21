@@ -28,14 +28,9 @@ int main(){
     clearScreen();
     vector<unsigned int> vetorIdClienteTeste;
     vector<string> vetorSringPub = supermercado.fazerPublicidade(vetorIdClienteTeste);
-    
-    for (size_t i = 0; i < vetorSringPub.size(); i++) {
-        
-        cout << vetorSringPub.at(i);
-        
-    }
-    
     supermercado.mostrarMatrizes();
+    
+    supermercado.calcularBottomN(600);
     
     //supermercado.mostrarMatrizes();
 //    supermercado.saveChanges();

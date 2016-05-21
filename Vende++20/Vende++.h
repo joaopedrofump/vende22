@@ -49,6 +49,7 @@ private:
     vector <vector <vector <unsigned int>>> matrizes;
     
     
+    
 public:
     VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
     void listarClientesOrdemAlfa() const;
@@ -85,6 +86,6 @@ public:
     
     void mostrarMatrizes() const;
     Produto obterProdutoMaisVendido(unsigned int clienteId, unsigned int numCoincidencias, bool numCoincidenciasReal) const; //se clienteid for diferente de 0 calcula o produto mais vendido excluindo os que comprou esse cliente
-    
+    vector<unsigned int> calcularBottomN(unsigned int bottomN = 10) const;
    
 };
