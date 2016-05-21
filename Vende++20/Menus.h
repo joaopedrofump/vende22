@@ -17,9 +17,9 @@ void opcoesIniciais(VendeMaisMais & supermercado);
 
 void opcoesGestaoClientes(VendeMaisMais & supermercado);
 
-void listarClientesOrdemAlfabetica(VendeMaisMais & supermercado);
+/*void listarClientesOrdemAlfabetica(VendeMaisMais & supermercado);
 
-void listarProdutos(VendeMaisMais & supermercado);
+void listarProdutos(VendeMaisMais & supermercado);*/
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado);
 
