@@ -22,7 +22,7 @@ private:
 	vector<Produto> produtosProduto;
 	Cliente clienteTransacao;
 	float total;
-	void calculateTotal();
+	
 
 public:
 	Transacao(ifstream & in); // trabsacao na forma de  idCliente ; data ; lista de produtos
@@ -33,8 +33,11 @@ public:
 	vector<string> getProdutosString() const;
 	vector<Produto> getProdutosProduto()const;
 	void setVectorProdutos(vector <Produto> vectorProdutos);
-	Cliente getCliente();
+	Cliente getCliente() const;
 	void setCliente(Cliente clienteAInserir);
 	float getTotal() const;
-};
+	Data getData() const;
+	void calculateTotal();
 
+	vector<string> Transacao::toTable() const;
+};

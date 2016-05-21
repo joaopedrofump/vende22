@@ -21,17 +21,11 @@ int main(){
     // cria uma loja
     VendeMaisMais supermercado(loja, fichClients, fichProdutos, fichTransacoes);
     
-    /*supermercado.listarClientesOrdemAlfa();
-     supermercado.adicionarCliente("Joao Pedro");
-     supermercado.mostraInformacaoCliente("Joao Pedro");
-     
-     cout << Cliente::getNumClientes() << endl;
-     cout << supermercado.getMaxClienteId() << endl;*/
-    
-    
-    
-    cout << "Informacao da loja " << loja << " do supermercado Vende++:" << endl;
+
+    cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
     cout << supermercado << endl;  // mostra estatisticas da loja
     opcoesIniciais(supermercado);
+
+  
     return 0;
 }
