@@ -3,7 +3,6 @@
 
 unsigned int Produto::numProdutos;
 
-<<<<<<< HEAD
 Produto::Produto(ifstream & in) { // nome ; custo
 	string stringTemporaria;
 	getline(in, stringTemporaria);
@@ -22,26 +21,6 @@ Produto::Produto(ifstream & in) { // nome ; custo
 	this->custo = atof(stringTemporaria.c_str());
 	this->active = true;
 	this->idProduto = ++Produto::numProdutos;
-=======
-Produto::Produto(ifstream & in){ // nome ; custo
-    string stringTemporaria;
-    getline(in, stringTemporaria);
-    
-    if (stringTemporaria.size() == 0) {
-        
-        this->idProduto = 0;
-        return;
-        
-    }
-    
-    this->nome = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
-    trimString(this->nome);
-    stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
-    trimString(stringTemporaria);
-    this->custo = atof(stringTemporaria.c_str());
-    this->active = true;
-    this->idProduto = ++Produto::numProdutos;
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 }
 
 Produto::Produto(string nomeProduto, float custoProduto) {
@@ -109,29 +88,6 @@ bool operator<(const Produto &prod1, const Produto &prod2) {
 }
 
 vector<string> Produto::toTable() const {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    vector<string> output;
-    
-    output.push_back(nome);
-    
-    stringstream ss;
-    
-    ss.str("");
-    ss << custo;
-    string str = ss.str();
-    output.push_back(str);
-    
-    if (this->active)
-        output.push_back("ATIVO");
-    else
-        output.push_back("INATIVO");
-    
-    return output;
-=======
-	vector<string> output;
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 
 	vector<string> output;
 
@@ -157,10 +113,5 @@ vector<string> Produto::toTable() const {
 		output.push_back("INATIVO");
 
 	return output;
-<<<<<<< HEAD
 
 }
-=======
->>>>>>> LEO
-}
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de

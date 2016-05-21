@@ -12,7 +12,6 @@ typedef map<string, Produto>::const_iterator constIntProdutoString;
 
 typedef map<unsigned int, unsigned int>::const_iterator constIteMMTra;
 
-<<<<<<< HEAD
 VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes) {
 
 	ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
@@ -112,7 +111,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
 	if (!inStreamProdutos.eof()) {
 
 		unsigned int produtoId;
-		string inactiveProducts; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
+		string inactiveProducts; //lê a ultima linha do ficheiro que contém a lista de produto inactivos
 		getline(inStreamProdutos, inactiveProducts);
 		getline(inStreamProdutos, inactiveProducts);
 		stringstream inactiveProductsStream(inactiveProducts);
@@ -177,176 +176,6 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
 	inStreamProdutos.close();
 	inStreamTransacoes.close();
 
-=======
-VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
-    
-    ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
-    
-    Cliente::setNumClientes(0);
-    Produto::setNumProdutos(0);
-    
-    unsigned int numeroClientes;
-    unsigned int numeroProdutos;
-    unsigned int numeroTransacoes;
-    
-    this->loja = loja;
-    this->fichClientes = fichClients;
-    this->fichProdutos = fichProdutos;
-    this->fichTransacoes = fichTransacoes;
-    
-    
-    inStreamClientes.open(this->fichClientes.c_str());
-    inStreamClientes >> numeroClientes;
-    inStreamClientes.ignore(1000, '\n');
-    
-    inStreamProdutos.open(this->fichProdutos.c_str());
-    inStreamProdutos >> numeroProdutos;
-    inStreamProdutos.ignore(1000, '\n');
-    
-    inStreamTransacoes.open(this->fichTransacoes.c_str());
-    inStreamTransacoes >> numeroTransacoes;
-    inStreamTransacoes.ignore(1000, '\n');
-    
-    //ler todos os clientes
-    
-    for (int i = 0; i < numeroClientes; i++) {
-        
-        Cliente clienteActual(inStreamClientes);
-        
-        if (clienteActual.getId() == 0) {
-            continue;
-        }
-        
-        pair<unsigned int, Cliente> parClienteIdActual = make_pair(clienteActual.getId(), clienteActual);
-        pair<string, Cliente> parNomeIdActual = make_pair(clienteActual.getNome(), clienteActual);
-        this->clientes.insert(parClienteIdActual);
-        this->clienteIdx.insert(parNomeIdActual);
-        
-        
-    }
-    
-    this->maxClientesId = Cliente::getNumClientes();
-    
-    //ler clientes inactivos
-    
-    if (!inStreamClientes.eof()) {
-        
-<<<<<<< HEAD
-=======
-        //cout << "teste" << endl;
-        
->>>>>>> LEO
-        unsigned int clientId;
-        string inactiveClients; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
-        getline(inStreamClientes, inactiveClients);
-        getline(inStreamClientes, inactiveClients);
-        stringstream inactiveClientsStream(inactiveClients);
-        
-        while (!inactiveClientsStream.eof()) {
-            
-            inactiveClientsStream >> clientId;
-            
-            if (inactiveClientsStream.fail()) {
-                
-                break;
-                
-            }
-            
-            this->clientes.at(clientId).setStatus(false);
-            this->clienteIdx.at(this->clientes.at(clientId).getNome()).setStatus(false);
-            
-        }
-        
-    }
-    
-    //ler todos os produtos
-    
-    for (int i = 0; i < numeroProdutos; i++) {
-        
-        Produto produtoActual(inStreamProdutos);
-        
-        if (produtoActual.getProdutoId() == 0) {
-            continue;
-        }
-        
-        pair<unsigned int, Produto> parIntProdutoActual = make_pair(produtoActual.getProdutoId(), produtoActual);
-        pair<string, Produto> parStringProdutoActual = make_pair(produtoActual.getNome(), produtoActual);
-        this->produtos.insert(parIntProdutoActual);
-        this->produtoIdx.insert(parStringProdutoActual);
-    }
-    
-    this->maxProdutcId = Produto::getNumProdutos();
-    
-    //ler produtos inactivos
-    
-    if (!inStreamProdutos.eof()) {
-        
-        unsigned int produtoId;
-        string inactiveProducts; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
-        getline(inStreamProdutos, inactiveProducts);
-        getline(inStreamProdutos, inactiveProducts);
-        stringstream inactiveProductsStream(inactiveProducts);
-        
-        while (!inactiveProductsStream.eof()) {
-            
-            inactiveProductsStream >> produtoId;
-            
-            if (inactiveProductsStream.fail()) {
-                
-                break;
-                
-            }
-            
-            this->produtos.at(produtoId).setStatus(false);
-            this->produtoIdx.at(this->produtos.at(produtoId).getNome()).setStatus(false);
-            
-        }
-        
-    }
-    
-    for (int i = 0; i < numeroTransacoes; i++) {
-        
-        Transacao transacaoActual(inStreamTransacoes);
-        
-        if (transacaoActual.getIdCliente() == 0) {
-            continue;
-        }
-        
-        vector <Produto> produtosActuais;
-        Cliente clienteAtual(this->clientes.at(transacaoActual.getIdCliente()));
-        
-        for (size_t j = 0; j < transacaoActual.getProdutosString().size(); j++) {
-            
-            produtosActuais.push_back(this->produtoIdx.at(transacaoActual.getProdutosString().at(j)));
-            
-        }
-        
-        transacaoActual.setVectorProdutos(produtosActuais);
-        transacaoActual.setCliente(clienteAtual);
-        
-        this->transacoes.push_back(transacaoActual);
-        
-        
-    }
-    
-    for (size_t i = 0; i < this->transacoes.size(); i++) {
-        
-        for (size_t j = 0; j < this->transacoes.at(i).getProdutosProduto().size(); j++) {
-            
-            pair<int, int> parTransacaoClienteInt = make_pair(this->transacoes.at(i).getCliente().getId(), transacoes.at(i).getProdutosProduto().at(j).getProdutoId());
-            
-            this->transacaoIdx.insert(parTransacaoClienteInt);
-            
-        }
-        
-    }
-    
-    
-    inStreamClientes.close();
-    inStreamProdutos.close();
-    inStreamTransacoes.close();
-    
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 }
 
 /*********************************
@@ -354,7 +183,6 @@ Gestao de Clientes
 ********************************/
 
 // lista os cleinets por ordem alfabetica crescente
-<<<<<<< HEAD
 void VendeMaisMais::listarClientesOrdemAlfa(bool onlyActives) const {
 
 	constIntClientString iteClienteIdx;
@@ -392,7 +220,7 @@ void VendeMaisMais::listarClientesOrdemAlfa(bool onlyActives) const {
 			}
 		}
 	}
-	
+
 	cout << clientsTable << endl;
 
 }
@@ -435,57 +263,6 @@ bool VendeMaisMais::mostraInformacaoCliente(string nome) {
 
 	cout << mostrarCliente;
 
-=======
-void VendeMaisMais::listarClientesOrdemAlfa() const{
-    
-    constIntClientString iteClienteIdx;
-    
-<<<<<<< HEAD
-    Table clientsTable({ "ID", "Nome do Cliente", "Cartao de Cliente", "Volume de Compras" });
-=======
-    Table clientsTable({ "ID", "Nome do Cliente", "Cartao de Cliente", "Volume de Compras" , "Status"});
->>>>>>> LEO
-    
-    for (iteClienteIdx = this->clienteIdx.begin(); iteClienteIdx != this->clienteIdx.end(); iteClienteIdx++) {
-        
-        if (iteClienteIdx == this->clienteIdx.begin()) {
-            clientsTable.addNewLine(iteClienteIdx->second.toTable());
-        }
-        else {
-            clientsTable.addDataInSameLine(iteClienteIdx->second.toTable()); //addDataInSameLine
-        }
-        
-    }
-    cout << clientsTable << endl;
-    
-}
-
-// mostra a informacao individual de um cliente
-bool VendeMaisMais::mostraInformacaoCliente(string nome){
-    
-    constIntClientString iterator = this->clienteIdx.find(nome);
-    
-    if (iterator == this->clienteIdx.end()) {
-        
-        cout << "O cliente não foi encontrado." << endl;
-        return false;
-        
-    }
-    
-    
-    cout << "***************************************************" << endl;
-    cout << "Id de Cliente: " << this->clienteIdx.at(nome).getId() << endl;
-    cout << "Nome do Cliente: " << this->clienteIdx.at(nome).getNome() << endl;
-    cout << "Cartão de Cliente: " << this->clienteIdx.at(nome).getCartaoCliente().mostrarData() << endl;
-    
-    string status;
-    
-    status =  this->clienteIdx.at(nome).getStatus() ? "Activo" : "Inactivo";
-    
-    cout << "Estado do Cliente: " << status << endl;
-    return true;
-    
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 	return true;
 
 	/*
@@ -532,23 +309,11 @@ bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
 
 	mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
 
-<<<<<<< HEAD
 	str = this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
 
 
 	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
 
-=======
-    str =  this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
-    
-<<<<<<< HEAD
-    cout << "Estado do Cliente: " << status << endl;
-    return true;
-=======
-	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
->>>>>>> LEO
-    
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 	cout << mostrarCliente;
 
 	return true;
@@ -569,7 +334,7 @@ bool VendeMaisMais::encontrarCliente(unsigned int clienteId) {
 		cout << "O cliente encontra-se inativo." << endl;
 		return false;
 	}
-	else{
+	else {
 		return true;
 	}
 }
@@ -586,7 +351,7 @@ bool VendeMaisMais::encontrarCliente(string nome) {
 		return false;
 
 	}
-} 
+}
 
 bool VendeMaisMais::eliminarCliente(string nome) {
 
@@ -749,30 +514,8 @@ Gestao de Produtos
 ********************************/
 
 // lisat os produto por ordem alfabetica crescente
-<<<<<<< HEAD
 void VendeMaisMais::listarProdutos(bool onlyActives) const {
 
-=======
-void VendeMaisMais::listarProdutos() const{
-    
-<<<<<<< HEAD
-    constIntProdutoString iteProdutoIdx;
-    
-    Table productsTable({ "Nome do Produto", "Custo", "Status"});
-    
-    for (iteProdutoIdx = this->produtoIdx.begin(); iteProdutoIdx != this->produtoIdx.end(); iteProdutoIdx++) {
-        
-        if (iteProdutoIdx == this->produtoIdx.begin()) {
-            productsTable.addNewLine(iteProdutoIdx->second.toTable());
-        }
-        else {
-            productsTable.addDataInSameLine(iteProdutoIdx->second.toTable()); //AddDataInSameLine
-        }
-        
-    }
-    cout << productsTable << endl;
-=======
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 	constIntProdutoString iteProdutoIdx;
 
 	Table productsTable({ "ID", "Nome do Produto", "Custo", "Status " });
@@ -794,7 +537,7 @@ void VendeMaisMais::listarProdutos() const{
 			}
 		}
 	}
-	else{
+	else {
 		for (iteProdutoIdx = this->produtoIdx.begin(); iteProdutoIdx != this->produtoIdx.end(); iteProdutoIdx++) {
 			if (iteProdutoIdx == this->produtoIdx.begin()) {
 				productsTable.addNewLine(iteProdutoIdx->second.toTable());
@@ -806,13 +549,8 @@ void VendeMaisMais::listarProdutos() const{
 	}
 
 	cout << productsTable << endl;
-<<<<<<< HEAD
 
 
-=======
->>>>>>> LEO
-    
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 }
 
 void VendeMaisMais::adicionarProduto(string nomeProduto, float custoProduto) {
@@ -986,7 +724,6 @@ unsigned int VendeMaisMais::getMaxProductId() const {
 
 }
 
-<<<<<<< HEAD
 
 /*********************************
 Gestao de Transacoes
@@ -1045,65 +782,6 @@ void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned i
 	this->clientes.at(idCliente).acrescentarCompras(transacaoInserir.getTotal());
 	this->clienteIdx.at(clientes.at(idCliente).getNome()).acrescentarCompras(transacaoInserir.getTotal());
 
-=======
-<<<<<<< HEAD
-void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned int> produtos) {
-    
-    
-    constIntClient iteradorClientes = this->clientes.find(idCliente);
-    
-    if (iteradorClientes == this->clientes.end()) {
-        
-        cout << "Nao foi possivel registar a transacao: o Cliente não foi encontrado." << endl;
-        return;
-        
-    }
-    
-    Cliente clienteTransacao(iteradorClientes->second);
-    
-    vector <Produto> produtosTransacao;
-    
-    for (size_t i = 0; i < produtos.size(); i++) {
-        
-        constIntProduto iteradorProdutos = this->produtos.find(produtos.at(i));
-        
-        if (iteradorProdutos != this->produtos.end() && this->produtos.at(produtos.at(i)).getStatus()) {
-            
-            produtosTransacao.push_back(this->produtos.at(produtos.at(i)));
-            
-        }
-        
-    }
-    
-    if (produtosTransacao.size() == 0) {
-        
-        cout << "Nao foi possivel registar a transacao: nenhum dos produtos foi encontrado." << endl;
-        return;
-        
-    }
-    
-    
-    Transacao transacaoInserir(clienteTransacao, produtosTransacao);
-    
-    this->transacoes.push_back(transacaoInserir);
-    
-    for (size_t i = 0; i < transacaoInserir.getProdutosProduto().size(); i++) {
-        
-        pair<int, int> parTransacaoClienteInt = make_pair(transacaoInserir.getCliente().getId(), transacaoInserir.getProdutosProduto().at(i).getProdutoId());
-        
-        this->transacaoIdx.insert(parTransacaoClienteInt);
-        
-    }
-    
-    this->clientes.at(idCliente).acrescentarCompras(transacaoInserir.getTotal());
-    this->clienteIdx.at(clientes.at(idCliente).getNome()).acrescentarCompras(transacaoInserir.getTotal());
-    
-    
-=======
-map<unsigned int, Cliente> VendeMaisMais::getMapIDtoCliente() const {
-	return this->clientes;
->>>>>>> LEO
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 }
 
 void VendeMaisMais::listarTransacoes() const {
@@ -1261,7 +939,6 @@ Preservar Informacao
 
 // guarda apenas a informacao de clientes e/ou de transacoes que foi alterada
 
-<<<<<<< HEAD
 void VendeMaisMais::saveChanges() const {
 
 	ofstream outClientes(this->fichClientes);
@@ -1337,83 +1014,6 @@ void VendeMaisMais::saveChanges() const {
 	outTransacoes.close();
 
 
-=======
-void VendeMaisMais::saveChanges() const{
-    
-    ofstream outClientes(this->fichClientes);
-    ofstream outProducts(this->fichProdutos);
-    ofstream outTransacoes(this->fichTransacoes);
-    
-    //escrever todos os clientes
-    outClientes << this->clientes.size() << endl;
-    
-    constIntClient iterator;
-    
-    for (iterator = this->clientes.begin(); iterator != this->clientes.end(); iterator++) {
-        
-        iterator->second.save(outClientes);
-    
-        
-    }
-    //escrever o numero dos clientes inactivos
-    outClientes << FILE_SEPRATOR << endl;
-    
-    for (iterator = this->clientes.begin(); iterator != this->clientes.end(); iterator++) {
-        
-        if (!iterator->second.getStatus()) {
-            
-            outClientes << iterator->first;
-            outClientes << " ";
-            
-        }
-        
-    }
-    
-    //escrever todos os produtos
-    outProducts << this->produtos.size() << endl;
-    
-    constIntProduto iteratorProduto;
-    
-    for (iteratorProduto = this->produtos.begin(); iteratorProduto != this->produtos.end(); iteratorProduto++) {
-        
-        iteratorProduto->second.save(outProducts);
-        
-        
-    }
-    //escrever o numero dos clientes inactivos
-    outProducts << FILE_SEPRATOR << endl;
-    
-    for (iteratorProduto = this->produtos.begin(); iteratorProduto != this->produtos.end(); iteratorProduto++) {
-        
-        if (!iteratorProduto->second.getStatus()) {
-            
-            outProducts << iteratorProduto->first;
-            outProducts << " ";
-            
-        }
-        
-    }
-    
-
-    outTransacoes << this->transacoes.size() << endl;
-    
-    for (size_t i = 0; i < this->transacoes.size(); i++) {
-        
-        transacoes.at(i).save(outTransacoes);
-        
-        if (i < transacoes.size() - 1) {
-            
-            outTransacoes << endl;
-            
-        }
-        
-    }
-    
-    outClientes.close();
-    outTransacoes.close();
-    
-    
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 }
 
 /*********************************

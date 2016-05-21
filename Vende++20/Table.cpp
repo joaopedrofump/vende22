@@ -101,7 +101,6 @@ Table::Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int
 }
 
 void Table::addNewLine(vector<string> components) {
-<<<<<<< HEAD
 	if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor número de termos
 		for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
 			components.push_back("");
@@ -125,31 +124,6 @@ void Table::addNewLine(vector<string> components) {
 	tableStream.clear();
 	Table newTable(this->tableVector, this->blocks, spaces, this->indent); //Reconstroi a tabela anterior com a largura das colunas redefinida
 	tableStream << newTable;
-=======
-    if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor número de termos
-        for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
-            components.push_back("");
-        }
-    }
-    if (components.size() > this->numColumns) {  //Verifica se vector componentes tem maior número de termos
-        for (int x = numColumns; x < components.size(); x++) { //da tabela original e remove-os, nesse caso.
-            components.pop_back();
-        }
-    }
-    vector<int> spaces;
-    for (size_t i = 0; i < components.size(); i++) {
-        if (components.at(i).length() >= this->columnsWidth.at(i)) {
-            spaces.push_back((int)components.at(i).length());
-        }
-        else {
-            spaces.push_back(columnsWidth.at(i));
-        }
-    } //Redefine a largura das colunas para a tabela alterada
-    tableStream.str(string());
-    tableStream.clear();
-    Table newTable(this->tableVector, this->blocks, spaces, this->indent); //Reconstroi a tabela anterior com a largura das colunas redefinida
-    tableStream << newTable;
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 	formatTable(' ', '|', spaces, this->indent);
 	tableStream << string(this->indent, ' ') << " |  ";
 	for (int i = 0; i < components.size(); i++) {
@@ -166,7 +140,6 @@ void Table::addNewLine(vector<string> components) {
 }
 
 void Table::addDataInSameLine(vector<string> components) {
-<<<<<<< HEAD
 	if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor número de termos
 		for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
 			components.push_back("");
@@ -203,47 +176,6 @@ void Table::addDataInSameLine(vector<string> components) {
 	}
 	tableStream << endl;
 	formatTable('_', '|', spaces);*/
-=======
-    if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor número de termos
-        for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
-            components.push_back("");
-        }
-    }
-    if (components.size() > this->numColumns) {  //Verifica se vector componentes tem maior número de termos
-        for (int x = numColumns; x < components.size(); x++) { //da tabela original e remove-os, nesse caso.  MELHORAR!!!
-            components.pop_back();
-        }
-    }
-    vector<int> spaces;
-    for (size_t i = 0; i < components.size(); i++) {
-        if (components.at(i).length() >= this->columnsWidth.at(i)) {
-            spaces.push_back((int)components.at(i).length());
-        }
-        else {
-            spaces.push_back(columnsWidth.at(i));
-        }
-    } //Redefine a largura das colunas para a tabela alterada
-
-    tableStream.str(string());
-    tableStream.clear();
-    tableVector.push_back(components);
-    blocks.pop_back();
-    blocks.push_back(false);
-<<<<<<< HEAD
-    blocks.push_back(true); //concatena a penultima linha com a última
-=======
-    blocks.push_back(true); //concatena a penultima linha com a �ltima
-
->>>>>>> LEO
-    Table newTable(this->tableVector, this->blocks, spaces); //Reconstroi a tabela anterior com a largura das colunas redefinida
-    tableStream << newTable;
-    /*tableStream << " |  ";
-     for (int i = 0; i < components.size(); i++){
-     tableStream << components.at(i) << string(spaces.at(i) - components.at(i).length(), ' ') << "  |  ";
-     }
-     tableStream << endl;
-     formatTable('_', '|', spaces);*/
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 	this->columnsWidth = spaces;
 }
 
@@ -267,17 +199,12 @@ unsigned int Table::getIndentacao() const {
 	return indent;
 }
 
-vector<vector<string>> Table::getTableVector() const{
+vector<vector<string>> Table::getTableVector() const {
 	return this->tableVector;
 }
 
 ostream& operator<<(ostream& out, const Table &tableToShow) {
 	out << tableToShow.tableStream.str();
 	//formatTableShow('_', '|', tableToShow.getColumsWidth(), tableToShow.getIndentacao(), out);
-<<<<<<< HEAD
 	return out;
 }
-=======
-    return out;
-}
->>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
