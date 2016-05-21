@@ -21,36 +21,9 @@ int main() {
 	// cria uma loja
 	VendeMaisMais supermercado(loja, fichClients, fichProdutos, fichTransacoes);
 
-<<<<<<< HEAD
-    //cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
-    //cout << supermercado << endl;  // mostra estatisticas da loja
-    //opcoesIniciais(supermercado);
-    clearScreen();
-    vector<unsigned int> vetorIdClienteTeste;
-    vector<string> vetorSringPub = supermercado.fazerPublicidade(vetorIdClienteTeste);
-    
-    for (size_t i = 0; i < vetorSringPub.size(); i++) {
-        
-        cout << vetorSringPub.at(i);
-        
-    }
-    
-    supermercado.mostrarMatrizes();
-    
-    //supermercado.mostrarMatrizes();
-//    supermercado.saveChanges();
-    
-    
-
-
-    return 0;
-=======
-
-	cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
-	cout << supermercado << endl;  // mostra estatisticas da loja
-	opcoesIniciais(supermercado);
-
-
+	//cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
+	//cout << supermercado << endl;  // mostra estatisticas da loja
+    opcoesIniciais(supermercado);
 	return 0;
->>>>>>> LEO
+
 }

@@ -13,7 +13,6 @@ typedef map<string, Produto>::const_iterator constIntProdutoString;
 typedef multimap<unsigned int, unsigned int>::const_iterator constIteMMTra;
 typedef pair <multimap<unsigned int,unsigned int>::iterator, multimap<unsigned int,unsigned int>::iterator> iteradorPar;
 
-<<<<<<< HEAD
 VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes){
     
     ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
@@ -177,173 +176,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     inStreamClientes.close();
     inStreamProdutos.close();
     inStreamTransacoes.close();
-    
-=======
-VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes) {
 
-	ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
-
-	Cliente::setNumClientes(0);
-	Produto::setNumProdutos(0);
-
-	unsigned int numeroClientes;
-	unsigned int numeroProdutos;
-	unsigned int numeroTransacoes;
-
-	this->loja = loja;
-	this->fichClientes = fichClients;
-	this->fichProdutos = fichProdutos;
-	this->fichTransacoes = fichTransacoes;
-
-
-	inStreamClientes.open(this->fichClientes.c_str());
-	inStreamClientes >> numeroClientes;
-	inStreamClientes.ignore(1000, '\n');
-
-	inStreamProdutos.open(this->fichProdutos.c_str());
-	inStreamProdutos >> numeroProdutos;
-	inStreamProdutos.ignore(1000, '\n');
-
-	inStreamTransacoes.open(this->fichTransacoes.c_str());
-	inStreamTransacoes >> numeroTransacoes;
-	inStreamTransacoes.ignore(1000, '\n');
-
-	//ler todos os clientes
-
-	for (int i = 0; i < numeroClientes; i++) {
-
-		Cliente clienteActual(inStreamClientes);
-
-		if (clienteActual.getId() == 0) {
-			continue;
-		}
-
-		pair<unsigned int, Cliente> parClienteIdActual = make_pair(clienteActual.getId(), clienteActual);
-		pair<string, Cliente> parNomeIdActual = make_pair(clienteActual.getNome(), clienteActual);
-		this->clientes.insert(parClienteIdActual);
-		this->clienteIdx.insert(parNomeIdActual);
-
-
-	}
-
-	this->maxClientesId = Cliente::getNumClientes();
-
-	//ler clientes inactivos
-
-	if (!inStreamClientes.eof()) {
-
-		unsigned int clientId;
-		string inactiveClients; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
-		getline(inStreamClientes, inactiveClients);
-		getline(inStreamClientes, inactiveClients);
-		stringstream inactiveClientsStream(inactiveClients);
-
-		while (!inactiveClientsStream.eof()) {
-
-			inactiveClientsStream >> clientId;
-
-			if (inactiveClientsStream.fail()) {
-
-				break;
-
-			}
-
-			this->clientes.at(clientId).setStatus(false);
-			this->clienteIdx.at(this->clientes.at(clientId).getNome()).setStatus(false);
-
-		}
-
-	}
-
-	//ler todos os produtos
-
-	for (int i = 0; i < numeroProdutos; i++) {
-
-		Produto produtoActual(inStreamProdutos);
-
-		if (produtoActual.getProdutoId() == 0) {
-			continue;
-		}
-
-		pair<unsigned int, Produto> parIntProdutoActual = make_pair(produtoActual.getProdutoId(), produtoActual);
-		pair<string, Produto> parStringProdutoActual = make_pair(produtoActual.getNome(), produtoActual);
-		this->produtos.insert(parIntProdutoActual);
-		this->produtoIdx.insert(parStringProdutoActual);
-	}
-
-	this->maxProdutcId = Produto::getNumProdutos();
-
-	//ler produtos inactivos
-
-	if (!inStreamProdutos.eof()) {
-
-		unsigned int produtoId;
-		string inactiveProducts; //lê a ultima linha do ficheiro que contém a lista de produto inactivos
-		getline(inStreamProdutos, inactiveProducts);
-		getline(inStreamProdutos, inactiveProducts);
-		stringstream inactiveProductsStream(inactiveProducts);
-
-		while (!inactiveProductsStream.eof()) {
-
-			inactiveProductsStream >> produtoId;
-
-			if (inactiveProductsStream.fail()) {
-
-				break;
-
-			}
-
-			this->produtos.at(produtoId).setStatus(false);
-			this->produtoIdx.at(this->produtos.at(produtoId).getNome()).setStatus(false);
-
-		}
-
-	}
-
-	for (int i = 0; i < numeroTransacoes; i++) {
-
-		Transacao transacaoActual(inStreamTransacoes);
-
-		if (transacaoActual.getIdCliente() == 0) {
-			continue;
-		}
-
-		vector <Produto> produtosActuais;
-		Cliente clienteAtual(this->clientes.at(transacaoActual.getIdCliente()));
-
-		for (size_t j = 0; j < transacaoActual.getProdutosString().size(); j++) {
-
-			produtosActuais.push_back(this->produtoIdx.at(transacaoActual.getProdutosString().at(j)));
-
-		}
-
-		transacaoActual.setVectorProdutos(produtosActuais);
-		transacaoActual.setCliente(clienteAtual);
-		transacaoActual.calculateTotal();
-
-		this->transacoes.push_back(transacaoActual);
-
-
-	}
-
-	for (size_t i = 0; i < this->transacoes.size(); i++) {
-
-		for (size_t j = 0; j < this->transacoes.at(i).getProdutosProduto().size(); j++) {
-
-			pair<int, int> parTransacaoClienteInt = make_pair(this->transacoes.at(i).getCliente().getId(), transacoes.at(i).getProdutosProduto().at(j).getProdutoId());
-
-			this->transacaoIdx.insert(parTransacaoClienteInt);
-
-		}
-
-	}
-
-
-	inStreamClientes.close();
-	inStreamProdutos.close();
-	inStreamTransacoes.close();
-
->>>>>>> LEO
 }
 
 /*********************************
@@ -351,26 +184,6 @@ Gestao de Clientes
 ********************************/
 
 // lista os cleinets por ordem alfabetica crescente
-<<<<<<< HEAD
-void VendeMaisMais::listarClientesOrdemAlfa() const{
-    
-    constIntClientString iteClienteIdx;
-    
-    Table clientsTable({ "ID", "Nome do Cliente", "Cartao de Cliente", "Volume de Compras" , "Status"});
-    
-    for (iteClienteIdx = this->clienteIdx.begin(); iteClienteIdx != this->clienteIdx.end(); iteClienteIdx++) {
-        
-        if (iteClienteIdx == this->clienteIdx.begin()) {
-            clientsTable.addNewLine(iteClienteIdx->second.toTable());
-        }
-        else {
-            clientsTable.addDataInSameLine(iteClienteIdx->second.toTable()); //addDataInSameLine
-        }
-        
-    }
-    cout << clientsTable << endl;
-    
-=======
 void VendeMaisMais::listarClientesOrdemAlfa(bool onlyActives) const {
 
 	constIntClientString iteClienteIdx;
@@ -411,7 +224,6 @@ void VendeMaisMais::listarClientesOrdemAlfa(bool onlyActives) const {
 
 	cout << clientsTable << endl;
 
->>>>>>> LEO
 }
 
 // mostra a informacao individual de um cliente
@@ -454,19 +266,6 @@ bool VendeMaisMais::mostraInformacaoCliente(string nome) {
 
 	return true;
 
-	/*
-	cout << "***************************************************" << endl;
-	cout << "Id de Cliente: " << this->clienteIdx.at(nome).getId() << endl;
-	cout << "Nome do Cliente: " << this->clienteIdx.at(nome).getNome() << endl;
-	cout << "Cartão de Cliente: " << this->clienteIdx.at(nome).getCartaoCliente().mostrarData() << endl;
-
-	string status;
-
-	status = this->clienteIdx.at(nome).getStatus() ? "Activo" : "Inactivo";
-
-	cout << "Estado do Cliente: " << status << endl;
-	return true;
-	*/
 }
 
 bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
@@ -498,19 +297,11 @@ bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
 
 	mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
 
-<<<<<<< HEAD
-    str =  this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
-    
-
-	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
-    
-=======
 	str = this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
 
 
 	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
 
->>>>>>> LEO
 	cout << mostrarCliente;
 
 	return true;
@@ -548,6 +339,8 @@ bool VendeMaisMais::encontrarCliente(string nome) {
 		return false;
 
 	}
+    
+    return true;
 }
 
 bool VendeMaisMais::eliminarCliente(string nome) {
@@ -711,12 +504,8 @@ Gestao de Produtos
 ********************************/
 
 // lisat os produto por ordem alfabetica crescente
-<<<<<<< HEAD
-void VendeMaisMais::listarProdutos() const{
-    
-=======
+
 void VendeMaisMais::listarProdutos(bool onlyActives) const {
->>>>>>> LEO
 
 	constIntProdutoString iteProdutoIdx;
 
@@ -752,11 +541,6 @@ void VendeMaisMais::listarProdutos(bool onlyActives) const {
 
 	cout << productsTable << endl;
 
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> LEO
 }
 
 void VendeMaisMais::adicionarProduto(string nomeProduto, float custoProduto) {
@@ -901,6 +685,8 @@ bool VendeMaisMais::encontrarProduto(string nome) {
 		return false;
 
 	}
+    
+    return true;
 }
 
 bool VendeMaisMais::encontrarProduto(unsigned int produtoId) {
@@ -929,157 +715,6 @@ unsigned int VendeMaisMais::getMaxProductId() const {
 	return this->maxProdutcId;
 
 }
-
-<<<<<<< HEAD
-void VendeMaisMais::registarTransacao(unsigned int idCliente, vector <unsigned int> produtos) {
-    
-    
-    constIntClient iteradorClientes = this->clientes.find(idCliente);
-    
-    if (iteradorClientes == this->clientes.end()) {
-        
-        cout << "Nao foi possivel registar a transacao: o Cliente não foi encontrado." << endl;
-        return;
-        
-    }
-    
-    Cliente clienteTransacao(iteradorClientes->second);
-    
-    vector <Produto> produtosTransacao;
-    
-    for (size_t i = 0; i < produtos.size(); i++) {
-        
-        constIntProduto iteradorProdutos = this->produtos.find(produtos.at(i));
-        
-        if (iteradorProdutos != this->produtos.end() && this->produtos.at(produtos.at(i)).getStatus()) {
-            
-            produtosTransacao.push_back(this->produtos.at(produtos.at(i)));
-            
-        }
-        
-    }
-    
-    if (produtosTransacao.size() == 0) {
-        
-        cout << "Nao foi possivel registar a transacao: nenhum dos produtos foi encontrado." << endl;
-        return;
-        
-    }
-    
-    
-    Transacao transacaoInserir(clienteTransacao, produtosTransacao);
-    
-    this->transacoes.push_back(transacaoInserir);
-    
-    for (size_t i = 0; i < transacaoInserir.getProdutosProduto().size(); i++) {
-        
-        pair<int, int> parTransacaoClienteInt = make_pair(transacaoInserir.getCliente().getId(), transacaoInserir.getProdutosProduto().at(i).getProdutoId());
-        
-        this->transacaoIdx.insert(parTransacaoClienteInt);
-        
-    }
-    
-    this->clientes.at(idCliente).acrescentarCompras(transacaoInserir.getTotal());
-    this->clienteIdx.at(clientes.at(idCliente).getNome()).acrescentarCompras(transacaoInserir.getTotal());
-
-}
-
-
-void VendeMaisMais::listarTransacoes() const {
-    
-    for (size_t i = this->transacoes.size(); i >= 1; i--) {
-        
-        cout << this->transacoes.at(i-1) << endl;
-        
-    }
-    
-}
-
-void VendeMaisMais::listarTransacoes(unsigned int clienteId) {
-    
-    constIntClient iteradorClientes = this->clientes.find(clienteId);
-    
-    if (iteradorClientes == this->clientes.end()) {
-        
-        ignoreLine(false, "O cliente nao foi encontrado");
-        return;
-        
-    }
-    
-    for (size_t i = this->transacoes.size(); i >= 1; i--) {
-        
-        if (this->transacoes.at(i-1).getCliente().getId() == iteradorClientes->first) {
-            
-            cout << this->transacoes.at(i-1) << endl;
-            
-        }
-        
-    }
-    
-}
-
-void VendeMaisMais::listarTransacoes(string data1, string data2, bool dataUnica) {
-    
-    data2 = dataUnica ? data1 : data2;
-    
-    Data dataMenor(data1);
-    Data dataMaior(data2);
-    
-    if (!(dataMaior >= dataMenor)) {
-        
-        Data dataTemp;
-        dataTemp = dataMaior;
-        dataMaior = dataMenor;
-        dataMenor = dataTemp;
-        
-    }
-    
-    for (size_t i = transacoes.size(); i >= 1; i--) {
-        
-        if (transacoes.at(i-1).getData() >= dataMenor && dataMaior >= transacoes.at(i-1).getData()) {
-            
-            cout << this->transacoes.at(i-1) << endl;
-            
-        }
-        
-    }
-    
-    
-}
-
-void VendeMaisMais::listarTransacoesProduto(unsigned int idProduto) {
-    
-    
-    constIntProduto iteradorProduto = this->produtos.find(idProduto);
-    
-    if (iteradorProduto == this->produtos.end()) {
-        
-        ignoreLine(false, "O produto nao foi encontrado.");
-        return;
-        
-    }
-    
-    
-    for (size_t i = transacoes.size(); i >= 1; i--) {
-        
-        
-        for (size_t j = 0; j < transacoes.at(i-1).getProdutosProduto().size(); j++) {
-            
-            if (idProduto == transacoes.at(i-1).getProdutosProduto().at(j).getProdutoId()) {
-                
-                cout << this->transacoes.at(i-1) << endl;
-                
-            }
-            
-            
-        }
-        
-    }
-    
-    
-    
-}
-=======
 
 /*********************************
 Gestao de Transacoes
@@ -1258,8 +893,6 @@ void VendeMaisMais::listarTransacoesProduto(unsigned int idProduto) {
 
 	for (size_t i = transacoes.size(); i >= 1; i--) {
 
->>>>>>> LEO
-
 		for (size_t j = 0; j < transacoes.at(i - 1).getProdutosProduto().size(); j++) {
 
 			if (idProduto == transacoes.at(i - 1).getProdutosProduto().at(j).getProdutoId()) {
@@ -1374,7 +1007,6 @@ void VendeMaisMais::saveChanges() const {
 }
 
 /*********************************
-<<<<<<< HEAD
  Recomendações
  ********************************/
 
@@ -1814,19 +1446,56 @@ void VendeMaisMais::mostrarMatrizes() const {
     
 }
 
-
-/*********************************
- Mostrar Loja
- ********************************/  
-=======
-Mostrar Loja
-********************************/
->>>>>>> LEO
-
-// mostra o conteudo de uma loja
-ostream& operator<<(ostream& out, const VendeMaisMais & supermercado) {
-
-	// A IMPLEMENTAR 
-	return out; // TESTE
-
+vector<unsigned int> VendeMaisMais::calcularBottomN(unsigned int bottomN) const {
+    
+    
+    if (bottomN > this->matrizes.at(0).size()) {
+        
+        bottomN = (unsigned int)this->matrizes.at(0).size();
+        
+    }
+    
+    vector<unsigned int> resultado(bottomN,0); //vetor resultado
+    multimap <unsigned int, unsigned int> mapaClientesNumeroTransacoes;
+    
+    vector<int> comprasCadaCliente(this->matrizes.at(0).size()+1, 0); //vetor com tamanho = numero de clientes em que cada elemento é o numero de compras de cada cliente
+    
+    for (size_t i = 0; i < matrizes.at(0).size(); i++) {   //iterar nas linhas da matriz (escolhi a 0 porque so vou usar as primeiras colunas-n)
+        
+        for (size_t j = 1; j < matrizes.at(0).at(i).size()-1; j++) { //iterar nas colunas
+            
+            if (matrizes.at(0).at(i).at(j) > 0) {
+                
+                comprasCadaCliente.at(i)++;
+                
+            }
+            
+        }
+        
+        pair<unsigned int, unsigned int> parTransacoesCliente = make_pair(comprasCadaCliente.at(i), matrizes.at(0).at(i).at(0));
+        
+        mapaClientesNumeroTransacoes.insert(parTransacoesCliente);
+        
+    }
+    
+    
+    multimap<unsigned int, unsigned int>::const_iterator iteradorMapa = mapaClientesNumeroTransacoes.begin();
+    
+    
+    
+    for (int i = 0; i < resultado.size(); i++) {
+        
+        resultado.at(i) = iteradorMapa->second;
+        iteradorMapa++;
+        
+    }
+    
+    for (int i = 0; i < resultado.size(); i++) {
+        
+        cout << resultado.at(i) << endl;
+        
+    }
+    
+    return resultado;
+    
 }

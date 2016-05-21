@@ -8,44 +8,6 @@ unsigned int Transacao::getIdCliente() const {
 	return idCliente;
 }
 
-
-<<<<<<< HEAD
-Transacao::Transacao(ifstream &in){ // le uma transacao na forma de  idcliente ; data ; lista produtos
-    string linha;
-    string stringTemporaria;
-    getline(in, linha);
-    
-    if (linha.size() == 0) {
-        
-        this->idCliente = 0;
-        return;
-        
-    }
-    
-    this->idCliente = atoi(linha.substr(0, linha.find(';', 0)).c_str()); //salva o id do Cliente
-    linha = linha.substr(linha.find(';', 0) + 1);	//atualiza a Linha
-    
-    stringTemporaria = linha.substr(0, linha.find(';', 0));
-    trimString(stringTemporaria);
-    
-    Data dataTemporaria(stringTemporaria);
-    this->data = dataTemporaria;  //guarda a data
-    
-    linha = linha.substr(linha.find(';', 0) + 1);  //atualiza a Linha
-    
-    vector<string> produtosComprados;
-    while (linha.find(',') < (int)linha.length()){ //correr o resto da string
-        
-        stringTemporaria = linha.substr(0, linha.find(',', 0));
-        validateProduct(stringTemporaria);
-        produtosComprados.push_back(stringTemporaria);
-        linha = linha.substr(linha.find(',') + 1);
-    }
-    validateProduct(linha);
-    produtosComprados.push_back(linha);
-    this->produtos = produtosComprados;
-    
-=======
 Transacao::Transacao(ifstream &in) { // le uma transacao na forma de  idcliente ; data ; lista produtos
 	string linha;
 	string stringTemporaria;
@@ -81,7 +43,7 @@ Transacao::Transacao(ifstream &in) { // le uma transacao na forma de  idcliente 
 	produtosComprados.push_back(linha);
 	this->produtos = produtosComprados;
 	//this->calculateTotal();
->>>>>>> LEO
+
 }
 
 Transacao::Transacao(Cliente clienteAInserir, vector <Produto> produtosTransacao) {
@@ -165,13 +127,6 @@ void Transacao::calculateTotal() {
 
 }
 
-<<<<<<< HEAD
-Data Transacao::getData() const {
-    
-    return this->data;
-    
-}
-=======
 vector<string> Transacao::toTable() const {
 
 	vector<string> output;
@@ -210,4 +165,3 @@ vector<string> Transacao::toTable() const {
 	return output;
 
 }
->>>>>>> LEO

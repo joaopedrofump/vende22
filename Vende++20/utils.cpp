@@ -43,127 +43,6 @@ void trimString(string &inputString) {
 }
 
 bool validateName(string &nome) {
-<<<<<<< HEAD
-    
-    trimString(nome);
-    
-    stringstream nomeStream(nome); //stringStream que contém o nome do cliente
-    vector<string> nomes; //vector com a lista de nomes do cliente
-    
-    //verificar se contém digitos
-    
-    for (size_t i = 0; i < nome.size(); i++) {
-        
-        if (isdigit((int)nome.at(i))) {
-            
-            cout << "O nome não pode conter digitos, apenas letras." << endl;
-            return false;
-            
-        }
-        
-    }
-    
-    //preencher o vector com os nomes
-    
-    while (!nomeStream.eof()) {
-        string nomeActual;
-        getline(nomeStream, nomeActual, ' ');
-        nomes.push_back(nomeActual);
-        
-        
-    }
-    
-    //verificar se tem pelo menos dois nomes
-    
-    if (nomes.size() < 2) {
-        
-        cout << "O nome do cliente tem de ser constituído por pelo menos dois nomes" << endl;
-        return false;
-        
-    }
-    
-    //verificar que cada nome tem pelo menos 3 letras
-    
-    for (size_t i = 0; i < nomes.size(); i++) {
-        
-        if (nomes.at(i).size() < 2) {
-            
-            cout << "Cada nome tem de conter pelo menos duas letras." << endl;
-            return false;
-            
-        }        
-    }
-    
-    nome.at(0) = (char)toupper(nome.at(0));
-    
-    
-    
-    for (size_t i = 0; i < nome.size()-1; i++) {
-        
-        if (nome.at(i) == ' ') {
-            
-            nome.at(i+1) = toupper(nome.at(i+1));
-            
-        }
-        
-        
-    }
-    
-    return true;
-    
-    
-}
-
-bool validateProduct(string &nome) {
-    
-    
-    trimString(nome);
-    
-    stringstream nomeStream(nome); //stringStream que contém o nome do cliente
-    vector<string> nomes; //vector com a lista de nomes do cliente
-    
-    //verificar se contém digitos
-    
-    //preencher o vector com os nomes
-    
-    while (!nomeStream.eof()) {
-        string nomeActual;
-        getline(nomeStream, nomeActual, ' ');
-        nomes.push_back(nomeActual);
-        
-    }
-    
-    //verificar que cada nome tem pelo menos 2 letras
-    
-    for (size_t i = 0; i < nomes.size(); i++) {
-        
-        if (nomes.at(i).size() < 2) {
-            
-            cout << "Cada produto tem de conter pelo menos duas letras." << endl;
-            return false;
-            
-        }
-    }
-    
-    nome.at(0) = (char)toupper(nome.at(0));
-    
-    
-    
-    for (size_t i = 0; i < nome.size()-1; i++) {
-        
-        if (nome.at(i) == ' ') {
-            
-            nome.at(i+1) = toupper(nome.at(i+1));
-            
-        }
-        
-        
-    }
-    
-    return true;
-    
-    
-=======
 
 	trimString(nome);
 
@@ -282,8 +161,6 @@ bool validateProduct(string &nome) {
 
 	return true;
 
-
->>>>>>> LEO
 }
 
 void SetCursor(int column, int line)
@@ -340,18 +217,6 @@ int GetCursorY()
 }
 
 void ignoreLine(bool ignoreControl, string message) {
-<<<<<<< HEAD
-    
-    string temp;
-    Table tableEnter({ message });
-    cout << tableEnter << endl;
-    if (ignoreControl) {
-        
-        cin.ignore(1000, '\n');
-        
-    }
-    getline(cin, temp);
-=======
 
 	string temp;
 	Table tableEnter({ message });
@@ -362,7 +227,7 @@ void ignoreLine(bool ignoreControl, string message) {
 
 	}
 	getline(cin, temp);
->>>>>>> LEO
+
 
 }
 
@@ -384,140 +249,13 @@ bool validateInputStream(istream &inStream, string errorMessage) {
 	return validInput;
 
 }
-<<<<<<< HEAD
-=======
-
 
 bool stringVazia(string stringTeste) {
 
 	if (stringTeste.size() == 0) {
->>>>>>> LEO
-
-
-<<<<<<< HEAD
-bool stringVazia(string stringTeste) {
-    
-    if (stringTeste.size() == 0) {
         
         return true;
-        
-    }
-    
-    return false;
-    
-}
 
-bool leVectorInteiros(vector <unsigned int> &resultado, string mensagem, string mensagemErro) {
-    
-    string inteiros;
-    bool resultadoBool = false;
-    
-    Table tabelaMensagem({mensagem});
-    Table tabelaMensagemErro({mensagemErro});
-    cout << tabelaMensagem << endl;
-    getline(cin, inteiros);
-    stringstream inteirosStream(inteiros);
-    trimString(inteiros);
-    
-    if (inteiros.size() == 0) {
-        
-        return true;
-        
-    }
-    
-    while (!inteirosStream.eof()) {
-        
-        unsigned int currentInt;
-        inteirosStream >> currentInt;
-        
-        if (inteirosStream.fail()) {
-            
-            inteirosStream.clear();
-            inteirosStream.ignore(1);
-            
-            
-        }
-        
-        else {
-            
-            resultado.push_back(currentInt);
-            resultadoBool = true;
-            
-        }
-        
-        
-    }
-    
-    if (!resultadoBool) {
-        
-        cout << tabelaMensagemErro << endl;
-        
-        
-    }
-    
-    return resultadoBool;
-    
-}
-
-
-bool leDatas(vector<string> &resultado, string mensagem, string mensagemErro) {
-    
-    
-    string datas;
-    bool resultadoBool = false;
-    
-    
-    
-    Table tabelaMensagem({mensagem});
-    Table tabelaMensagemErro({mensagemErro});
-    cout << tabelaMensagem << endl;
-    getline(cin, datas);
-    stringstream datasStream(datas);
-    trimString(datas);
-    
-    if (datas.size() == 0) {
-        
-        return true;
-        
-    }
-    
-    while (!datasStream.eof()) {
-        
-        string currentData;
-        getline(datasStream, currentData, ' ');
-        
-        Data currentDataData(currentData);
-        if (currentDataData.getValid()) {
-            
-            resultado.push_back(currentData);
-            resultadoBool = true;
-            
-        }
-        
-        if (resultado.size() == 2) {
-            
-            resultadoBool = true;
-            
-        }
-        
-        
-        
-    }
-    
-    if (!resultadoBool) {
-        
-        cout << tabelaMensagemErro << endl;
-        
-        
-    }
-    
-    
-    
-    return resultadoBool;
-    
-}
-
-=======
 	}
 
 	return false;
@@ -525,58 +263,6 @@ bool leDatas(vector<string> &resultado, string mensagem, string mensagemErro) {
 }
 
 bool leUnsignedShortInt(unsigned short int &input, unsigned short int min, unsigned short int  max, string mensagemErro) {
-
-	/*string inputUser;
-	unsigned short int userSInt;
-	bool inputValido = false;
-
-	do {
-	//cout << "Por favor introduza um numero entre " << min << " e " << max << endl;
-	getline(cin, inputUser);
-	if (inputUser == "")
-	{
-	return true;
-	}
-	if (cin.fail()) {
-
-	if (cin.eof()) {
-
-	cin.clear();
-	cin.ignore(1000, '\n');
-	continue;
-	}
-
-	else {
-
-	Table invalidInput({ "Invalid Input" });
-	cout << invalidInput << endl;
-	cin.clear();
-	cin.ignore(1000, '\n');
-	continue;
-	}
-
-	}
-
-	else if (userSInt < min || userSInt > max) {
-
-	Table invalidInput({ "Invalid Input" });
-	cout << invalidInput << endl;
-
-	}
-	else {
-	inputValido = true;
-	}
-
-
-	} while (userSInt < min || userSInt > max);
-
-	input = userSInt;
-	return inputValido;*/
-
-
-
-
-
 
 	string inputUser;
 	bool resultadoBool = false;
@@ -810,6 +496,5 @@ bool leStringFloat(pair<string, float> &resultado, string mensagem, string mensa
 	}
 
 	return resultadoBool;
->>>>>>> LEO
 
 }
