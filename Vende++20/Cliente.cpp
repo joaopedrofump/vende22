@@ -4,6 +4,7 @@
 
 unsigned int Cliente::numClientes;
 
+<<<<<<< HEAD
 Cliente::Cliente(ifstream &in) {
 
 	string stringTemporaria;
@@ -41,6 +42,45 @@ Cliente::Cliente(ifstream &in) {
 		numClientes = this->id;
 	}
 
+=======
+Cliente::Cliente(ifstream &in){
+    
+    string stringTemporaria;
+    getline(in, stringTemporaria);
+    
+    if (stringTemporaria.size() == 0) {
+        
+        this->id = 0;
+        return;
+        
+    }
+    
+    this->id = atoi(stringTemporaria.substr(0, stringTemporaria.find(';', 0)).c_str());
+    
+    stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
+    
+    this->nome = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
+    trimString(this->nome);
+    
+    stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
+    
+    string dataString = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
+    trimString(dataString);
+    
+    Data dataCartao(dataString);
+    this->cartaoCliente = dataCartao;
+    
+    stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
+    
+    this->volCompras = atof(stringTemporaria.c_str());
+    this->active = true;
+    
+    if (numClientes < this->id) {
+        
+        numClientes = this->id;
+    }
+    
+>>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 }
 
 Cliente::Cliente(string nome) {
@@ -130,9 +170,15 @@ unsigned int Cliente::getNumClientes() {
 }
 
 void Cliente::setNumClientes(unsigned int primeiro) {
+<<<<<<< HEAD
 
 	numClientes = primeiro;
 
+=======
+    
+    numClientes = primeiro;
+    
+>>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 }
 
 vector<string> Cliente::toTable() const {
@@ -165,4 +211,10 @@ void Cliente::acrescentarCompras(float total) {
 
 	this->volCompras += total;
 
+}
+
+void Cliente::acrescentarCompras(float total) {
+    
+    this->volCompras += total;
+    
 }

@@ -17,7 +17,11 @@ class Table {
 private:
 	//stringstream tableStream;
 	vector<vector<string>> tableVector;
+<<<<<<< HEAD
 	vector<bool> blocks; //FALSE se a linha est· colada ‡ de cima, TRUE se s„o linhas separadas
+=======
+	vector<bool> blocks; //FALSE se a linha estÂ· colada â€¡ de cima, TRUE se sâ€žo linhas separadas
+>>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 
 	unsigned int numColumns;
 	unsigned int numLines;
@@ -47,5 +51,10 @@ public:
 	void adjustColumnsSize(vector<int> spaspacesForColumn);
 
 	friend ostream& operator<<(ostream& out, const Table &table);
+<<<<<<< HEAD
 
 };
+=======
+	
+};
+>>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de

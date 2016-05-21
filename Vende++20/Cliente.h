@@ -21,6 +21,30 @@ private:
 	static unsigned int numClientes;
 
 public:
+<<<<<<< HEAD
+=======
+    
+    Cliente(ifstream & in);
+    Cliente(string nome);
+    Cliente() {};
+    string getNome() const;
+    unsigned int getId() const;
+    float getVolCompras() const;
+    Data getCartaoCliente() const;
+    void setStatus(bool status);
+    static unsigned int getNumClientes();
+    static void setNumClientes(unsigned int primeiro);
+    bool getStatus() const;
+    void save(ofstream & out) const;
+    friend ostream& operator<<(ostream& out, const Cliente & cli);  // mostra informacao do cliente no ecra
+    
+    friend bool operator<(const Cliente &cli1, const Cliente &cli2); // compara 2 clientes (1 cleinte e menor que outro se o seu nome for "alfabeticamente" inferior)
+    
+    vector<string> toTable() const;
+    void acrescentarCompras(float total);
+    
+};
+>>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 
 	Cliente(ifstream & in);
 	Cliente(string nome);

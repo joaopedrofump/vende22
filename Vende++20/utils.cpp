@@ -43,6 +43,7 @@ void trimString(string &inputString) {
 }
 
 bool validateName(string &nome) {
+<<<<<<< HEAD
 
 	trimString(nome);
 
@@ -147,8 +148,83 @@ bool validateProduct(string &nome) {
 	nome.at(0) = (char)toupper(nome.at(0));
 
 
+=======
+    
+    trimString(nome);
+    
+    stringstream nomeStream(nome); //stringStream que contém o nome do cliente
+    vector<string> nomes; //vector com a lista de nomes do cliente
+    
+    //verificar se contém digitos
+    
+    for (size_t i = 0; i < nome.size(); i++) {
+        
+        if (isdigit((int)nome.at(i))) {
+            
+            cout << "O nome não pode conter digitos, apenas letras." << endl;
+            return false;
+            
+        }
+        
+    }
+    
+    //preencher o vector com os nomes
+    
+    while (!nomeStream.eof()) {
+        string nomeActual;
+        getline(nomeStream, nomeActual, ' ');
+        nomes.push_back(nomeActual);
+        
+        
+    }
+    
+    //verificar se tem pelo menos dois nomes
+    
+    if (nomes.size() < 2) {
+        
+        cout << "O nome do cliente tem de ser constituído por pelo menos dois nomes" << endl;
+        return false;
+        
+    }
+    
+    //verificar que cada nome tem pelo menos 3 letras
+    
+    for (size_t i = 0; i < nomes.size(); i++) {
+        
+        if (nomes.at(i).size() < 2) {
+            
+            cout << "Cada nome tem de conter pelo menos duas letras." << endl;
+            return false;
+            
+        }        
+    }
+    
+<<<<<<< HEAD
+    nome.at(0) = (char)toupper(nome.at(0));
+    
+    
+    
+    for (size_t i = 0; i < nome.size()-1; i++) {
+        
+        if (nome.at(i) == ' ') {
+            
+            nome.at(i+1) = toupper(nome.at(i+1));
+            
+        }
+        
+        
+    }
+    
+    return true;
+    
+    
+}
+=======
+	nome.at(0) = toupper(nome.at(0));
+>>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 
 	for (size_t i = 0; i < nome.size() - 1; i++) {
+>>>>>>> LEO
 
 		if (nome.at(i) == ' ') {
 
@@ -218,6 +294,7 @@ int GetCursorY()
 }
 
 void ignoreLine(bool ignoreControl, string message) {
+<<<<<<< HEAD
 
 	string temp;
 	Table tableEnter({ message });
@@ -251,17 +328,136 @@ bool validateInputStream(istream &inStream, string errorMessage) {
 }
 
 
+=======
+    
+    string temp;
+    Table tableEnter({ message });
+    cout << tableEnter << endl;
+<<<<<<< HEAD
+    if (ignoreControl) {
+        
+        cin.ignore(1000, '\n');
+        
+    }
+=======
+    if(ignoreControl)
+		cin.ignore(10000, '\n');
+>>>>>>> LEO
+    getline(cin, temp);
+
+<<<<<<< HEAD
+}
+
+bool validateInputStream(istream &inStream, string errorMessage) {
+    
+    
+    bool validInput = true;
+    
+    if (inStream.fail()) {
+        
+        inStream.clear();
+        inStream.ignore(1000, '\n');
+        ignoreLine(false);
+        validInput = false;
+        
+    }
+    
+    
+    return validInput;
+    
+}
+=======
+>>>>>>> baaf46f1abea6b3e8fa5a002698c729e585053de
 bool stringVazia(string stringTeste) {
 
 	if (stringTeste.size() == 0) {
+>>>>>>> LEO
 
 		return true;
 
+<<<<<<< HEAD
+bool stringVazia(string stringTeste) {
+    
+    if (stringTeste.size() == 0) {
+        
+        return true;
+        
+    }
+    
+    return false;
+    
+}
+=======
 	}
+>>>>>>> LEO
 
 	return false;
 
+<<<<<<< HEAD
+vector <unsigned int> leVectorInteiros(string mensagem, string mensagemErro) {
+    
+    string inteiros;
+    vector <unsigned int> resultado;
+    bool fim = false;
+    
+    
+    
+    do {
+        
+        Table tabelaMensagem({mensagem});
+        Table tabelaMensagemErro({mensagemErro});
+        cout << tabelaMensagem << endl;
+        getline(cin, inteiros);
+        stringstream inteirosStream(inteiros);
+        trimString(inteiros);
+        
+        if (inteiros.size() == 0) {
+            
+            break;
+            
+        }
+        
+        while (!inteirosStream.eof()) {
+            
+            unsigned int currentInt;
+            inteirosStream >> currentInt;
+            
+            if (inteirosStream.fail()) {
+                
+                inteirosStream.clear();
+                inteirosStream.ignore(1);
+                
+                
+                
+            }
+            
+            else {
+                
+                resultado.push_back(currentInt);
+                fim = true;
+                
+            }
+            
+            
+        }
+        
+        if (!fim) {
+            
+            cout << tabelaMensagemErro << endl;
+            
+            
+        }
+        
+    
+    } while (!fim);
+    
+    return resultado;
+    
 }
+
+=======
+}
+>>>>>>> LEO
 
 bool leUnsignedShortInt(unsigned short int &input, unsigned short int min, unsigned short int  max, string mensagemErro) {
 
