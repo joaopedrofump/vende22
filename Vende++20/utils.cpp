@@ -148,6 +148,57 @@ bool validateName(string &nome) {
     
 }
 
+bool validateProduct(string &nome) {
+    
+    
+    trimString(nome);
+    
+    stringstream nomeStream(nome); //stringStream que contém o nome do cliente
+    vector<string> nomes; //vector com a lista de nomes do cliente
+    
+    //verificar se contém digitos
+    
+    //preencher o vector com os nomes
+    
+    while (!nomeStream.eof()) {
+        string nomeActual;
+        getline(nomeStream, nomeActual, ' ');
+        nomes.push_back(nomeActual);
+        
+    }
+    
+    //verificar que cada nome tem pelo menos 2 letras
+    
+    for (size_t i = 0; i < nomes.size(); i++) {
+        
+        if (nomes.at(i).size() < 2) {
+            
+            cout << "Cada produto tem de conter pelo menos duas letras." << endl;
+            return false;
+            
+        }
+    }
+    
+    nome.at(0) = (char)toupper(nome.at(0));
+    
+    
+    
+    for (size_t i = 0; i < nome.size()-1; i++) {
+        
+        if (nome.at(i) == ' ') {
+            
+            nome.at(i+1) = toupper(nome.at(i+1));
+            
+        }
+        
+        
+    }
+    
+    return true;
+    
+    
+}
+
 void SetCursor(int column, int line)
 
 {
@@ -247,68 +298,114 @@ bool stringVazia(string stringTeste) {
     
 }
 
-vector <unsigned int> leVectorInteiros(string mensagem, string mensagemErro) {
+bool leVectorInteiros(vector <unsigned int> &resultado, string mensagem, string mensagemErro) {
     
     string inteiros;
-    vector <unsigned int> resultado;
-    bool fim = false;
+    bool resultadoBool = false;
     
+    Table tabelaMensagem({mensagem});
+    Table tabelaMensagemErro({mensagemErro});
+    cout << tabelaMensagem << endl;
+    getline(cin, inteiros);
+    stringstream inteirosStream(inteiros);
+    trimString(inteiros);
     
+    if (inteiros.size() == 0) {
+        
+        return true;
+        
+    }
     
-    do {
+    while (!inteirosStream.eof()) {
         
-        Table tabelaMensagem({mensagem});
-        Table tabelaMensagemErro({mensagemErro});
-        cout << tabelaMensagem << endl;
-        getline(cin, inteiros);
-        stringstream inteirosStream(inteiros);
-        trimString(inteiros);
+        unsigned int currentInt;
+        inteirosStream >> currentInt;
         
-        if (inteiros.size() == 0) {
+        if (inteirosStream.fail()) {
             
-            break;
-            
-        }
-        
-        while (!inteirosStream.eof()) {
-            
-            unsigned int currentInt;
-            inteirosStream >> currentInt;
-            
-            if (inteirosStream.fail()) {
-                
-                inteirosStream.clear();
-                inteirosStream.ignore(1);
-                
-                
-                
-            }
-            
-            else {
-                
-                resultado.push_back(currentInt);
-                fim = true;
-                
-            }
+            inteirosStream.clear();
+            inteirosStream.ignore(1);
             
             
         }
         
-        if (!fim) {
+        else {
             
-            cout << tabelaMensagemErro << endl;
-            
+            resultado.push_back(currentInt);
+            resultadoBool = true;
             
         }
         
+        
+    }
     
-    } while (!fim);
+    if (!resultadoBool) {
+        
+        cout << tabelaMensagemErro << endl;
+        
+        
+    }
     
-    return resultado;
+    return resultadoBool;
     
 }
 
 
-
+bool leDatas(vector<string> &resultado, string mensagem, string mensagemErro) {
+    
+    
+    string datas;
+    bool resultadoBool = false;
+    
+    
+    
+    Table tabelaMensagem({mensagem});
+    Table tabelaMensagemErro({mensagemErro});
+    cout << tabelaMensagem << endl;
+    getline(cin, datas);
+    stringstream datasStream(datas);
+    trimString(datas);
+    
+    if (datas.size() == 0) {
+        
+        return true;
+        
+    }
+    
+    while (!datasStream.eof()) {
+        
+        string currentData;
+        getline(datasStream, currentData, ' ');
+        
+        Data currentDataData(currentData);
+        if (currentDataData.getValid()) {
+            
+            resultado.push_back(currentData);
+            resultadoBool = true;
+            
+        }
+        
+        if (resultado.size() == 2) {
+            
+            resultadoBool = true;
+            
+        }
+        
+        
+        
+    }
+    
+    if (!resultadoBool) {
+        
+        cout << tabelaMensagemErro << endl;
+        
+        
+    }
+    
+    
+    
+    return resultadoBool;
+    
+}
 
 

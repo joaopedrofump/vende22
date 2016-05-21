@@ -20,6 +20,7 @@ private:
 public:
     Produto(ifstream &in);
     Produto(string nomeProduto, float custoProduto);
+    Produto(){};
 
     string getNome() const;
     float getCusto() const;

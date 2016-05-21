@@ -5,6 +5,7 @@
 #include <map>
 #include <algorithm>
 #include <vector>
+#include <iomanip>
 
 #include "defs.h"
 #include "Data.h"
@@ -38,9 +39,15 @@ private:
     
     map<unsigned int, Produto> produtos;
     map<string, Produto> produtoIdx;  // map para "traduzir" nome do produto no indice dele no vetor de produtos
-    multimap<int, int> transacaoIdx; // multima para "traduzir" o identificador do cliente nos indices das suas
+    multimap<unsigned int, unsigned int> transacaoIdx; // multima para "traduzir" o identificador do cliente nos indices das suas
     // transacoes no vetor de
     // transacoes
+    unsigned int obterProdutoRecomendado(Produto &produtoRecomendado, unsigned int idCliente);
+    //casos de retorno:
+    //0: cliente não comprou nada, recomenda-se o produto mais comprado na loja
+    //1: cliente com produtos comprados mas sem nenhuma coincidencia com outros clientes
+    vector <vector <vector <unsigned int>>> matrizes;
+    
     
 public:
     VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
@@ -60,6 +67,11 @@ public:
     void reactivarProduto(unsigned int produtoId);
     void adicionarCliente(string nome);
     void adicionarProduto(string nomeProduto, float custoProduto);
+    
+    void listarTransacoes() const;
+    void listarTransacoes(unsigned int clienteId);
+    void listarTransacoes(string data1, string data2="", bool dataUnica=true);
+    void listarTransacoesProduto(unsigned int idProduto);
 
     void registarTransacao(unsigned int idCliente, vector <unsigned int> produtos);
 
@@ -68,5 +80,11 @@ public:
 
     void saveChanges() const;
     unsigned int getMaxClienteId() const;
+    vector<string> fazerPublicidade(vector<unsigned int> vetorIdClientes);
     friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
+    
+    void mostrarMatrizes() const;
+    Produto obterProdutoMaisVendido(unsigned int clienteId, unsigned int numCoincidencias, bool numCoincidenciasReal) const; //se clienteid for diferente de 0 calcula o produto mais vendido excluindo os que comprou esse cliente
+    
+   
 };

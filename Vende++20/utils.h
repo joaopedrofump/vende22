@@ -14,6 +14,7 @@
 
 #include "defs.h"
 #include "Table.h"
+#include "Data.h"
 using namespace std;
 
 void clearScreen();
@@ -23,6 +24,8 @@ unsigned short int leUnsignedShortInt(unsigned short int min, unsigned short int
 void trimString(string &inputString);
 
 bool validateName(string &nome);
+
+bool validateProduct(string &produto);
 
 void SetCursor(int column, int line);
 
@@ -34,4 +37,6 @@ void showError(string error);
 
 bool stringVazia(string stringTeste);
 
-vector <unsigned int> leVectorInteiros(string mensagem, string mensagemErro = "Por favor insira pelo menos um numero inteiro positivo");
+bool leVectorInteiros(vector <unsigned int> &resultado, string mensagem, string mensagemErro = "Por favor insira pelo menos um numero inteiro positivo");
+
+bool leDatas(vector<string> &resultado, string mensagem, string mensagemErro = "Formato de Datas Invalido");
