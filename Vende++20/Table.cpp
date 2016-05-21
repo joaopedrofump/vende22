@@ -65,7 +65,7 @@ Table::Table(vector<vector<string>> tableVector, vector<bool> blocks, vector<int
 
 		tableStream << string(indentacao, ' ') << " |  ";
 
-		for (int i = 0; i < numColumnsV; i++) {
+		for (unsigned int i = 0; i < numColumnsV; i++) {
 
 			int dif = spacesForColumn.at(i) - tableVector.at(x).at(i).length(); //espaÁos a mais
 			string temporario;
@@ -140,44 +140,7 @@ void Table::addNewLine(vector<string> components) {
 }
 
 void Table::addDataInSameLine(vector<string> components) {
-<<<<<<< HEAD
-    if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor n√∫mero de termos
-        for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
-            components.push_back("");
-        }
-    }
-    if (components.size() > this->numColumns) {  //Verifica se vector componentes tem maior n√∫mero de termos
-        for (int x = numColumns; x < components.size(); x++) { //da tabela original e remove-os, nesse caso.  MELHORAR!!!
-            components.pop_back();
-        }
-    }
-    vector<int> spaces;
-    for (size_t i = 0; i < components.size(); i++) {
-        if (components.at(i).length() >= this->columnsWidth.at(i)) {
-            spaces.push_back((int)components.at(i).length());
-        }
-        else {
-            spaces.push_back(columnsWidth.at(i));
-        }
-    } //Redefine a largura das colunas para a tabela alterada
 
-    tableStream.str(string());
-    tableStream.clear();
-    tableVector.push_back(components);
-    blocks.pop_back();
-    blocks.push_back(false);
-
-    blocks.push_back(true); //concatena a penultima linha com a última
-
-    Table newTable(this->tableVector, this->blocks, spaces); //Reconstroi a tabela anterior com a largura das colunas redefinida
-    tableStream << newTable;
-    /*tableStream << " |  ";
-     for (int i = 0; i < components.size(); i++){
-     tableStream << components.at(i) << string(spaces.at(i) - components.at(i).length(), ' ') << "  |  ";
-     }
-     tableStream << endl;
-     formatTable('_', '|', spaces);*/
-=======
 	if (components.size() < this->numColumns) {  //Verifica se vector componentes tem menor n√∫mero de termos
 		for (size_t x = components.size(); x < numColumns; x++) {  //da tabela original e adiciona nesse caso.
 			components.push_back("");
@@ -214,7 +177,7 @@ void Table::addDataInSameLine(vector<string> components) {
 	}
 	tableStream << endl;
 	formatTable('_', '|', spaces);*/
->>>>>>> LEO
+
 	this->columnsWidth = spaces;
 }
 

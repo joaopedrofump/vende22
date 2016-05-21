@@ -15,35 +15,7 @@ using namespace std;
 
 
 class Transacao {
-<<<<<<< HEAD
- private:
-  unsigned int idCliente;
-    Data data; // na forma DD/MM/AAAAA
-    vector<string> produtos;
-    vector<Produto> produtosProduto;
-    Cliente clienteTransacao;
-    float total;
-    
 
- public:
-    Transacao(ifstream & in); // trabsacao na forma de  idCliente ; data ; lista de produtos
-    Transacao(Cliente clienteAInserir, vector <Produto> produtosTransacao);
-    unsigned int getIdCliente() const;
-    void save(ofstream & out) const; // guarda a transacao
-    friend ostream& operator<<(ostream& out, const Transacao & trans); // mostra a transacao
-    vector<string> getProdutosString() const;
-    vector<Produto> getProdutosProduto()const ;
-    void setVectorProdutos(vector <Produto> vectorProdutos);
-    Cliente getCliente();
-    void setCliente(Cliente clienteAInserir);
-    float getTotal() const;
-    void calculateTotal();
-    Data getData() const;
-};
-
-
-
-=======
 private:
 	unsigned int idCliente;
 	Data data; // na forma DD/MM/AAAAA
@@ -68,6 +40,5 @@ public:
 	Data getData() const;
 	void calculateTotal();
 
-	vector<string> Transacao::toTable() const;
+	vector<string> toTable() const;
 };
->>>>>>> LEO

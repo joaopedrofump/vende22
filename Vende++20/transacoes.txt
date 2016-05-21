@@ -1,6 +1,6 @@
 35
 3 ; 3/1/2016 ; Cerveja,Batata Frita,Amendoins,Fiambre
-1 ; 4/1/2016 ; Cerveja,Amendoins,Pao,Cerveja,Vinho,Sumo,Agua,Bolachas,Pao,Batata Frita,Amendoins,Fiambre,Presunto,Peixe,Carne,Batatas,Acucar,Cha,Cafe,Fita-cola,Tomate,Compal,Amaciador,Manteiga,Margarina,Batata Palha,Mantas,Colchao
+1 ; 4/1/2016 ; Cerveja,Amendoins,Pao,Cerveja,Vinho,Sumo,Agua,Bolachas,Pao
 2 ; 4/1/2016 ; Peixe,Carne,Batatas
 4 ; 10/1/2016 ; Agua,Acucar,Cha
 1 ; 1/2/2016 ; Cerveja,Batata Frita,Amendoins,Presunto
@@ -29,8 +29,8 @@
 7 ; 20/5/2016 ; Colchao
 7 ; 20/5/2016 ; Colchao
 7 ; 20/5/2016 ; Colchao
-1 ; 20/5/2016 ; peixe,carne,acucar,fita-cola
-4 ; 20/5/2016 ; pao
-5 ; 20/5/2016 ; pao
-9 ; 20/5/2016 ; pao
-2 ; 20/5/2016 ; pao
+1 ; 20/5/2016 ; Peixe,Carne,Acucar,Fita-cola
+4 ; 20/5/2016 ; Pao
+5 ; 20/5/2016 ; Pao
+9 ; 20/5/2016 ; Pao
+2 ; 20/5/2016 ; Pao

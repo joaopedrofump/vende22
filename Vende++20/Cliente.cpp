@@ -4,7 +4,6 @@
 
 unsigned int Cliente::numClientes;
 
-<<<<<<< HEAD
 Cliente::Cliente(ifstream &in){
     
     string stringTemporaria;
@@ -43,45 +42,7 @@ Cliente::Cliente(ifstream &in){
         numClientes = this->id;
     }
     
-=======
-Cliente::Cliente(ifstream &in) {
 
-	string stringTemporaria;
-	getline(in, stringTemporaria);
-
-	if (stringTemporaria.size() == 0) {
-
-		this->id = 0;
-		return;
-
-	}
-
-	this->id = atoi(stringTemporaria.substr(0, stringTemporaria.find(';', 0)).c_str());
-
-	stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
-
-	this->nome = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
-	trimString(this->nome);
-
-	stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
-
-	string dataString = stringTemporaria.substr(0, stringTemporaria.find(';', 0));
-	trimString(dataString);
-
-	Data dataCartao(dataString);
-	this->cartaoCliente = dataCartao;
-
-	stringTemporaria = stringTemporaria.substr(stringTemporaria.find(';', 0) + 1);
-
-	this->volCompras = atof(stringTemporaria.c_str());
-	this->active = true;
-
-	if (numClientes < this->id) {
-
-		numClientes = this->id;
-	}
-
->>>>>>> LEO
 }
 
 Cliente::Cliente(string nome) {
