@@ -22,7 +22,7 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
      getline(cin, fichClientes);
      cout << "Introduza o nome do ficheiro de produtos" << endl;
      getline(cin, fichProdutos);
-     cout << "Introduza o nome do ficheiro de transações" << endl;
+     cout << "Introduza o nome do ficheiro de transacoes" << endl;
      getline(cin, fichTransacoes);
     
     /*loja = "Micro-Preço";
@@ -759,24 +759,34 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
 					
 					if (i == 0) {
 
+						ss.str("");
+						ss << setw(7) << fixed << setprecision(2) << right << supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto();
+						str = ss.str();
+
 						mostrarTransacao.addNewLine({ to_string(vetorIdProdutos.at(i)) , 
-													  supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getNome(), 
-													  to_string(supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto()) });
+							supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getNome(), 
+							str });
 
 						total += supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto();
 					}
 					else {
-
+						ss.str("");
+						ss << setw(7) << fixed << setprecision(2) << right << supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto();
+						str = ss.str();
+	
 						mostrarTransacao.addDataInSameLine({ to_string(vetorIdProdutos.at(i)) ,
 							supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getNome(),
-							to_string(supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto()) });
+							str });
 
 						total += supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto();
 					}
 				}
 
+				ss.str("");
+				ss << setw(7) << fixed << setprecision(2) << right << total;
+				str = ss.str();
 				
-				mostrarTransacao.addNewLine({ "Total: ", to_string(vetorIdProdutos.size()) + "produtos" , to_string(total) });
+				mostrarTransacao.addNewLine({ "Total: ", to_string(vetorIdProdutos.size()) + " produtos" , str });
 
 
 				clearScreen();
