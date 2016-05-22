@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #include "Vende++.h"
 #include <fstream>
 #include <iostream>
@@ -1480,7 +1489,7 @@ vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClien
                     break;
                     
                 case 2:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome();
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que considere a possibilidade de comprar " + produtoAtual.getNome();
                     
                     break;
                     
@@ -1710,8 +1719,6 @@ bool VendeMaisMais::mostraMensagemRecomendacaoCliente(unsigned int clientId) {
 	str = ss.str();
 
 	mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
-
-	cout << mostrarCliente;
 	
 	listarRecomendacoes({ clientId });
 

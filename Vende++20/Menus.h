@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #pragma once
 
 #include <iostream>
@@ -5,7 +14,7 @@
 #include <string>
 
 
-#include "defs.h"
+#include <map>
 #include "utils.h"
 #include "Vende++.h"
 

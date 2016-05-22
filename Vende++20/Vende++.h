@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #pragma once
 
 #include <iostream>
@@ -7,13 +16,11 @@
 #include <vector>
 #include <iomanip>
 
-#include "defs.h"
 #include "Data.h"
 #include "Cliente.h"
 #include "Transacao.h"
 #include "Produto.h"
 #include "utils.h"
-#include "defs.h"
 #include "Table.h"
 
 
