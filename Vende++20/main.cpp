@@ -24,6 +24,8 @@ int main() {
 	//cout << "Informacao da loja '" << loja << " do supermercado Vende++:" << endl;
 	//cout << supermercado << endl;  // mostra estatisticas da loja
     opcoesIniciais(supermercado);
+    
+    
 	return 0;
 
 }

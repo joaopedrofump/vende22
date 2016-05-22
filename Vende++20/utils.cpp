@@ -498,3 +498,31 @@ bool leStringFloat(pair<string, float> &resultado, string mensagem, string mensa
 	return resultadoBool;
 
 }
+
+bool confirmar(string mensagemConfirmacao) {
+    
+    bool resultado = false;
+    string resposta;
+    Table confirmar ({"Prima Enter para confirmar ou qualquer tecla para voltar atras."});
+    
+    Table mensagem({mensagemConfirmacao});
+    cout << mensagem << endl;
+    cout << confirmar << endl;
+    
+    
+    getline(cin, resposta);
+    
+    if (resposta.size()==0) {
+        resposta = true;
+    }
+    
+    
+    return resultado;
+    
+}
+
+
+
+
+
+

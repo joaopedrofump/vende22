@@ -23,7 +23,7 @@ class VendeMaisMais {
 
 private:
     string loja; // nome da loja
-    
+
     // nome dos ficheiros de clientes, produtos e transacoes
     string fichClientes, fichProdutos, fichTransacoes;
     bool transacoesAlterdas; // flag que fica a true se for preciso guardar no final as transacoes
@@ -45,10 +45,14 @@ private:
     unsigned int obterProdutoRecomendado(Produto &produtoRecomendado, unsigned int idCliente);
     //casos de retorno:
     //0: cliente não comprou nada, recomenda-se o produto mais comprado na loja
-    //1: cliente com produtos comprados mas sem nenhuma coincidencia com outros clientes
+    //1: cliente com produtos comprados mas sem nenhuma coincidencia com outros clientes, recomenda-se o produto mais comprado que ele não tenha comprado
+    //2: há coincidencias -> dois subcasos:
+                            //a) só há um cliente com o numero maximo de coincidencias com ele: sugere-se o produto mais comprado por esse cliente
+                            //b) há mais do que um, sugere-se o produto que mais pessoas compraram
+    //3: nenhum dos clientes com coincidencias compraram produtos que o cliente alvo ainda não tenha comprado: sugere-se o produto mais comprado da loja embora o cliente alvo já o tenha comprado
+    //4: cliente alvo comprou todos os produtos: sugere-se o produto mais comprado da loja embora o cliente alvo já o tenha comprado
     vector <vector <vector <unsigned int>>> matrizes;
-    
-    
+    void preencherMatrizes();
     
 public:
     VendeMaisMais(string loja, string fichClients, string fichProdutos, string fichTransacoes);
@@ -90,11 +94,14 @@ public:
 
     void saveChanges() const;
     unsigned int getMaxClienteId() const;
-    vector<string> fazerPublicidade(vector<unsigned int> vetorIdClientes);
+    vector<string> fazerPublicidade(vector<unsigned int> vetorIdClientes = vector<unsigned int>(0,0));
     friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
     
     void mostrarMatrizes() const;
     Produto obterProdutoMaisVendido(unsigned int clienteId, unsigned int numCoincidencias, bool numCoincidenciasReal) const; //se clienteid for diferente de 0 calcula o produto mais vendido excluindo os que comprou esse cliente
-    vector<unsigned int> calcularBottomN(unsigned int bottomN = 10) const;
+    
+    vector<unsigned int> calcularBottomN(unsigned int bottomN = 10);
+    
+    
    
 };
