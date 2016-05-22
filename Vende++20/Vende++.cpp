@@ -178,6 +178,8 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
         
     }
     
+    preencherMatrizes();
+    
     inStreamClientes.close();
     inStreamProdutos.close();
     inStreamTransacoes.close();
@@ -1487,7 +1489,7 @@ vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClien
                     break;
                     
                 case 4:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que já comprou todos os nossos produtos. Receba os nossos parabéns. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + " com 15 % de desconto.";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", PARABENS, comprou todos os produtos. Considere comprar novamente o produto mais popular: " + produtoAtual.getNome() + " com 15 % de desconto.";
                     break;
             }
                         
@@ -1588,13 +1590,17 @@ void VendeMaisMais::preencherMatrizes() {
         Produto produtoAtual;
         obterProdutoRecomendado(produtoAtual, iteradorCliente->first);
     }
+
 }
 
 // ================ MOSTRAR RECOMENDAÇOES =======================
 
 void VendeMaisMais::listarRecomendacoes(vector<unsigned int> vetorIdClientes) {
 
-	vector<string> vetorPublicidade = fazerPublicidade(vetorIdClientes);
+    preencherMatrizes();
+    
+    vector<string> vetorPublicidade = fazerPublicidade(vetorIdClientes);
+    
 
 	if (vetorIdClientes.size() == 0) {
 		Table tabelaMensagens({ "ID", "Nome", "Mensagem" });

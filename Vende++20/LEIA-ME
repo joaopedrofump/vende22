@@ -4,6 +4,8 @@ João Pinheiro/Leonardo Teixeira
 O programa foi concluído com todas as funcionalidades pedidas.
 Nota: O programa está preparado para correr a partir de ficheiros vazios ou já com informação.
 
+NOTA IMPORTANTE: Se os ficheiros já contiverem dados, os clintes já existentes têm de ter ids seguidos.
+
 Classe principal:
 VendeMaisMais
     Mapa int,Cliente
