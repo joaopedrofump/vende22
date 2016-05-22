@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #include "Data.h"
 #include <string>
 #include <fstream>

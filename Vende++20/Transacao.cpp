@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #include "Transacao.h"
 #include "utils.h"
 #include "Data.h"

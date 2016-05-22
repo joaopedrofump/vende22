@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #include "Menus.h"
 
 using namespace std;
@@ -7,19 +16,19 @@ const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programaçã
 bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes) {
     ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
     bool clientesExiste, produtosExiste, transacoesExiste;
-    /*cout << "Introduza o nome da loja" << endl;
+    cout << "Introduza o nome da loja" << endl;
      getline(cin, loja);
      cout << "Introduza o nome do ficheiro de clientes" << endl;
      getline(cin, fichClientes);
      cout << "Introduza o nome do ficheiro de produtos" << endl;
      getline(cin, fichProdutos);
      cout << "Introduza o nome do ficheiro de transações" << endl;
-     getline(cin, fichTransacoes);*/
+     getline(cin, fichTransacoes);
     
-    loja = "Micro-Preço";
+    /*loja = "Micro-Preço";
     fichClientes = "clientes.txt";
     fichProdutos = "produtos.txt";
-    fichTransacoes = "transacoes.txt";
+    fichTransacoes = "transacoes.txt";*/
     
 #ifdef __llvm__
     
@@ -138,6 +147,8 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 		string input;
 		unsigned int idCliente;
         bool control = false;
+		bool sairDoSwitch = false;
+
 		stringstream ss;
 		string str;
 		Table mostrarCliente({ "Informacao" , "Dados" });
@@ -145,6 +156,7 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 		Table confirmarEliminar({ "Tem a certeza que pretende eliminar o cliente?" });
 		Table confirmarReativar({ "Tem a certeza que pretende eliminar o cliente?" });
 		Data hoje(true);
+
         switch (opcao) {
             case 1:           //=========== MOSTRAR CLIENTES ==============
                 clearScreen();
@@ -187,13 +199,14 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
                     cout << introIdNome << endl;
                     getline(cin, input);
                     if (stringVazia(input)) {
+						sairDoSwitch = true;
                         break;
                     }
                     trimString(input);
                     control = validateName(input);
                     //ignoreLine(false, "Cliente adicionado com sucesso");
                 } while (!control);
-
+				if (sairDoSwitch) break;  //Teclar enter apenas, cancela a operacao
 				
 
 				//Mostrar resumo da operacao
@@ -455,7 +468,7 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
                 while (!control) {
                     clearScreen();
                     mostrarMenuInicial(0);
-                    control = leStringFloat(pairNomeCusto, "Introduza o nome seguido do custo do produto.");
+                    control = leStringFloat(pairNomeCusto, "Introduza o nome seguido do custo do produto. (Ex: produto 1.30)");
                     if (!control) {
                         cin.get();
                         continue;
@@ -677,6 +690,16 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
         vector<unsigned int> vetorIdProdutos;
         vector<string> vetorStringDatas;
         bool controlAux = false;
+
+		stringstream ss;
+		string str;
+		Table mostrarCliente({ "Informacao" , "Dados" });
+		Table mostrarTransacao({ "ID do produto", "Nome do produto", "Custo" });
+
+		Table confirmarTransacao({ "Tem a certeza que pretende realizar a transacao?" });
+
+		float total = 0;
+
         switch (opcao) {
             case 1:      //    =============== REGISTRAR COMPRA ==============
                 do {
@@ -713,6 +736,60 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
                         cin.get();
                     }
                 }
+
+				//================================================
+				//      Mostrar resumo da operacao
+				//================================================
+
+				ss.str("");
+				ss << idClienteOuProduto;
+				str = ss.str();
+
+				mostrarCliente.addNewLine({ "ID do cliente: " , str });  // Mostra o ID do cliente
+
+				ss.str("");
+				ss << supermercado.getMapIDtoCliente().at(idClienteOuProduto).getNome();
+				str = ss.str();
+
+				mostrarCliente.addNewLine({ "Nome do cliente: " , str }); // Mostra o nome do cliente
+
+				
+				for (size_t i = 0; i < vetorIdProdutos.size(); i++) {
+					
+					
+					if (i == 0) {
+
+						mostrarTransacao.addNewLine({ to_string(vetorIdProdutos.at(i)) , 
+													  supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getNome(), 
+													  to_string(supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto()) });
+
+						total += supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto();
+					}
+					else {
+
+						mostrarTransacao.addDataInSameLine({ to_string(vetorIdProdutos.at(i)) ,
+							supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getNome(),
+							to_string(supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto()) });
+
+						total += supermercado.getMapIDtoProduct().at(vetorIdProdutos.at(i)).getCusto();
+					}
+				}
+
+				
+				mostrarTransacao.addNewLine({ "Total: ", to_string(vetorIdProdutos.size()) + "produtos" , to_string(total) });
+
+
+				clearScreen();
+				mostrarMenuInicial(0);
+
+
+				cout << confirmarTransacao << mostrarCliente;
+
+				if (!confirmar(mostrarTransacao.getTableVector(), mostrarTransacao.getBlocks(), mostrarTransacao.getColumsWidth(), mostrarTransacao.getIndentacao())) {
+					break;
+				}
+				ignoreLine(false, "Transacao efetuada com sucesso");
+
                 supermercado.registarTransacao(idClienteOuProduto, vetorIdProdutos);
                 supermercado.saveChanges();
                 break;
@@ -842,7 +919,7 @@ unsigned short int menuRecomendacao() {
         menuProdutos.addNewLine({ "3 - Listar sugestoes para os N piores clientes" });
         menuProdutos.addNewLine({ "0 - Voltar ao menu inicial" });
         cout << menuProdutos;
-        control = leUnsignedShortInt(opcao, 0, 5);
+        control = leUnsignedShortInt(opcao, 0, 3);
     } while (!control);
     return opcao;
 }
@@ -855,13 +932,13 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 		unsigned int idCliente;
 		bool control = false;
 		switch (opcao) {
-		case 1:
+		case 1:  //================== LISTAR TODAS AS RECOMENDACOES ============
 			clearScreen();
 			mostrarMenuInicial(0);
 			supermercado.listarRecomendacoes();
 			ignoreLine(false);
 			break;
-		case 2:
+		case 2: //================== MOSTRAR RECOMENDACAO DE UM CLIENTE ========
 			do {
 				clearScreen();
 				mostrarMenuInicial(0);
@@ -888,7 +965,7 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 				}
 			} while (!control);
 			break;
-		case 3:
+		case 3:  //================== MOSTRAR RECOMENDACAO DOS N PIORES CLIENTES ========
 			do {
 				clearScreen();
 				mostrarMenuInicial(0);
@@ -922,8 +999,6 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 				}
 			} while (!control);
 
-			break;
-		case 4:
 			break;
 		}
 	}

@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #include "Vende++.h"
 #include <fstream>
 #include <iostream>
@@ -1478,7 +1487,7 @@ vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClien
                     break;
                     
                 case 2:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome();
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que considere a possibilidade de comprar " + produtoAtual.getNome();
                     
                     break;
                     
@@ -1486,9 +1495,9 @@ vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClien
                     mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que é o cliente com mais produtos comprados. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome();
                     break;
                     
-                case 4:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que já comprou todos os nossos produtos. Receba os nossos parabéns. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + " com 15 % de desconto.";
-                    break;
+				case 4:
+					mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", PARABENS, comprou todos os produtos. Considere comprar novamente o produto mais popular: " + produtoAtual.getNome() + " com 15 % de desconto.";
+					break;
             }
                         
             resultado.push_back(mensagem);
@@ -1704,8 +1713,6 @@ bool VendeMaisMais::mostraMensagemRecomendacaoCliente(unsigned int clientId) {
 	str = ss.str();
 
 	mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
-
-	cout << mostrarCliente;
 	
 	listarRecomendacoes({ clientId });
 

@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #pragma once
 
 #include <iostream>
@@ -12,7 +21,7 @@
 
 #endif
 
-#include "defs.h"
+#include <map>
 #include "Table.h"
 #include "Data.h"
 using namespace std;

@@ -1,3 +1,12 @@
+/*
+
+T7G02
+João Pinheiro
+Leonardo Teixeira
+
+*/
+
+
 #include "Table.h"
 
 Table::Table(vector<string> components, unsigned int indentacao) {
