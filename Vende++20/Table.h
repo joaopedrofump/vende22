@@ -40,6 +40,7 @@ public:
 	vector<int> getColumsWidth() const;
 	unsigned int getIndentacao() const;
 	vector<vector<string>> getTableVector() const;
+	vector<bool> getBlocks() const;
 
 	void addNewLine(vector<string> components);
 	void addDataInSameLine(vector<string> components);

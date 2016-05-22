@@ -65,8 +65,8 @@ public:
 	bool eliminarCliente(unsigned int clientId);
 
 
-	void reactivarCliente(string nome);
-	void reactivarCliente(unsigned int clientId);
+	bool reactivarCliente(string nome);
+	bool reactivarCliente(unsigned int clientId);
 
 	bool encontrarCliente(unsigned int clienteId);
 	bool encontrarCliente(string nome);
@@ -91,17 +91,21 @@ public:
 
 	map<unsigned int, Cliente> getMapIDtoCliente() const;
 	map<string, Cliente> getMapNametoCliente() const;
+	map<unsigned int, Produto> getMapIDtoProduct() const;
 
     void saveChanges() const;
     unsigned int getMaxClienteId() const;
     vector<string> fazerPublicidade(vector<unsigned int> vetorIdClientes = vector<unsigned int>(0,0));
+
     friend ostream& operator<<(ostream& out, const VendeMaisMais & supermercado);
     
     void mostrarMatrizes() const;
     Produto obterProdutoMaisVendido(unsigned int clienteId, unsigned int numCoincidencias, bool numCoincidenciasReal) const; //se clienteid for diferente de 0 calcula o produto mais vendido excluindo os que comprou esse cliente
     
     vector<unsigned int> calcularBottomN(unsigned int bottomN = 10);
-    
-    
-   
+
+	void listarRecomendacoes(vector< unsigned int> vetorIdClientes = {});
+	bool mostraMensagemRecomendacaoCliente(string nome);
+	bool mostraMensagemRecomendacaoCliente(unsigned int clientId);
+       
 };

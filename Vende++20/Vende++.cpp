@@ -264,10 +264,18 @@ bool VendeMaisMais::mostraInformacaoCliente(string nome) {
 
 	str = this->clienteIdx.at(nome).getStatus() ? "Activo" : "Inactivo";
 
-
 	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
 
+	ss.str("");
+	ss << this->clienteIdx.at(nome).getVolCompras();
+	str = ss.str();
+
+	mostrarCliente.addNewLine({ "Volume de compras: " , str });
+
 	cout << mostrarCliente;
+
+	Table transacoes({ "Ultimas transacoes:" });
+	listarTransacoes(clienteIdx.at(nome).getId());
 
 	return true;
 
@@ -300,19 +308,31 @@ bool VendeMaisMais::mostraInformacaoCliente(unsigned int clientId) {
 	ss << this->clientes.at(clientId).getCartaoCliente().mostrarData();
 	str = ss.str();
 
+
 	mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
 
 	str = this->clientes.at(clientId).getStatus() ? "Activo" : "Inactivo";
 
-
 	mostrarCliente.addNewLine({ "Estado do Cliente: " , str });
 
+
+	ss.str("");
+	ss << this->clientes.at(clientId).getVolCompras();
+	str = ss.str();
+
+	mostrarCliente.addNewLine({ "Volume de compras: " , str });
+
 	cout << mostrarCliente;
+	
+	Table transacoes({ "Ultimas transacoes:" });
+	listarTransacoes(clientId);
 
 	return true;
 }
 
 bool VendeMaisMais::encontrarCliente(unsigned int clienteId) {
+	//verificar se o cliente existe e se está ativo
+
 	constIntClient iterator = this->clientes.find(clienteId);
 
 	if (iterator == this->clientes.end()) {
@@ -324,7 +344,9 @@ bool VendeMaisMais::encontrarCliente(unsigned int clienteId) {
 	}
 	else if (!this->clientes.at(clienteId).getStatus()) {
 
-		cout << "O cliente encontra-se inativo." << endl;
+		Table clienteNaoEncontrado({ "O cliente encontra-se inativo." });
+		cout << clienteNaoEncontrado << endl;
+
 		return false;
 	}
 	else {
@@ -333,7 +355,7 @@ bool VendeMaisMais::encontrarCliente(unsigned int clienteId) {
 }
 
 bool VendeMaisMais::encontrarCliente(string nome) {
-	//verificar se o cliente existe
+	//verificar se o cliente existe e se está ativo
 
 	constIntClientString iterator = this->clienteIdx.find(nome);
 
@@ -344,7 +366,13 @@ bool VendeMaisMais::encontrarCliente(string nome) {
 		return false;
 
 	}
-    
+	else if (!this->clienteIdx.at(nome).getStatus()) {
+
+		Table clienteNaoEncontrado({ "O cliente encontra-se inativo." });
+		cout << clienteNaoEncontrado << endl;
+		return false;
+	}
+	
     return true;
 }
 
@@ -356,7 +384,8 @@ bool VendeMaisMais::eliminarCliente(string nome) {
 
 	if (iterator == this->clienteIdx.end()) {
 
-		cout << "O cliente não foi encontrado." << endl;
+		Table clienteNaoEncontrado({ "O cliente nao foi encontrado." });
+		cout << clienteNaoEncontrado << endl;
 		return false;
 
 	}
@@ -365,14 +394,18 @@ bool VendeMaisMais::eliminarCliente(string nome) {
 
 	if (this->clienteIdx.at(nome).getStatus()) {
 		this->clienteIdx.at(nome).setStatus(false);
-		this->clientes.at(this->clienteIdx.at(nome).getId()).setStatus(false);
-		cout << "Cliente eliminado correctamente" << endl;
+		this->clientes.at(this->clienteIdx.at(nome).getId()).setStatus(false); 
+		
+		Table clienteNaoEncontrado({ "Cliente eliminado correctamente." });
+		cout << clienteNaoEncontrado << endl;
+
 		this->clientesAlterados = true;
 	}
 
 	else {
 
-		cout << "O cliente já se encontra eliminado." << endl;
+		Table clienteNaoEncontrado({ "O cliente ja se encontra eliminado." });
+		cout << clienteNaoEncontrado << endl;
 
 	}
 
@@ -387,7 +420,8 @@ bool VendeMaisMais::eliminarCliente(unsigned int clientId) {
 
 	if (iterator == this->clientes.end()) {
 
-		cout << "O cliente não foi encontrado." << endl;
+		Table clienteNaoEncontrado({ "O cliente nao foi encontrado." });
+		cout << clienteNaoEncontrado << endl;
 		return false;
 
 	}
@@ -396,18 +430,22 @@ bool VendeMaisMais::eliminarCliente(unsigned int clientId) {
 
 		this->clientes.at(clientId).setStatus(false);
 		this->clienteIdx.at(this->clientes.at(clientId).getNome()).setStatus(false);
-		cout << "Cliente eliminado correctamente" << endl;
+
+		Table clienteNaoEncontrado({ "Cliente eliminado correctamente." });
+		cout << clienteNaoEncontrado << endl;
+
 		this->clientesAlterados = true;
 
 
 	}
 	else {
-		cout << "O cliente já se encontra eliminado." << endl;
+		Table clienteNaoEncontrado({ "O cliente ja se encontra eliminado." });
+		cout << clienteNaoEncontrado << endl;
 	}
 	return true;
 }
 
-void VendeMaisMais::reactivarCliente(string nome) {
+bool VendeMaisMais::reactivarCliente(string nome) {
 
 	//verificar se o cliente existe
 
@@ -415,8 +453,9 @@ void VendeMaisMais::reactivarCliente(string nome) {
 
 	if (iterator == this->clienteIdx.end()) {
 
-		cout << "O cliente não foi encontrado." << endl;
-		return;
+		Table clienteNaoEncontrado({ "O cliente nao foi encontrado." });
+		cout << clienteNaoEncontrado << endl;
+		return false;
 
 	}
 
@@ -425,20 +464,26 @@ void VendeMaisMais::reactivarCliente(string nome) {
 	if (!this->clienteIdx.at(nome).getStatus()) {
 		this->clienteIdx.at(nome).setStatus(true);
 		this->clientes.at(this->clienteIdx.at(nome).getId()).setStatus(true);
-		cout << "Cliente eliminado correctamente" << endl;
-		this->clientesAlterados = true;
 
+		Table clienteNaoEncontrado({ "Cliente reativado correctamente." });
+		cout << clienteNaoEncontrado << endl;
+
+		this->clientesAlterados = true;
 	}
 
 	else {
 
-		cout << "O cliente já se encontra activo." << endl;
+		Table clienteNaoEncontrado({ "O cliente ja se encontra activo." });
+		cout << clienteNaoEncontrado << endl;
+		return false;
 
 	}
 
+	return true;
+
 }
 
-void VendeMaisMais::reactivarCliente(unsigned int clientId) {
+bool VendeMaisMais::reactivarCliente(unsigned int clientId) {
 
 	//verificar se o cliente existe
 
@@ -446,8 +491,9 @@ void VendeMaisMais::reactivarCliente(unsigned int clientId) {
 
 	if (iterator == this->clientes.end()) {
 
-		cout << "O cliente não foi encontrado." << endl;
-		return;
+		Table clienteNaoEncontrado({ "O cliente nao foi encontrado." });
+		cout << clienteNaoEncontrado << endl;
+		return false;
 
 	}
 
@@ -455,15 +501,21 @@ void VendeMaisMais::reactivarCliente(unsigned int clientId) {
 
 		this->clientes.at(clientId).setStatus(true);
 		this->clienteIdx.at(this->clientes.at(clientId).getNome()).setStatus(true);
-		cout << "Cliente eliminado correctamente" << endl;
+
+		Table clienteNaoEncontrado({ "Cliente reativado correctamente." });
+		cout << clienteNaoEncontrado << endl;
+
 		this->clientesAlterados = true;
 
 
 	}
 	else {
-		cout << "O cliente já se encontra activo." << endl;
+		Table clienteNaoEncontrado({ "O cliente ja se encontra activo." });
+		cout << clienteNaoEncontrado << endl;
+		return false;
 	}
 
+	return true;
 }
 
 void VendeMaisMais::adicionarCliente(string nome) {
@@ -479,6 +531,7 @@ void VendeMaisMais::adicionarCliente(string nome) {
 		this->maxClientesId = Cliente::getNumClientes();
 
 		this->clientesAlterados = true;
+
 
 	}
 
@@ -501,6 +554,10 @@ map<unsigned int, Cliente> VendeMaisMais::getMapIDtoCliente() const {
 
 map<string, Cliente> VendeMaisMais::getMapNametoCliente() const {
 	return clienteIdx;
+}
+
+map<unsigned int, Produto> VendeMaisMais::getMapIDtoProduct() const {
+	return this->produtos;
 }
 
 
@@ -1015,6 +1072,8 @@ void VendeMaisMais::saveChanges() const {
  Recomendações
  ********************************/
 
+// ================ CALCULAR RECOMENDAÇOES =======================
+
 unsigned int VendeMaisMais::obterProdutoRecomendado(Produto &produtoRecomendado, unsigned int idCliente) {
     
     constIteMMTra iteradorMM;
@@ -1368,7 +1427,6 @@ Produto VendeMaisMais::obterProdutoMaisVendido(unsigned int clienteId, unsigned 
  
 }
 
-
 vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClientes) {
     
     this->preencherMatrizes();
@@ -1410,26 +1468,26 @@ vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClien
             
             switch (caso) {
                 case 0:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", ainda nao efectuou nenhuma compra no nosso supermercado, considere comprar o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", ainda nao efectuou nenhuma compra no nosso supermercado, considere comprar o nosso produto mais popular: " + produtoAtual.getNome();
                     
                     break;
                     
                 case 1:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que considere a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que considere a possibilidade de comprar " + produtoAtual.getNome();
                     
                     break;
                     
                 case 2:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome();
                     
                     break;
                     
                 case 3:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que é o cliente com mais produtos comprados. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que é o cliente com mais produtos comprados. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome();
                     break;
                     
                 case 4:
-                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que já comprou todos os nossos produtos. Receba os nossos parabéns. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + " com 15 % de desconto. \n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que já comprou todos os nossos produtos. Receba os nossos parabéns. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + " com 15 % de desconto.";
                     break;
             }
                         
@@ -1530,4 +1588,126 @@ void VendeMaisMais::preencherMatrizes() {
         Produto produtoAtual;
         obterProdutoRecomendado(produtoAtual, iteradorCliente->first);
     }
+}
+
+// ================ MOSTRAR RECOMENDAÇOES =======================
+
+void VendeMaisMais::listarRecomendacoes(vector<unsigned int> vetorIdClientes) {
+
+	vector<string> vetorPublicidade = fazerPublicidade(vetorIdClientes);
+
+	if (vetorIdClientes.size() == 0) {
+		Table tabelaMensagens({ "ID", "Nome", "Mensagem" });
+
+		constIntClient iteradorMapaIds = clientes.begin();
+
+		tabelaMensagens.addNewLine({ to_string(clientes.begin()->second.getId()), clientes.begin()->second.getNome(), vetorPublicidade.at(0) });
+		for (size_t i = 1; i < vetorPublicidade.size(); i++) {
+
+			iteradorMapaIds++;
+			tabelaMensagens.addDataInSameLine({ to_string(iteradorMapaIds->second.getId()), iteradorMapaIds->second.getNome(), vetorPublicidade.at(i) });
+
+		}
+		cout << tabelaMensagens;
+	}
+	else if(vetorIdClientes.size() == 1) {
+
+		stringstream ss;
+		ss << this->clientes.at(vetorIdClientes.at(0)).getId();
+		string str = ss.str();
+
+		Table mostrarCliente({ "Id de Cliente: " , str });  // Mostra o id
+
+		ss.str("");
+		ss << this->clientes.at(vetorIdClientes.at(0)).getNome();
+		str = ss.str();
+
+		mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+		cout << mostrarCliente;
+
+
+		Table tabelaMensagens({ vetorPublicidade.at(0) });
+
+		for (size_t i = 1; i < vetorPublicidade.size(); i++) {
+
+			tabelaMensagens.addDataInSameLine({ vetorPublicidade.at(i) });
+
+		}
+		cout << tabelaMensagens;
+	}
+
+	else {
+		Table tabelaMensagens({ "ID", "Nome", "Mensagem" });
+
+		tabelaMensagens.addNewLine({ to_string(vetorIdClientes.at(0)), clientes.at(vetorIdClientes.at(0)).getNome(), vetorPublicidade.at(0) });
+		for (size_t i = 1; i < vetorPublicidade.size(); i++) {
+
+			tabelaMensagens.addDataInSameLine({ to_string(vetorIdClientes.at(i)), clientes.at(vetorIdClientes.at(i)).getNome(), vetorPublicidade.at(i) });
+
+		}
+		cout << tabelaMensagens;
+	}
+}
+
+bool VendeMaisMais::mostraMensagemRecomendacaoCliente(string nome) {
+
+	constIntClientString iterator = this->clienteIdx.find(nome);
+
+	if (iterator == this->clienteIdx.end()) {
+
+		Table clienteNaoEncontrado({ "O cliente nao foi encontrado." });
+		cout << clienteNaoEncontrado << endl;
+		return false;
+
+	}
+
+	stringstream ss;
+	ss << this->clienteIdx.at(nome).getId();
+	string str = ss.str();
+
+	Table mostrarCliente({ "Id de Cliente: " , str });  // Mostra o id
+
+	ss.str("");
+	ss << this->clienteIdx.at(nome).getNome();
+	str = ss.str();
+
+	mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+	cout << mostrarCliente;
+
+	listarRecomendacoes({ this->clienteIdx.at(nome).getId() });
+
+	return true;
+
+}
+
+bool VendeMaisMais::mostraMensagemRecomendacaoCliente(unsigned int clientId) {
+
+	constIntClient iterator = this->clientes.find(clientId);
+
+	if (iterator == this->clientes.end()) {
+
+		Table clienteNaoEncontrado({ "O cliente nao foi encontrado." });
+		cout << clienteNaoEncontrado << endl;
+		return false;
+	}
+
+	stringstream ss;
+	ss << this->clientes.at(clientId).getId();
+	string str = ss.str();
+
+	Table mostrarCliente({ "Id de Cliente: " , str });  // Mostra o id
+
+	ss.str("");
+	ss << this->clientes.at(clientId).getNome();
+	str = ss.str();
+
+	mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+	cout << mostrarCliente;
+	
+	listarRecomendacoes({ clientId });
+
+	return true;
 }

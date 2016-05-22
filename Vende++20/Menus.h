@@ -25,7 +25,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado);
 
 void opcoesRecomendacao(VendeMaisMais & supermercado);
 
-void mostrarMenuInicial(unsigned short int opcaoEscolhida);
+void mostrarMenuInicial(unsigned short int opcaoEscolhida = 0);
 
 void opcoesGestaoProdutos(VendeMaisMais &supermercado);
 

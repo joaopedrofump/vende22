@@ -205,6 +205,10 @@ vector<vector<string>> Table::getTableVector() const {
 	return this->tableVector;
 }
 
+vector<bool> Table::getBlocks() const {
+	return this->blocks;
+}
+
 ostream& operator<<(ostream& out, const Table &tableToShow) {
 	out << tableToShow.tableStream.str();
 	//formatTableShow('_', '|', tableToShow.getColumsWidth(), tableToShow.getIndentacao(), out);

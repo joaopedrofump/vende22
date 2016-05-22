@@ -4,6 +4,8 @@
 
 unsigned int Cliente::numClientes;
 
+//============== CONSTRUTORES ============
+
 Cliente::Cliente(ifstream &in){
     
     string stringTemporaria;
@@ -41,8 +43,6 @@ Cliente::Cliente(ifstream &in){
         
         numClientes = this->id;
     }
-    
-
 }
 
 Cliente::Cliente(string nome) {
@@ -56,6 +56,7 @@ Cliente::Cliente(string nome) {
 
 }
 
+// ============= GETTERS =================
 
 string Cliente::getNome() const {
 
@@ -80,17 +81,32 @@ Data Cliente::getCartaoCliente() const {
 	return this->cartaoCliente;
 }
 
+bool Cliente::getStatus() const {
+
+	return this->active;
+
+}
+
+unsigned int Cliente::getNumClientes() {
+
+	return numClientes;
+
+}
+
+// ============= SETTERS =================
+
 void Cliente::setStatus(bool status) {
 
 	this->active = status;
 
 }
 
-bool Cliente::getStatus() const {
+void Cliente::setNumClientes(unsigned int primeiro) {
 
-	return this->active;
+	numClientes = primeiro;
 
 }
+
 
 void Cliente::save(ofstream &out) const {
 
@@ -109,7 +125,6 @@ ostream& operator<<(ostream& out, const Cliente &cliente) {
 	return out;
 }
 
-
 bool operator<(const Cliente &cliente1, const Cliente &cliente2) {
 
 	if (cliente1.getVolCompras() < cliente2.getVolCompras()) {
@@ -125,17 +140,7 @@ bool operator<(const Cliente &cliente1, const Cliente &cliente2) {
 
 }
 
-unsigned int Cliente::getNumClientes() {
 
-	return numClientes;
-
-}
-
-void Cliente::setNumClientes(unsigned int primeiro) {
-
-	numClientes = primeiro;
-
-}
 
 vector<string> Cliente::toTable() const {
 	vector<string> output;
