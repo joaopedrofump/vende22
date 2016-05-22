@@ -786,7 +786,7 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
 				ss << setw(7) << fixed << setprecision(2) << right << total;
 				str = ss.str();
 				
-				mostrarTransacao.addNewLine({ "Total: ", to_string(vetorIdProdutos.size()) + " produtos" , str });
+				mostrarTransacao.addNewLine({ "Total: ", to_string(vetorIdProdutos.size()) + " produto(s)" , str });
 
 
 				clearScreen();
