@@ -1,6 +1,9 @@
 #include "Menus.h"
+
 using namespace std;
+
 const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programação/ProjectoVende++/Vende++20/Vende++20/";
+
 bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes) {
     ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
     bool clientesExiste, produtosExiste, transacoesExiste;
@@ -42,8 +45,14 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
     inStreamTransacoes.close();
     return clientesExiste && produtosExiste && transacoesExiste;
 }
+
+/******************************************
+* Menu Inicial
+******************************************/
+
 void opcoesIniciais(VendeMaisMais &supermercado) {
     unsigned int opcao;
+	
     while ((opcao = menuInicial()))
         switch (opcao) {
             case 1: opcoesGestaoClientes(supermercado);
@@ -53,20 +62,28 @@ void opcoesIniciais(VendeMaisMais &supermercado) {
             case 3: opcoesGestaoTransacoes(supermercado);
                 break;
             case 4: opcoesRecomendacao(supermercado);
-                break;
+				break;
+			case 5:
+				break;
         }
     supermercado.saveChanges();
 }
+
 unsigned short int menuInicial() {
     unsigned short int opcao = 0;
     bool control = false;
+	Table acabarPrograma({ "Tem a certeza que pretende encerrar o programa?" });
     while (!control) {
         mostrarMenuInicial(0);
         control = leUnsignedShortInt(opcao, 0, 4);
     }
 
+	if (opcao == 0 && !confirmar(acabarPrograma.getTableVector(), acabarPrograma.getBlocks(), acabarPrograma.getColumsWidth(), acabarPrograma.getIndentacao())) {
+		opcao = 5;
+	}
     return opcao;
 }
+
 void mostrarMenuInicial(unsigned short int opcaoEscolhida) {
     clearScreen();
     Table menu({ "Menu Inicial" });
@@ -85,16 +102,18 @@ void mostrarMenuInicial(unsigned short int opcaoEscolhida) {
             menuCabecalho = { "1 - Clientes", "2 - Produtos", "3 - Transacoes" + string(21, ' '), "4 - Recomendacoes", "0 - Sair" };
             break;
         default:
-            menuCabecalho = { "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes", "0 - Sair" };
+            menuCabecalho = { "1 - Clientes", "2 - Produtos", "3 - Transacoes", "4 - Recomendacoes" + string(30, ' '), "0 - Sair" };
             break;
     }
     Table menuOpcoes(menuCabecalho);
     cout << menu << endl;
     cout << menuOpcoes;
 }
+
 /******************************************
  * Gestao de Clientes
  ******************************************/
+
 unsigned short int menuGestaoClientes() {
     unsigned short int opcao;
     bool control = false;
@@ -103,19 +122,29 @@ unsigned short int menuGestaoClientes() {
         Table menuClientes({ "1 - Listar clientes" });
         menuClientes.addNewLine({ "2 - Ver informacao cliente" });
         menuClientes.addNewLine({ "3 - Adicionar cliente" });
-        menuClientes.addNewLine({ "4 - Remover cliente" });
+		menuClientes.addNewLine({ "4 - Reativar cliente" });
+        menuClientes.addNewLine({ "5 - Remover cliente" });
         menuClientes.addNewLine({ "0 - Voltar ao menu inicial" });
         cout << menuClientes;
-        control = leUnsignedShortInt(opcao, 0, 4);
+        control = leUnsignedShortInt(opcao, 0, 5);
     } while (!control);
     return opcao;
 }
+
 void opcoesGestaoClientes(VendeMaisMais &supermercado) {
     unsigned int opcao;
-    string nome;
-    unsigned int idCliente;
+    
     while ((opcao = menuGestaoClientes())) {
+		string input;
+		unsigned int idCliente;
         bool control = false;
+		stringstream ss;
+		string str;
+		Table mostrarCliente({ "Informacao" , "Dados" });
+		Table confirmarAdicionar({ "Tem a certeza que pretende adicionar o cliente?" });
+		Table confirmarEliminar({ "Tem a certeza que pretende eliminar o cliente?" });
+		Table confirmarReativar({ "Tem a certeza que pretende eliminar o cliente?" });
+		Data hoje(true);
         switch (opcao) {
             case 1:           //=========== MOSTRAR CLIENTES ==============
                 clearScreen();
@@ -127,15 +156,16 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
                 do {
                     clearScreen();
                     mostrarMenuInicial(0);
+					supermercado.listarClientesOrdemAlfa();
                     Table introIdNome({ "Introduza o ID ou o NOME do cliente." });
                     cout << introIdNome << endl;
-                    getline(cin, nome);
-                    if (stringVazia(nome)) {
+                    getline(cin, input);
+                    if (stringVazia(input)) {
                         break;
                     }
-                    trimString(nome);
-                    if (isdigit(nome.at(0))) {
-                        idCliente = stoi(nome);
+                    trimString(input);
+                    if (isdigit(input.at(0))) {
+                        idCliente = stoi(input);
                         clearScreen();
                         mostrarMenuInicial(0);
                         control = supermercado.mostraInformacaoCliente(idCliente);
@@ -144,7 +174,7 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
                     else {
                         clearScreen();
                         mostrarMenuInicial(0);
-                        control = supermercado.mostraInformacaoCliente(nome);
+                        control = supermercado.mostraInformacaoCliente(input);
                         ignoreLine(false);
                     }
                 } while (!control);
@@ -155,49 +185,231 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
                     mostrarMenuInicial(0);
                     Table introIdNome({ "Introduza NOME do cliente." });
                     cout << introIdNome << endl;
-                    getline(cin, nome);
-                    if (stringVazia(nome)) {
+                    getline(cin, input);
+                    if (stringVazia(input)) {
                         break;
                     }
-                    trimString(nome);
-                    control = validateName(nome);
-                    ignoreLine(false, "Cliente adicionado com sucesso");
+                    trimString(input);
+                    control = validateName(input);
+                    //ignoreLine(false, "Cliente adicionado com sucesso");
                 } while (!control);
-                supermercado.adicionarCliente(nome);
+
+				
+
+				//Mostrar resumo da operacao
+				
+				ss << Cliente::getNumClientes() + 1;
+				str = ss.str();
+
+				mostrarCliente.addNewLine({ "Id de Cliente: " , str });  // Mostra o id
+
+				ss.str("");
+				ss << input;
+				str = ss.str();
+
+				mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+				ss.str("");
+				ss << hoje.mostrarData();
+				str = ss.str();
+
+
+				mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
+
+				clearScreen();
+				mostrarMenuInicial(0);
+
+				
+				cout << confirmarAdicionar;
+
+				if (!confirmar(mostrarCliente.getTableVector(), mostrarCliente.getBlocks(), mostrarCliente.getColumsWidth(), mostrarCliente.getIndentacao())) {
+					break;
+				}
+				ignoreLine(false, "Cliente adicionado com sucesso");
+                supermercado.adicionarCliente(input);
                 supermercado.saveChanges();
                 break;
-            case 4:            //============  ELIMINAR CLIENTES ================
+            case 5:            //============  ELIMINAR CLIENTES ================
                 do {
                     clearScreen();
                     mostrarMenuInicial(0);
+					supermercado.listarClientesOrdemAlfa(true);
                     Table introIdNome({ "Introduza o ID ou o NOME do cliente a eliminar." });
                     cout << introIdNome << endl;
-                    getline(cin, nome);
-                    if (stringVazia(nome)) {
+                    getline(cin, input);
+                    if (stringVazia(input)) {
                         break;
                     }
-                    trimString(nome);
-                    if (isdigit(nome.at(0))) {
-                        idCliente = stoi(nome);
+                    trimString(input);
+                    if (isdigit(input.at(0))) { // ELIMINAR PELO ID
+                        idCliente = stoi(input);
                         control = supermercado.eliminarCliente(idCliente);
-                        ignoreLine(false);
+
+						//Mostrar resumo da operacao
+
+						ss << idCliente;
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Id de Cliente: " , str });  // Mostra o id
+
+						ss.str("");
+						ss << supermercado.getMapIDtoCliente().at(idCliente);
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+						ss.str("");
+						ss << hoje.mostrarData();
+						str = ss.str();
+
+
+						mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
+
+						clearScreen();
+						mostrarMenuInicial(0);
+
+						
+						cout << confirmarEliminar;
+
+						if (!confirmar(mostrarCliente.getTableVector(), mostrarCliente.getBlocks(), mostrarCliente.getColumsWidth(), mostrarCliente.getIndentacao())) {
+							break;
+						}
+						ignoreLine(false, "Cliente eliminado com sucesso");
                     }
-                    else {
-                        control = supermercado.eliminarCliente(nome);
-                        ignoreLine(false);
+                    else {   // ELIMINAR PELO NOME
+                        control = supermercado.eliminarCliente(input);
+
+						//Mostrar resumo da operacao
+
+						ss << supermercado.getMapNametoCliente().at(input);
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Id de Cliente: " , str });  // Mostra o id
+
+						ss.str("");
+						ss << input;
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+						ss.str("");
+						ss << hoje.mostrarData();
+						str = ss.str();
+
+
+						mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
+
+						clearScreen();
+						mostrarMenuInicial(0);
+
+
+						cout << confirmarEliminar;
+
+						if (!confirmar(mostrarCliente.getTableVector(), mostrarCliente.getBlocks(), mostrarCliente.getColumsWidth(), mostrarCliente.getIndentacao())) {
+							break;
+						}
+						ignoreLine(false, "Cliente eliminado com sucesso");
                     }
                 } while (!control);
                 supermercado.saveChanges();
                 break;
+			case 4:  //================ REATIVAR CLIENTE ==================
+				do {
+					clearScreen();
+					mostrarMenuInicial(0);
+					supermercado.listarClientesOrdemAlfa();
+					Table introIdNome({ "Introduza o ID ou o NOME do cliente." });
+					cout << introIdNome << endl;
+					getline(cin, input);
+					if (stringVazia(input)) {
+						break;
+					}
+					trimString(input);
+					if (isdigit(input.at(0))) { //  REATIVAR PELO ID
+						idCliente = stoi(input);
+						clearScreen();
+						mostrarMenuInicial(0);
+						control = supermercado.reactivarCliente(idCliente);
+						
+						//Mostrar resumo da operacao
+
+						ss << idCliente;
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Id de Cliente: " , str });  // Mostra o id
+
+						ss.str("");
+						ss << supermercado.getMapIDtoCliente().at(idCliente);
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+						ss.str("");
+						ss << hoje.mostrarData();
+						str = ss.str();
+
+
+						mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
+
+						clearScreen();
+						mostrarMenuInicial(0);
+
+
+						cout << confirmarReativar;
+
+						if (!confirmar(mostrarCliente.getTableVector(), mostrarCliente.getBlocks(), mostrarCliente.getColumsWidth(), mostrarCliente.getIndentacao())) {
+							break;
+						}
+						ignoreLine(false, "Cliente reativado com sucesso");
+					}
+					else {  //  REATIVAR PELO NOME
+						clearScreen();
+						mostrarMenuInicial(0);
+						control = supermercado.reactivarCliente(input);
+						
+						//Mostrar resumo da operacao
+
+						ss << supermercado.getMapNametoCliente().at(input);
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Id de Cliente: " , str });  // Mostra o id
+
+						ss.str("");
+						ss << input;
+						str = ss.str();
+
+						mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
+
+						ss.str("");
+						ss << hoje.mostrarData();
+						str = ss.str();
+
+
+						mostrarCliente.addNewLine({ "Cartao de Cliente: " , str });
+
+						clearScreen();
+						mostrarMenuInicial(0);
+
+
+						cout << confirmarReativar;
+
+						if (!confirmar(mostrarCliente.getTableVector(), mostrarCliente.getBlocks(), mostrarCliente.getColumsWidth(), mostrarCliente.getIndentacao())) {
+							break;
+						}
+						ignoreLine(false, "Cliente reativado com sucesso");
+					}
+				} while (!control);
+				break;
             case 0:
                 break;
         }
-        //break;
     }
 }
+
 /******************************************
  * Gestao de Produtos
  ******************************************/
+
 unsigned short int menuGestaoProdutos() {
     unsigned short int opcao;
     bool control = false;
@@ -205,13 +417,15 @@ unsigned short int menuGestaoProdutos() {
         mostrarMenuInicial(2);
         Table menuProdutos({ "1 - Listar produtos" }, 17);
         menuProdutos.addNewLine({ "2 - Adicionar produto" });
-        menuProdutos.addNewLine({ "3 - Remover produto" });
+        menuProdutos.addNewLine({ "3 - Reativar produto" });
+		menuProdutos.addNewLine({ "4 - Remover produto" });
         menuProdutos.addNewLine({ "0 - Voltar ao menu inicial" });
         cout << menuProdutos;
-        control = leUnsignedShortInt(opcao, 0, 3);
+        control = leUnsignedShortInt(opcao, 0, 4);
     } while (!control);
     return opcao;
 }
+
 void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
     unsigned int opcao;
     while ((opcao = menuGestaoProdutos())) {
@@ -221,12 +435,21 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
         bool sairDoSwitch = false;
         pair<string, float> pairNomeCusto;
         vector<unsigned int> vectorInteiros;
+
+		stringstream ss;
+		string str;
+		Table mostrarProduto({ "Informacao" , "Dados" });
+		Table mostrarProdutos({ "Nome", "Custo" });
+
+		Table confirmarAdicionar({ "Tem a certeza que pretende adicionar o produto?" });
+		Table confirmarEliminar({ "Tem a certeza que pretende eliminar o(s) produto(s)?" });
+		Table confirmarReativar({ "Tem a certeza que pretende reativar o(s) produto(s)?" });
         switch (opcao) {
             case 1:     // ============== MOSTRAR PRODUTOS ============
                 clearScreen();
                 mostrarMenuInicial(0);
                 supermercado.listarProdutos();
-                ignoreLine();
+                ignoreLine(false);
                 break;
             case 2:     // ============== ADICIONAR PRODUTO ===========
                 while (!control) {
@@ -243,10 +466,38 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
                     }
                 }
                 if (sairDoSwitch) break;  //Teclar enter apenas, cancela a operacao
+
+				//================================================
+				//Mostrar resumo da operacao
+				//================================================
+				ss << pairNomeCusto.first;
+				str = ss.str();
+
+				mostrarProduto.addNewLine({ "Nome do produto: " , str });  // Mostra o nome do produto
+
+				ss.str("");
+				ss << pairNomeCusto.second;
+				str = ss.str();
+
+				mostrarProduto.addNewLine({ "Custo do produto: " , str }); // Mostra o custo
+
+
+				clearScreen();
+				mostrarMenuInicial(0);
+
+
+				cout << confirmarAdicionar;
+
+				if (!confirmar(mostrarProduto.getTableVector(), mostrarProduto.getBlocks(), mostrarProduto.getColumsWidth(), mostrarProduto.getIndentacao())) {
+					break;
+				}
+				ignoreLine(false, "Produto adicionado com sucesso");
+
                 supermercado.adicionarProduto(pairNomeCusto.first, pairNomeCusto.second);
-                ignoreLine(false);
+				supermercado.saveChanges();
+
                 break;
-            case 3:    // ================ ELIMINAR PRODUTO ===========
+            case 4:    // ================ ELIMINAR PRODUTO ===========
                 while (!control) {
                     clearScreen();
                     mostrarMenuInicial(0);
@@ -262,17 +513,142 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
                     }
                 }
                 if (sairDoSwitch) break;  //Teclar enter apenas, cancela a operacao
+
                 for (size_t i = 0; i < vectorInteiros.size(); i++) {
-                    supermercado.eliminarProduto(vectorInteiros.at(i));
+
+					//================================================
+					//Mostrar resumo da operacao
+					//================================================
+					if (vectorInteiros.size() == 1) {
+						ss.str("");
+						ss << supermercado.getMapIDtoProduct().at(vectorInteiros.at(i)).getNome();
+						str = ss.str();
+
+						mostrarProduto.addNewLine({ "Nome do produto: " , str });  // Mostra o nome do produto
+
+						ss.str("");
+						ss << supermercado.getMapIDtoProduct().at(vectorInteiros.at(i)).getCusto();
+						str = ss.str();
+
+						mostrarProduto.addNewLine({ "Custo do produto: " , str }); // Mostra o custo
+
+						clearScreen();
+						mostrarMenuInicial(0);
+				
+						cout << confirmarEliminar;
+
+					}
+					else {
+
+						mostrarProdutos.addNewLine({ supermercado.getMapIDtoProduct().at(vectorInteiros.at(i)).getNome() , to_string(vectorInteiros.at(i)) });  // Mostra o produto
+						
+						clearScreen();
+						mostrarMenuInicial(0);
+
+						cout << confirmarEliminar;
+
+						
+					}		
                 }
-                ignoreLine(false);
+
+				if (vectorInteiros.size() == 1) {
+					if (!confirmar(mostrarProduto.getTableVector(), mostrarProduto.getBlocks(), mostrarProduto.getColumsWidth(), mostrarProduto.getIndentacao())) {
+						break;
+					}
+				}
+				else {
+					if (!confirmar(mostrarProdutos.getTableVector(), mostrarProdutos.getBlocks(), mostrarProdutos.getColumsWidth(), mostrarProdutos.getIndentacao())) {
+						break;
+					}
+				}
+					
+				ignoreLine(false, "Produto(s) eliminado(s) com sucesso");
+				
+				for (size_t i = 0; i < vectorInteiros.size(); i++) {
+					supermercado.eliminarProduto(vectorInteiros.at(i));
+				}
+					
                 break;
+
+			case 3:    // ================ REATIVAR PRODUTO ===========
+				while (!control) {
+					clearScreen();
+					mostrarMenuInicial(0);
+					supermercado.listarProdutos();
+					control = leVectorInteiros(vectorInteiros, "Introduza os ID's dos produtos a reativar.");
+					if (!control) {
+						cin.get();
+						continue;
+					}
+					if (vectorInteiros.size() == 0) {
+						sairDoSwitch = true;
+						break;
+					}
+				}
+				if (sairDoSwitch) break;  //Teclar enter apenas, cancela a operacao
+
+				for (size_t i = 0; i < vectorInteiros.size(); i++) {
+
+					//================================================
+					//Mostrar resumo da operacao
+					//================================================
+					if (vectorInteiros.size() == 1) {
+						ss.str("");
+						ss << supermercado.getMapIDtoProduct().at(vectorInteiros.at(i)).getNome();
+						str = ss.str();
+
+						mostrarProduto.addNewLine({ "Nome do produto: " , str });  // Mostra o nome do produto
+
+						ss.str("");
+						ss << supermercado.getMapIDtoProduct().at(vectorInteiros.at(i)).getCusto();
+						str = ss.str();
+
+						mostrarProduto.addNewLine({ "Custo do produto: " , str }); // Mostra o custo
+
+						clearScreen();
+						mostrarMenuInicial(0);
+
+						cout << confirmarReativar;
+
+					}
+					else {
+
+						mostrarProdutos.addNewLine({ supermercado.getMapIDtoProduct().at(vectorInteiros.at(i)).getNome() , to_string(vectorInteiros.at(i)) });  // Mostra o produto
+
+						clearScreen();
+						mostrarMenuInicial(0);
+
+						cout << confirmarReativar;
+
+
+					}
+				}
+				if (vectorInteiros.size() == 1) {
+					if (!confirmar(mostrarProduto.getTableVector(), mostrarProduto.getBlocks(), mostrarProduto.getColumsWidth(), mostrarProduto.getIndentacao())) {
+						break;
+					}
+				}
+				else {
+					if (!confirmar(mostrarProdutos.getTableVector(), mostrarProdutos.getBlocks(), mostrarProdutos.getColumsWidth(), mostrarProdutos.getIndentacao())) {
+						break;
+					}
+				}
+
+				ignoreLine(false, "Produto(s) reativado(s) com sucesso");
+
+				for (size_t i = 0; i < vectorInteiros.size(); i++) {
+					supermercado.reactivarProduto(vectorInteiros.at(i));
+				}
+
+				break;
         }
     }
 }
+
 /******************************************
  * Gestao de Transacoes
  ******************************************/
+
 unsigned short int menuGestaoTransacoes() {
     unsigned short int opcao;
     bool control = false;
@@ -289,6 +665,7 @@ unsigned short int menuGestaoTransacoes() {
     } while (!control);
     return opcao;
 }
+
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
     unsigned int opcao;
     while ((opcao = menuGestaoTransacoes())) {
@@ -300,7 +677,6 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
         vector<unsigned int> vetorIdProdutos;
         vector<string> vetorStringDatas;
         bool controlAux = false;
-        unsigned int iterador = 0;
         switch (opcao) {
             case 1:      //    =============== REGISTRAR COMPRA ==============
                 do {
@@ -309,12 +685,8 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
                     supermercado.listarClientesOrdemAlfa(true); //Mostra clientes e seus respetivos ids
                     Table introIdNome({ "Introduza o ID do cliente." });
                     cout << introIdNome << endl;
-                    if (iterador == 0)
-                        cin.ignore();
-                    iterador++;
                     getline(cin, input);
                     if (stringVazia(input)) {
-                        //cin.ignore();
                         sairDoSwitch = true;
                         break;
                     }
@@ -347,7 +719,6 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
             case 2:      //  =========== LISTAR TODAS AS TRANSACOES ===========
                 clearScreen();
                 mostrarMenuInicial(0);
-                cin.ignore();
                 supermercado.listarTransacoes();
                 ignoreLine(false);
                 break;
@@ -358,9 +729,6 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
                     supermercado.listarClientesOrdemAlfa();
                     Table introIdNome({ "Introduza o ID ou o NOME do cliente." });
                     cout << introIdNome << endl;
-                    if (iterador == 0)
-                        cin.ignore();
-                    iterador++;
                     getline(cin, input);
                     if (stringVazia(input)) {
                         //cin.ignore();
@@ -396,9 +764,6 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
                     clearScreen();
                     mostrarMenuInicial(0);
                     supermercado.listarTransacoes();
-                    if (iterador == 0)
-                        cin.ignore();
-                    iterador++;
                     controlAux = leDatas(vetorStringDatas, "Introduza uma data.");
                     if (!controlAux) {
                         cin.get();
@@ -429,13 +794,9 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
                     mostrarMenuInicial(0);
                     supermercado.listarProdutos();
                     Table introIdNome({ "Introduza o ID ou o NOME do produto." });
-                    cout << introIdNome << endl;
-                    if (iterador == 0)
-                        cin.ignore();
-                    iterador++;
+                    cout << introIdNome << endl;                    
                     getline(cin, input);
                     if (stringVazia(input)) {
-                        //cin.ignore();
                         sairDoSwitch = true;
                         break;
                     }
@@ -466,37 +827,104 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
         }
     }
 }
+
 /******************************************
  * Gestao de Recomendacao
  ******************************************/
+
 unsigned short int menuRecomendacao() {
     unsigned short int opcao;
     bool control = false;
     do {
-        mostrarMenuInicial(3);
-        Table menuProdutos({ "1 - Listar sugestoes para todos os clientes" }, 34);
-        menuProdutos.addNewLine({ "2 - Listar sugestao de produto para um cliente" });
-        menuProdutos.addNewLine({ "3 - Listar clientes adicionados recentemente" });
+        mostrarMenuInicial(4);
+        Table menuProdutos({ "1 - Listar sugestoes para todos os clientes" }, 53);
+        menuProdutos.addNewLine({ "2 - Mostrar sugestao de produto para um cliente" });
+        menuProdutos.addNewLine({ "3 - Listar sugestoes para os N piores clientes" });
         menuProdutos.addNewLine({ "0 - Voltar ao menu inicial" });
         cout << menuProdutos;
         control = leUnsignedShortInt(opcao, 0, 5);
     } while (!control);
     return opcao;
 }
+
 void opcoesRecomendacao(VendeMaisMais & supermercado) {
     unsigned int opcao;
-    while ((opcao = menuRecomendacao()))
-        switch (opcao) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-        }
+	
+	while ((opcao = menuRecomendacao())) {
+		string input;
+		unsigned int idCliente;
+		bool control = false;
+		switch (opcao) {
+		case 1:
+			clearScreen();
+			mostrarMenuInicial(0);
+			supermercado.listarRecomendacoes();
+			ignoreLine(false);
+			break;
+		case 2:
+			do {
+				clearScreen();
+				mostrarMenuInicial(0);
+				supermercado.listarClientesOrdemAlfa();
+				Table introIdNome({ "Introduza o ID ou o NOME do cliente." });
+				cout << introIdNome << endl;
+				getline(cin, input);
+				if (stringVazia(input)) {
+					break;
+				}
+				trimString(input);
+				if (isdigit(input.at(0))) {
+					idCliente = stoi(input);
+					clearScreen();
+					mostrarMenuInicial(0);
+					control = supermercado.mostraMensagemRecomendacaoCliente(idCliente);
+					ignoreLine(false);
+				}
+				else {
+					clearScreen();
+					mostrarMenuInicial(0);
+					control = supermercado.mostraMensagemRecomendacaoCliente(input);
+					ignoreLine(false);
+				}
+			} while (!control);
+			break;
+		case 3:
+			do {
+				clearScreen();
+				mostrarMenuInicial(0);
+				supermercado.listarClientesOrdemAlfa();
+				Table introN({ "Introduza N para mostrar as recomendacoes dos N piores clientes." });
+				cout << introN << endl;
+				getline(cin, input);
+				if (stringVazia(input)) {
+					break;
+				}
+				trimString(input);
+
+				//control = leUnsignedInt(idCliente, 1, supermercado.getMapIDtoCliente().size(), "Numero de clientes invalido");//idCLiente = N
+
+				
+
+				if (isdigit(input.at(0))) {
+					idCliente = stoi(input);
+					clearScreen();
+					mostrarMenuInicial(0);
+					supermercado.listarRecomendacoes(supermercado.calcularBottomN(idCliente));
+					control = true;
+					ignoreLine(false);
+				}
+				else {
+	
+					Table erro({ "Valor invalido" });
+					cout << erro;
+					control = false;
+					ignoreLine(false);
+				}
+			} while (!control);
+
+			break;
+		case 4:
+			break;
+		}
+	}
 }
-/******************************************
- * Menu Inicial
- ******************************************/

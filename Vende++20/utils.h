@@ -19,8 +19,6 @@ using namespace std;
 
 void clearScreen();
 
-bool leUnsignedShortInt(unsigned short int &input, unsigned short int min, unsigned short int  max, string mensagemErro = "Input invalido");
-
 void trimString(string &inputString);
 
 bool validateName(string &nome);
@@ -35,6 +33,10 @@ bool validateInputStream(istream &inStream, string errorMessage);
 
 bool stringVazia(string stringTeste);
 
+bool leUnsignedShortInt(unsigned short int &input, unsigned short int min, unsigned short int  max, string mensagemErro = "Input invalido");
+
+bool leUnsignedInt(unsigned int &input, unsigned int min, unsigned int  max, string mensagemErro = "Input invalido");
+
 bool leVectorInteiros(vector <unsigned int> &resultado,
 	string mensagem, string mensagemErro = "Por favor insira pelo menos um numero inteiro positivo");
 
@@ -42,4 +44,4 @@ bool leDatas(vector<string> &resultado, string mensagem, string mensagemErro = "
 
 bool leStringFloat(pair<string, float> &resultado, string mensagem, string mensagemErro = "Input invalido");
 
-bool confirmar(string mensagemConfirmacao);
+bool confirmar(vector<vector<string>> mensagemConfirmacao, vector<bool> blocks, vector<int> spacesForColumn, unsigned int indentacao);

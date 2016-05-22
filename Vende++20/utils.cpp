@@ -318,6 +318,51 @@ bool leUnsignedShortInt(unsigned short int &input, unsigned short int min, unsig
 
 }
 
+bool leUnsignedInt(unsigned int &input, unsigned int min, unsigned int  max, string mensagemErro) {
+
+	string inputUser;
+	bool resultadoBool = false;
+
+	Table tabelaMensagemErro({ mensagemErro });
+
+	getline(cin, inputUser);
+	stringstream inteirosStream(inputUser);
+	trimString(inputUser);
+
+	if (inputUser.size() == 0) {
+
+		input = 0;
+		return true;
+
+	}
+
+	while (!inteirosStream.eof()) {
+
+		unsigned int currentInt;
+		inteirosStream >> currentInt;
+
+		if (inteirosStream.fail()) {
+
+			inteirosStream.clear();
+			inteirosStream.ignore(1);
+		}
+
+		else {
+
+			input = currentInt;
+			resultadoBool = true;
+			break;
+		}
+	}
+
+	if (!resultadoBool) {
+
+		cout << tabelaMensagemErro << endl;
+	}
+
+	return resultadoBool;
+}
+
 bool leVectorInteiros(vector <unsigned int> &resultado, string mensagem, string mensagemErro) {
 
 	string inteiros;
@@ -499,13 +544,12 @@ bool leStringFloat(pair<string, float> &resultado, string mensagem, string mensa
 
 }
 
-bool confirmar(string mensagemConfirmacao) {
+bool confirmar(vector<vector<string>> mensagemConfirmacao, vector<bool> blocks, vector<int> spacesForColumn, unsigned int indentacao) {
     
     bool resultado = false;
     string resposta;
     Table confirmar ({"Prima Enter para confirmar ou qualquer tecla para voltar atras."});
-    
-    Table mensagem({mensagemConfirmacao});
+	Table mensagem(mensagemConfirmacao, blocks, spacesForColumn, indentacao);
     cout << mensagem << endl;
     cout << confirmar << endl;
     
@@ -513,7 +557,7 @@ bool confirmar(string mensagemConfirmacao) {
     getline(cin, resposta);
     
     if (resposta.size()==0) {
-        resposta = true;
+        resultado = true;
     }
     
     
