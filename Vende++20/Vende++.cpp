@@ -20,27 +20,33 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     Cliente::setNumClientes(0);
     Produto::setNumProdutos(0);
     
-    unsigned int numeroClientes;
-    unsigned int numeroProdutos;
-    unsigned int numeroTransacoes;
+    unsigned int numeroClientes = 0;
+    unsigned int numeroProdutos = 0;
+    unsigned int numeroTransacoes = 0;
     
     this->loja = loja;
     this->fichClientes = fichClients;
     this->fichProdutos = fichProdutos;
     this->fichTransacoes = fichTransacoes;
     
-    
     inStreamClientes.open(this->fichClientes.c_str());
-    inStreamClientes >> numeroClientes;
-    inStreamClientes.ignore(1000, '\n');
+    if (!inStreamClientes.eof()) {
+        inStreamClientes >> numeroClientes;
+        inStreamClientes.ignore(1000, '\n');
+    }
     
     inStreamProdutos.open(this->fichProdutos.c_str());
-    inStreamProdutos >> numeroProdutos;
-    inStreamProdutos.ignore(1000, '\n');
+    if (!inStreamProdutos.eof()) {
+        inStreamProdutos >> numeroProdutos;
+        inStreamProdutos.ignore(1000, '\n');
+    }
     
     inStreamTransacoes.open(this->fichTransacoes.c_str());
-    inStreamTransacoes >> numeroTransacoes;
-    inStreamTransacoes.ignore(1000, '\n');
+    if (!inStreamTransacoes.eof()) {
+        inStreamTransacoes >> numeroTransacoes;
+        inStreamTransacoes.ignore(1000, '\n');
+    }
+    
     
     //ler todos os clientes
     
@@ -112,7 +118,7 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
     if (!inStreamProdutos.eof()) {
         
         unsigned int produtoId;
-        string inactiveProducts; //lê a ultima linha do ficheiro que contém a lista de clientes inactivos
+        string inactiveProducts; //lê a ultima linha do ficheiro que contém a lista de produtos inactivos
         getline(inStreamProdutos, inactiveProducts);
         getline(inStreamProdutos, inactiveProducts);
         stringstream inactiveProductsStream(inactiveProducts);
@@ -171,7 +177,6 @@ VendeMaisMais::VendeMaisMais(string loja, string fichClients, string fichProduto
         }
         
     }
-    
     
     inStreamClientes.close();
     inStreamProdutos.close();
@@ -1366,52 +1371,78 @@ Produto VendeMaisMais::obterProdutoMaisVendido(unsigned int clienteId, unsigned 
 
 vector<string> VendeMaisMais::fazerPublicidade(vector<unsigned int> vetorIdClientes) {
     
+    this->preencherMatrizes();
     vector<string> resultado;
+    vector<unsigned int> idsClientesAUsar;
     
-    if (vetorIdClientes.size() == 0) {
+    //preencher o vetor de clientes a usar para fazer publicidade, se entrar vazio nesta função faz-se para todos, se entrar com alguns ids, faz-se so para esses
+    
+    if (vetorIdClientes.size() > 0) {
         
-        for (constIntClient iteradorCliente = this->clientes.begin(); iteradorCliente != this->clientes.end(); iteradorCliente++) {
+        for (size_t j = 0; j < vetorIdClientes.size(); j++) {
             
+            for (constIntClient iteradorClientes = this->clientes.begin(); iteradorClientes != this->clientes.end(); iteradorClientes++) {
+                
+                if (iteradorClientes->first == vetorIdClientes.at(j)) {
+                    
+                    idsClientesAUsar.push_back(iteradorClientes->first);
+                }
+                
+            }
+            
+        }
+    }
+    
+    else {
+            
+        for (constIntClient iteradorClientes = this->clientes.begin(); iteradorClientes != this->clientes.end(); iteradorClientes++) {
+            
+            idsClientesAUsar.push_back(iteradorClientes->first);
+        }
+        
+    }
+    
+    for (size_t i = 0; i < idsClientesAUsar.size(); i++) {
+        
             Produto produtoAtual;
-            unsigned int caso = this->obterProdutoRecomendado(produtoAtual, iteradorCliente->first);
+            unsigned int caso = this->obterProdutoRecomendado(produtoAtual, idsClientesAUsar.at(i));
             string mensagem;
             
             switch (caso) {
                 case 0:
-                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", ainda nao efectuou nenhuma compra no nosso supermercado, considere comprar o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
-
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", ainda nao efectuou nenhuma compra no nosso supermercado, considere comprar o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+                    
                     break;
                     
                 case 1:
-                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + " sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que considere a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
                     
                     break;
-                
+                    
                 case 2:
-                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + " sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome()  + ", sugerimos que consider a possibilidade de comprar " + produtoAtual.getNome() + ".\n";
                     
                     break;
                     
                 case 3:
-                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + ", verificamos que é o cliente com mais compras efectuadas. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que é o cliente com mais produtos comprados. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
                     break;
                     
                 case 4:
-                    mensagem = "Caro(a) " + iteradorCliente->second.getNome() + ", com base em estatísticas do " + this->loja + ", verificamos que já comprou todos os nossos produtos. Receba os nossos parabéns. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + ".\n";
+                    mensagem = "Caro(a) " + this->clientes.at(idsClientesAUsar.at(i)).getNome() + ", verificamos que já comprou todos os nossos produtos. Receba os nossos parabéns. Considere comprar novamente o nosso produto mais popular: " + produtoAtual.getNome() + " com 15 % de desconto. \n";
                     break;
             }
-            
+                        
             resultado.push_back(mensagem);
-            
+        
         }
 
-    }
-    
     return resultado;
     
 }
 
 void VendeMaisMais::mostrarMatrizes() const {
+    
     
     cout << endl;
     
@@ -1446,9 +1477,9 @@ void VendeMaisMais::mostrarMatrizes() const {
     
 }
 
-vector<unsigned int> VendeMaisMais::calcularBottomN(unsigned int bottomN) const {
+vector<unsigned int> VendeMaisMais::calcularBottomN(unsigned int bottomN) {
     
-    
+    this->preencherMatrizes();
     if (bottomN > this->matrizes.at(0).size()) {
         
         bottomN = (unsigned int)this->matrizes.at(0).size();
@@ -1481,8 +1512,6 @@ vector<unsigned int> VendeMaisMais::calcularBottomN(unsigned int bottomN) const 
     
     multimap<unsigned int, unsigned int>::const_iterator iteradorMapa = mapaClientesNumeroTransacoes.begin();
     
-    
-    
     for (int i = 0; i < resultado.size(); i++) {
         
         resultado.at(i) = iteradorMapa->second;
@@ -1490,12 +1519,15 @@ vector<unsigned int> VendeMaisMais::calcularBottomN(unsigned int bottomN) const 
         
     }
     
-    for (int i = 0; i < resultado.size(); i++) {
-        
-        cout << resultado.at(i) << endl;
-        
-    }
-    
     return resultado;
     
+}
+
+void VendeMaisMais::preencherMatrizes() {
+    
+    for (constIntClient iteradorCliente = this->clientes.begin(); iteradorCliente != this->clientes.end(); iteradorCliente++) {
+        
+        Produto produtoAtual;
+        obterProdutoRecomendado(produtoAtual, iteradorCliente->first);
+    }
 }

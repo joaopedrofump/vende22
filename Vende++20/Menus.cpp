@@ -12,11 +12,14 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
      getline(cin, fichProdutos);
      cout << "Introduza o nome do ficheiro de transações" << endl;
      getline(cin, fichTransacoes);*/
+    
     loja = "Micro-Preço";
     fichClientes = "clientes.txt";
     fichProdutos = "produtos.txt";
     fichTransacoes = "transacoes.txt";
+    
 #ifdef __llvm__
+    
     string fichclientes2 = "";
     string fichProdutos2 = "";
     string fichTransacoes2 = "";
@@ -27,6 +30,7 @@ bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, strin
     fichProdutos = fichProdutos2;
     fichTransacoes = fichTransacoes2;
 #endif
+    
     inStreamClientes.open(fichClientes.c_str());
     clientesExiste = inStreamClientes.good();
     inStreamProdutos.open(fichProdutos.c_str());

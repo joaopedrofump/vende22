@@ -25,9 +25,7 @@ void trimString(string &inputString);
 
 bool validateName(string &nome);
 
-
 bool validateProduct(string &nome);
-
 
 void SetCursor(int column, int line);
 
@@ -43,3 +41,5 @@ bool leVectorInteiros(vector <unsigned int> &resultado,
 bool leDatas(vector<string> &resultado, string mensagem, string mensagemErro = "Formato de Datas Invalido");
 
 bool leStringFloat(pair<string, float> &resultado, string mensagem, string mensagemErro = "Input invalido");
+
+bool confirmar(string mensagemConfirmacao);
