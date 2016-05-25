@@ -114,5 +114,15 @@ public:
 	void listarRecomendacoes(vector< unsigned int> vetorIdClientes = {});
 	bool mostraMensagemRecomendacaoCliente(string nome);
 	bool mostraMensagemRecomendacaoCliente(unsigned int clientId);
+    
+    vector <Transacao> getTransacoes() const;
+    map <unsigned int, Cliente> getClientes() const;
+    map <unsigned int, Produto> getProdutos() const;
+    bool existemProdutosActivos() const;
+    bool existemClientesActivos() const;
+    bool existemProdutosInactivos() const;
+    bool existemClientesInactivos() const;
+    void listarClientesOrdemAlfaInactivos() const;
+    
        
 };

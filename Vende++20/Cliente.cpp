@@ -129,7 +129,7 @@ ostream& operator<<(ostream& out, const Cliente &cliente) {
 	out << cliente.getId() << " ; ";
 	out << cliente.getNome() << " ; ";
 	out << cliente.getCartaoCliente() << " ; ";
-	out << cliente.getVolCompras() << endl;
+	out << fixed << setprecision(2) << cliente.getVolCompras() << endl;
 
 	return out;
 }
@@ -165,7 +165,7 @@ vector<string> Cliente::toTable() const {
 	output.push_back(cartaoCliente.mostrarData());
 
 	ss.str("");
-	ss << volCompras;
+	ss << setw(17) << fixed << setprecision(2) << right << volCompras;
 	str = ss.str();
 	output.push_back(str);
 

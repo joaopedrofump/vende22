@@ -1,2 +1,24 @@
-0
+21
+1 ; Jao Pinheiro ; 24/5/2016 ; 0.00
+2 ; Filipa Santos ; 24/5/2016 ; 2.70
+3 ; Elisabete Pereira ; 24/5/2016 ; 26.40
+4 ; Rui Santos ; 24/5/2016 ; 0.00
+5 ; Filipe Silva ; 24/5/2016 ; 0.00
+6 ; Arminda Moura ; 24/5/2016 ; 1.10
+7 ; Joana Matos ; 24/5/2016 ; 3.40
+8 ; Cesar Ferreira ; 24/5/2016 ; 0.00
+9 ; Joao Moreira ; 24/5/2016 ; 0.00
+10 ; Catarina Fontes ; 24/5/2016 ; 0.00
+11 ; Mario Sampaio ; 24/5/2016 ; 0.00
+12 ; Nuno Neves ; 24/5/2016 ; 0.00
+13 ; Andre Vila Real ; 24/5/2016 ; 0.00
+14 ; Jose Mourinho ; 24/5/2016 ; 1.70
+15 ; Joao Vasconcelos ; 24/5/2016 ; 0.00
+16 ; Marta Correia ; 24/5/2016 ; 2.80
+17 ; Dulce Clemente ; 24/5/2016 ; 3.70
+18 ; Joana Miranda ; 24/5/2016 ; 4.80
+19 ; Magda Bento ; 24/5/2016 ; 0.00
+20 ; Teofilo Fernandes ; 24/5/2016 ; 20.80
+21 ; Leonardo Teixeira ; 25/5/2016 ; 0.00
 ------------------------------------------------
+8 13 

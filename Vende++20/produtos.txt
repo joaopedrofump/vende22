@@ -1,3 +1,23 @@
-1
-Pao ; 0.1
+20
+Batatas-frita ; 0.6
+Cola ; 0.7
+Bacalhau ; 1.2
+Rissol ; 0.2
+Pastel ; 0.5
+Laranja ; 0.2
+Banana ; 0.5
+Pera ; 0.3
+Iogurte ; 0.5
+Queijo ; 13.5
+Farinha ; 1.1
+Manteiga ; 1.2
+Soja ; 1.4
+Leite ; 0.3
+Ovos ; 0.4
+Margarina ; 0.7
+Papel-Higienico ; 1.2
+Caneta ; 0.3
+Lapis ; 0.3
+Robalo ; 2.4
 ------------------------------------------------
+11 

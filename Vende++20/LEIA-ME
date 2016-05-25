@@ -1,7 +1,114 @@
-Este directório contém uma proposta INCOMPLETA de implementação do
-Trabalho 2.  NÃO é obrigatório utilizar esta estrutura de classes e
-ficheiros. O estudante tem toda a liberdade de não usar ou adaptar a
-porção de código fornecida.
+T7G02
+João Pinheiro/Leonardo Teixeira
+
+O programa foi concluído com todas as funcionalidades pedidas.
+Nota: O programa está preparado para correr a partir de ficheiros vazios ou já com informação.
+
+NOTA IMPORTANTE: Se os ficheiros já contiverem dados, os clintes já existentes têm de ter ids seguidos.
+
+Classe principal:
+VendeMaisMais
+    Mapa int,Cliente
+    Mapa string, Cliente
+    Mapa int, Produto
+    Mapa string, Produto
+    Vector <transacoes>
+    Mapa int, int -> idcliente, produto comprado
+
+Funcionalidades:
+
+Navegação:
+
+A navegação é feita através da introdução das opções visualizadas no ecrã. A tecla sem a inserção de nenhum caracter tem o efeito de voltar para trás.
 
 
-Bom trabalho ...
+1 - Clientes:
+    1.1 - Listar Clientes
+        Lista todos os cliente spor ordem alfabética fazendo uso do mapa <string, Cliente>
+
+    1.2 - Ver Informação de Cliente
+        Pede ao utilizador um id ou nome de cliente e verifica se o cliente foi encontrado, se sim, mostra a informação apenas desse cliente
+
+    1.3 - Adicionar Cliente:
+        É pedido o nome do cliente, esse nome é validade (terá de ter no mínimo duas palavras cada uma contendo no mínimo 2 caracteres e não contendo números. A função de validação também faz o trim e coloca cada primeira letra em maiuscula). Se a validação for feita correctamente o cliente é inserido no mapa <int,Cliente> e <string, Cliente>. É atribuído ao cliente um id a seguir ao id do ultimo cliente
+
+    1.4 - Remover Cliente:
+        É mostrada a lista de clientes e é pedido um id ou nome de cliente, é feita uma validação e se o id ou nome corresponder a algum cliente activo, esse cliente é desactivado. O ficheiro de clientes guarda no final de todos os clientes o id dos clientes inactivos
+
+    1.5 - Reactivar Cliente:
+        Faz o inverso da anterior
+
+2 - Produtos
+
+    2.1 - Listar Produtos
+        Lista todos os produtos por ordem alfabética fazendo uso do mapa <string, Produto>
+
+    2.2 - Adicionar Produto
+        Pede ao utilizador um nome para o produto e um preço na mesma linha, faz a validação do nome do produto(tem pelo menos 2 letras, além disso coloca a primeira letra de cada palavra em maiuscula), faz a validação do preço (float) e se conseguir validar as duas coisas insere o produto no mapa <int, Produto> e no mapa <string, Produto>. É atribuído ao produto um id a seguir ao id do produto cliente
+
+    2.3 - Remover Produto
+        Pede ao utilizador um id ou nome de produto, valida se esse produto existe e se existir desactiva esse produto. O ficheiro de produtos guarda no final o id de cada produto inactivo
+
+    Reactivar Produto
+        Faz o inverso da anterior
+
+3 - Transações
+
+    3.1 - Registar Transacao
+        Mostra a lista de clientes ao utilizador e pede um id, verifica se está na lista e se estiver mostra a lista de produtos, pede ao utilizador o id dos produtos separados por espaços, verifica se existe pelo menos um e se existir regista a transaçao, inserindo-a no vector de transaçoes e aumentando o volume de compras do cliente correspondente no mapa <int, Cliente> e <string, Cliente>
+    3.2 - Lista Transacoes
+        Mostra todas as transacoes ordenadas por data
+
+    3.3 - Lista Transacoes de um cliente
+        Pede um id ou nome de cliente ao utilizador validando-os e mostra apenas as transacoes desse cliente
+
+    3.4 - Lista transacoes por data
+        Pede ao utilizador até no maximo duas datas validando-as, se o utilizador inserir uma, mostra as transacoes desse dia, se introduzir duas, mostra as transacoes entre essas duas datas
+
+    3.5 - Listar transacoes por produto
+        Pede ao utilizador um id de produto e lista apenas as transacoes em que esse produto foi comprado
+
+4 - Recomendações
+
+    4.1 - Listar recomendações para todos os clientes
+        Lista as mensagens de sugestão para todos os clientes
+
+    4.2 - Listar recomendações de apenas alguns clientes
+        Pede uma lista de ids ao utilizador, valida se os ids pertencentem a clientes e mostra a recomendação apenas para esses cliente.
+
+    4.3 - Lista recomendações para os piores clientes
+        Pede um inteiro n ao utilizador e mostra as recomendaçoes apenas para os piores n clientes (um cliente é tanto pior quanto menor for o numero de produtos comprado)
+
+
+
+Breve explição do algoritmo de recomendações
+
+
+A classe VendeMaisMais tem um campo que é um vetor de matrizes. Uma matriz para cada cliente
+
+A matriz de cada cliente é constituido por n linhas em que n é o numero de clientes e constituida para m +1 colunas na linha correspondente ao seu id e m + 2 nas linhas correspondentes aos ids dos outros clientes. Cada linha é constituida por o id de cliente + m colunas correpondentes aos m produtos da loja + 1 sendo o utlimo elemento o numero de coincidencias que o cliente dessa linha tem com o cliente correspondente a essa matriz. Na linha do cliente este valor não existe. Cada celula da matriz é um inteiro que representa as vezes que o cliente dessa linha comprou o produto dessa coluna exceptuando a primeira coluna que representa o id do cliente e a ultima que representa o numero de coincidencias desse cliente com o cliente alvo
+
+Para obter o produto recomendado para cada cliente faz-se uso da sua matriz da seguinte forma:
+
+    Se o numero maximo de coincidencias com outros clientes for 0:
+
+        Caso A: O cliente ainda não comprou nenhum produto: recomenda-se o produto que mais clientes compraram
+
+        Caso B: O cliente comprou produtos mas mais ninguem comprou nenhum dos produtos que ele comprou: recomenda-se o produto que mais clientes compraram
+
+    Se o número máximo de coincidencias for maior que 0, ou seja, existem clientes que compraram pelo menos um produto que o cliente alvo tenha comprado:
+
+        Os clientes com coincidencias têm produtos que o cliente alvo ainda não comprou
+
+            Caso C: Existe apenas um cliente nessa circunstancia: recomenda-se o produto mais vezes comprado por esse cliente
+
+            Caso D: Existe mais do que um cliente nessa circunstancia: recomenda-se o produto que mais clientes compraram (independetemente da quantidade)
+
+        Os clientes com coincidencias não têm produtos que o cliente alvo ainda não comprou
+
+            Caso E: O cliente alvo comprou todos os produtos da loja: recomenda-se ao cliente que compre novamente o produto que mais clientes compraram embora ele já o tenha comprado
+
+            Caso F: O cliente alvo ainda não comprou todos os produtos da loja: recomenda-se ao cliente que compre novamente o produto que mais clientes compraram embora ele já o tenha comprado
+
+
+Nota: Em alguns dos casos, o produto recomendado é o mesmo mas são casos diferentes devido à mensagem apresentada ao cliente na sugestão.
