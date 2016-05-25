@@ -13,22 +13,32 @@ using namespace std;
 
 const string PATH = "/Users/joaofurriel/Documents/Estudo/MIEIC/Ano1/Programação/ProjectoVende++/Vende++20/Vende++20/";
 
+typedef map<unsigned int, Cliente>::const_iterator constIntClient;
+typedef map<string, Cliente>::const_iterator constIntClientString;
+
+typedef map<unsigned int, Produto>::const_iterator constIntProduto;
+typedef map<string, Produto>::const_iterator constIntProdutoString;
+
+typedef multimap<unsigned int, unsigned int>::const_iterator constIteMMTra;
+typedef pair <multimap<unsigned int,unsigned int>::iterator, multimap<unsigned int,unsigned int>::iterator> iteradorPar;
+
+
 bool infoInicial(string &loja, string &fichClientes, string &fichProdutos, string &fichTransacoes) {
     ifstream inStreamClientes, inStreamProdutos, inStreamTransacoes;
     bool clientesExiste, produtosExiste, transacoesExiste;
-    cout << "Introduza o nome da loja" << endl;
-     getline(cin, loja);
-     cout << "Introduza o nome do ficheiro de clientes" << endl;
-     getline(cin, fichClientes);
-     cout << "Introduza o nome do ficheiro de produtos" << endl;
-     getline(cin, fichProdutos);
-     cout << "Introduza o nome do ficheiro de transacoes" << endl;
-     getline(cin, fichTransacoes);
+//    cout << "Introduza o nome da loja" << endl;
+//     getline(cin, loja);
+//     cout << "Introduza o nome do ficheiro de clientes" << endl;
+//     getline(cin, fichClientes);
+//     cout << "Introduza o nome do ficheiro de produtos" << endl;
+//     getline(cin, fichProdutos);
+//     cout << "Introduza o nome do ficheiro de transacoes" << endl;
+//     getline(cin, fichTransacoes);
     
-    /*loja = "Micro-Preço";
+    loja = "Micro-Preço";
     fichClientes = "clientes.txt";
     fichProdutos = "produtos.txt";
-    fichTransacoes = "transacoes.txt";*/
+    fichTransacoes = "transacoes.txt";
     
 #ifdef __llvm__
     
@@ -154,17 +164,36 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 		Table mostrarCliente({ "Informacao" , "Dados" });
 		Table confirmarAdicionar({ "Tem a certeza que pretende adicionar o cliente?" });
 		Table confirmarEliminar({ "Tem a certeza que pretende eliminar o cliente?" });
-		Table confirmarReativar({ "Tem a certeza que pretende eliminar o cliente?" });
+		Table confirmarReativar({ "Tem a certeza que pretende reactivar o cliente?" });
 		Data hoje(true);
 
         switch (opcao) {
             case 1:           //=========== MOSTRAR CLIENTES ==============
+                
+                if (supermercado.getMapIDtoCliente().size() == 0) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem clientes."});
+                    ignoreLine(false);
+                    break;
+                }
                 clearScreen();
                 mostrarMenuInicial(0);
                 supermercado.listarClientesOrdemAlfa();
                 ignoreLine(false);
                 break;
             case 2:          //============ MOSTRAR UM CLIENTE ============
+                
+                if (supermercado.getMapIDtoCliente().size() == 0) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem clientes."});
+                    ignoreLine(false);
+                    break;
+                }
+                
                 do {
                     clearScreen();
                     mostrarMenuInicial(0);
@@ -243,6 +272,29 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
                 supermercado.saveChanges();
                 break;
             case 5:            //============  ELIMINAR CLIENTES ================
+                
+                
+                
+                
+                if (supermercado.getMapIDtoCliente().size() == 0) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem clientes."});
+                    ignoreLine(false);
+                    break;
+                }
+                
+                if (!supermercado.existemClientesActivos()) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem clientes activos."});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
                 do {
                     clearScreen();
                     mostrarMenuInicial(0);
@@ -256,6 +308,14 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
                     trimString(input);
                     if (isdigit(input.at(0))) { // ELIMINAR PELO ID
                         idCliente = stoi(input);
+                        
+                        if (!supermercado.getMapIDtoCliente().at(idCliente).getStatus()) {
+                            cout << Table({"O cliente ja se encontra inactivo."});
+                            ignoreLine(false);
+                            continue;
+                        }
+                        
+                        
                         control = supermercado.eliminarCliente(idCliente);
 
 						//Mostrar resumo da operacao
@@ -266,7 +326,7 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 						mostrarCliente.addNewLine({ "Id de Cliente: " , str });  // Mostra o id
 
 						ss.str("");
-						ss << supermercado.getMapIDtoCliente().at(idCliente);
+						ss << supermercado.getMapIDtoCliente().at(idCliente).getNome();
 						str = ss.str();
 
 						mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
@@ -327,10 +387,32 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
                 supermercado.saveChanges();
                 break;
 			case 4:  //================ REATIVAR CLIENTE ==================
-				do {
+				
+                if (supermercado.getMapIDtoCliente().size() == 0) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem clientes."});
+                    ignoreLine(false);
+                    break;
+                }
+                
+                
+                if (!supermercado.existemClientesInactivos()) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem clientes inactivos."});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
+                
+                do {
 					clearScreen();
 					mostrarMenuInicial(0);
-					supermercado.listarClientesOrdemAlfa();
+					supermercado.listarClientesOrdemAlfaInactivos();
 					Table introIdNome({ "Introduza o ID ou o NOME do cliente." });
 					cout << introIdNome << endl;
 					getline(cin, input);
@@ -340,6 +422,13 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 					trimString(input);
 					if (isdigit(input.at(0))) { //  REATIVAR PELO ID
 						idCliente = stoi(input);
+                        
+                        if (supermercado.getMapIDtoCliente().at(idCliente).getStatus()) {
+                            cout << Table({"O cliente ja se encontra activo."});
+                            ignoreLine(false);
+                            continue;
+                        }
+                        
 						clearScreen();
 						mostrarMenuInicial(0);
 						control = supermercado.reactivarCliente(idCliente);
@@ -352,7 +441,7 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 						mostrarCliente.addNewLine({ "Id de Cliente: " , str });  // Mostra o id
 
 						ss.str("");
-						ss << supermercado.getMapIDtoCliente().at(idCliente);
+						ss << supermercado.getMapIDtoCliente().at(idCliente).getNome();
 						str = ss.str();
 
 						mostrarCliente.addNewLine({ "Nome do Cliente: " , str }); // Mostra o Nome
@@ -376,6 +465,13 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 						ignoreLine(false, "Cliente reativado com sucesso");
 					}
 					else {  //  REATIVAR PELO NOME
+                        
+                        if (supermercado.getMapNametoCliente().at(input).getStatus()) {
+                            cout << Table({"O cliente ja se encontra activo."});
+                            ignoreLine(false);
+                            continue;
+                        }
+                        
 						clearScreen();
 						mostrarMenuInicial(0);
 						control = supermercado.reactivarCliente(input);
@@ -412,6 +508,7 @@ void opcoesGestaoClientes(VendeMaisMais &supermercado) {
 						ignoreLine(false, "Cliente reativado com sucesso");
 					}
 				} while (!control);
+                supermercado.saveChanges();
 				break;
             case 0:
                 break;
@@ -461,6 +558,14 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
             case 1:     // ============== MOSTRAR PRODUTOS ============
                 clearScreen();
                 mostrarMenuInicial(0);
+                
+                if (supermercado.getMapIDtoProduct().size() == 0) {
+                    
+                    cout << Table({"Nao existem produtos."});
+                    ignoreLine(false);
+                    break;
+                }
+                
                 supermercado.listarProdutos();
                 ignoreLine(false);
                 break;
@@ -489,7 +594,7 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
 				mostrarProduto.addNewLine({ "Nome do produto: " , str });  // Mostra o nome do produto
 
 				ss.str("");
-				ss << pairNomeCusto.second;
+				ss << fixed << setprecision(2) << pairNomeCusto.second;
 				str = ss.str();
 
 				mostrarProduto.addNewLine({ "Custo do produto: " , str }); // Mostra o custo
@@ -511,6 +616,26 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
 
                 break;
             case 4:    // ================ ELIMINAR PRODUTO ===========
+                
+                if (supermercado.getMapIDtoProduct().size() == 0) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem produtos."});
+                    ignoreLine(false);
+                    break;
+                }
+                
+                if (!supermercado.existemProdutosActivos()) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem produtos activos."});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+
                 while (!control) {
                     clearScreen();
                     mostrarMenuInicial(0);
@@ -580,11 +705,33 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
 				for (size_t i = 0; i < vectorInteiros.size(); i++) {
 					supermercado.eliminarProduto(vectorInteiros.at(i));
 				}
-					
+				supermercado.saveChanges();
                 break;
 
 			case 3:    // ================ REATIVAR PRODUTO ===========
-				while (!control) {
+				
+                if (supermercado.getMapIDtoProduct().size() == 0) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem produtos."});
+                    ignoreLine(false);
+                    break;
+                }
+                
+                if (!supermercado.existemClientesInactivos()) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem produtos inactivos."});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
+                
+                
+                while (!control) {
 					clearScreen();
 					mostrarMenuInicial(0);
 					supermercado.listarProdutos();
@@ -652,8 +799,9 @@ void opcoesGestaoProdutos(VendeMaisMais &supermercado) {
 				for (size_t i = 0; i < vectorInteiros.size(); i++) {
 					supermercado.reactivarProduto(vectorInteiros.at(i));
 				}
-
+                supermercado.saveChanges();
 				break;
+                
         }
     }
 }
@@ -680,8 +828,10 @@ unsigned short int menuGestaoTransacoes() {
 }
 
 void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
+    
     unsigned int opcao;
     while ((opcao = menuGestaoTransacoes())) {
+    
         string nome;
         string input;
         unsigned int idClienteOuProduto = 0;
@@ -702,9 +852,43 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
 
         switch (opcao) {
             case 1:      //    =============== REGISTRAR COMPRA ==============
-                do {
+                
+                clearScreen();
+                mostrarMenuInicial(0);
+                if (supermercado.getProdutos().size() == 0) {
+                    cout << Table({"Nao existem produtos no supermercado."});
+                    ignoreLine(false);
+                    break;
+                }
+                
+                if (supermercado.getClientes().size() == 0) {
+                    cout << Table({"Nao existem clientes no supermercado."});
+                    ignoreLine(false);
+                    break;
+                }
+                
+                if (!supermercado.existemClientesActivos()) {
+                    
                     clearScreen();
-                    mostrarMenuInicial(0);
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem clientes activos."});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
+                if (!supermercado.existemProdutosActivos()) {
+                    
+                    clearScreen();
+                    mostrarMenuInicial();
+                    cout << Table({"Nao existem produtos activos."});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
+                do {
+
                     supermercado.listarClientesOrdemAlfa(true); //Mostra clientes e seus respetivos ids
                     Table introIdNome({ "Introduza o ID do cliente." });
                     cout << introIdNome << endl;
@@ -806,10 +990,29 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
             case 2:      //  =========== LISTAR TODAS AS TRANSACOES ===========
                 clearScreen();
                 mostrarMenuInicial(0);
+                
+                if (supermercado.getTransacoes().size() == 0) {
+                    
+                    cout << Table({"Nao existem transacoes"});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
                 supermercado.listarTransacoes();
                 ignoreLine(false);
                 break;
             case 3:      // ============ LISTAR TRANSACOES DE UM CLIENTE ======
+                
+                if (supermercado.getTransacoes().size() == 0) {
+                    
+                    cout << Table({"Nao existem transacoes"});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
+                
                 do {
                     clearScreen();
                     mostrarMenuInicial(0);
@@ -847,11 +1050,23 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
                 ignoreLine(false);
                 break;
             case 4:      // ============ LISTAR TRANSACOES NUMA DATA ==========
+                
+                
+                if (supermercado.getTransacoes().size() == 0) {
+                    
+                    cout << Table({"Nao existem transacoes"});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
+                
+                
                 while (!controlAux) {
                     clearScreen();
                     mostrarMenuInicial(0);
                     supermercado.listarTransacoes();
-                    controlAux = leDatas(vetorStringDatas, "Introduza uma data.");
+                    controlAux = leDatas(vetorStringDatas, "Introduza uma data ou duas datas (intervalo de datas) no formato DD//MM/AAAA.");
                     if (!controlAux) {
                         cin.get();
                         continue;
@@ -876,6 +1091,15 @@ void opcoesGestaoTransacoes(VendeMaisMais & supermercado) {
                 ignoreLine(false);
                 break;
             case 5:
+                
+                if (supermercado.getTransacoes().size() == 0) {
+                    
+                    cout << Table({"Nao existem transacoes"});
+                    ignoreLine(false);
+                    break;
+                    
+                }
+                
                 do {
                     clearScreen();
                     mostrarMenuInicial(0);
@@ -936,8 +1160,67 @@ unsigned short int menuRecomendacao() {
 
 void opcoesRecomendacao(VendeMaisMais & supermercado) {
     unsigned int opcao;
+    
+    if (supermercado.getClientes().size() == 0) {
+        cout << Table({"Nao existem clientes no supermercado."});
+        ignoreLine(false);
+        return;
+    }
+    
+    if (!supermercado.existemClientesActivos()) {
+        cout << Table({"Nao existem clientes activos no supermercado."});
+        ignoreLine(false);
+        return;
+    }
+    
+    if (supermercado.getProdutos().size() == 0) {
+        cout << Table({"Nao existem produtos no supermercado."});
+        ignoreLine(false);
+        return;
+    }
+    
+    if (!supermercado.existemProdutosActivos()) {
+        cout << Table({"Nao existem produtos activos no supermercado."});
+        ignoreLine(false);
+        return;
+    }
+    
+    if (supermercado.getTransacoes().size() == 0) {
+        clearScreen();
+        mostrarMenuInicial(0);
+        cout << Table({"Nao existem compras efectuadas no supermercado, nao e possivel fazer recomendacoes."});
+        ignoreLine(false);
+        return;
+    }
+    
+    bool transacoesProdutosActivos = false;
+    
+    for (size_t i = 0; i < supermercado.getTransacoes().size(); i++) {
+        
+        for (size_t j = 0; j < supermercado.getTransacoes().at(i).getProdutosProduto().size(); j++) {
+            
+            if (supermercado.getProdutos().at(supermercado.getTransacoes().at(i).getProdutosProduto().at(j).getProdutoId()).getStatus())  {
+                
+                transacoesProdutosActivos = true;
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    if (!transacoesProdutosActivos) {
+        clearScreen();
+        mostrarMenuInicial(0);
+        cout << Table({"Nao existem compras efectuadas no supermercado com produtos activos, nao e possivel fazer recomendacoes."});
+        ignoreLine(false);
+        return;
+    }
+    
 	
 	while ((opcao = menuRecomendacao())) {
+        
 		string input;
 		unsigned int idCliente;
 		bool control = false;
@@ -952,7 +1235,7 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			do {
 				clearScreen();
 				mostrarMenuInicial(0);
-				supermercado.listarClientesOrdemAlfa();
+                supermercado.listarClientesOrdemAlfa();
 				Table introIdNome({ "Introduza o ID ou o NOME do cliente." });
 				cout << introIdNome << endl;
 				getline(cin, input);
@@ -979,7 +1262,7 @@ void opcoesRecomendacao(VendeMaisMais & supermercado) {
 			do {
 				clearScreen();
 				mostrarMenuInicial(0);
-				supermercado.listarClientesOrdemAlfa();
+                supermercado.listarClientesOrdemAlfa();
 				Table introN({ "Introduza N para mostrar as recomendacoes dos N piores clientes." });
 				cout << introN << endl;
 				getline(cin, input);

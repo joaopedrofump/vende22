@@ -1,6 +1,12 @@
-5
-1 ; 1/1/2016 ; Laranja,Banana
-1 ; 3/1/2016 ; Peixe,Laranja,Batatas Fritas
-2 ; 15/3/2016 ; Banana,Laranja,Peixe
-3 ; 20/5/2016 ; Peixe,Batatas Fritas,Laranja
-5 ; 22/5/2016 ; Banana,Vinho
+11
+6 ; 25/5/2016 ; Farinha
+17 ; 25/5/2016 ; Batatas-frita,Bacalhau,Papel-Higienico,Rissol,Pastel
+2 ; 25/5/2016 ; Cola,Bacalhau,Pastel,Caneta
+18 ; 25/5/2016 ; Iogurte,Manteiga,Bacalhau,Rissol
+14 ; 25/5/2016 ; Papel-Higienico,Iogurte
+20 ; 25/5/2016 ; Batatas-frita,Cola,Bacalhau,Rissol,Pastel,Laranja,Banana,Pera,Iogurte,Queijo,Manteiga,Soja
+18 ; 25/5/2016 ; Soja
+18 ; 25/5/2016 ; Lapis
+3 ; 25/5/2016 ; Batatas-frita,Cola,Bacalhau,Rissol,Pastel,Laranja,Banana,Pera,Iogurte,Queijo,Manteiga,Soja,Leite,Ovos,Margarina,Papel-Higienico,Caneta,Lapis,Robalo
+16 ; 25/5/2016 ; Robalo,Ovos
+7 ; 25/5/2016 ; Pera,Pastel,Banana,Cola,Batatas-frita,Pera,Iogurte
